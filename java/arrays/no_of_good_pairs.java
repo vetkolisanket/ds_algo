@@ -29,6 +29,7 @@ Constraints:
 1 <= nums[i] <= 100
 */
 
+/*
 class Solution {
     public int numIdenticalPairs(int[] nums) {
         int goodPairs = 0;
@@ -43,6 +44,22 @@ class Solution {
         }
         for(Map.Entry<Integer, Integer> entry: map.entrySet()){
             int val = entry.getValue();
+            goodPairs += val*(val-1)/2;
+        }
+        return goodPairs;
+    }
+}
+*/
+
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+        int goodPairs = 0;
+        int arr[] = new int[100];
+        for(int i=0;i<nums.length;i++) {
+            arr[nums[i]-1]++;
+        }
+        for(int i=0;i<100;i++) {
+            int val = arr[i];
             goodPairs += val*(val-1)/2;
         }
         return goodPairs;
