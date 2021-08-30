@@ -5,6 +5,47 @@ Input: Tact Coa
 Output: True (permutations: "taco cat". "atco cta". etc.)
 */
 
+boolean isPermutationOfPalindrome(String phrase) {
+	int bitVector = createBitVector(phrase.toLowerCase());          //For easier getNumericValue function
+	return bitVector == 0 || checkExactlyOneBitIsSet(bitVector);
+}
+
+int createBitVector(String phrase){
+	int bitVector = 0;
+	for (char c: phrase.toCharArray()){
+		int x = getNumericValue(c);
+		bitVector = toggleBit(bitVector, x);
+	}
+	return bitVector;
+}
+
+int getNumericValue(char c) {
+	int x = Character.getNumericValue(c);
+	int a = Character.getNumericValue(‘a’);
+	int z = Character.getNumericValue(‘z’);
+	if (x >= a && x <= z) {
+		return x-a;
+	}
+	return -1;
+} 
+
+int toggleBitVector(int bitVector, int x) {
+	if (x < 0) return bitVector;
+	int mask = 1 << x;
+	if(bitVector & mask == 0) {
+		bitVector |= mask;
+	} else {
+		bitVector &= ~mask;
+	}
+	return bitVector;
+}
+
+Boolean checkExactlyOneBitIsSet(int bitVector) {
+	int temp = bitVector - 1;
+	return temp & bitVector == 0;
+}
+
+/*
 boolean isPermutationOfPalindrome(String phrase){
 	int bitVector = createBitVector(phrase);
 	return bitvector == 0 || checkExactlyOneBitSet(bitVector);
@@ -44,3 +85,4 @@ int getCharNumber(Character c){
 	}
 	return -1;
 }
+*/
