@@ -7,6 +7,6 @@ Result: nothing is returned, but the new linked list looks like a - >b- >d - >e-
 //You cannot delete the last node with this technique
 void deleteMiddleNode(LinkedListNode n){
 	if(n==null||n.next==null) return;
-	n.val = next.val;
+	n.val = n.next.val;
 	n.next = n.next.next;
 }
