@@ -33,6 +33,7 @@ class MyBinarySearchTree {
 
 	public void printInOrderTraversal() {
 		printInOrderTraversal(root);
+		System.out.println();
 	}
 
 	public void printInOrderTraversal(TreeNode node) {
@@ -40,6 +41,30 @@ class MyBinarySearchTree {
 		printInOrderTraversal(node.left);
 		System.out.print(node.val + " ");
 		printInOrderTraversal(node.right);
+	}
+
+	public void printPreOrderTraversal() {
+		printPreOrderTraversal(root);
+		System.out.println();
+	}
+
+	public void printPreOrderTraversal(TreeNode node) {
+		if (node == null) return;
+		System.out.print(node.val + " ");
+		printPreOrderTraversal(node.left);
+		printPreOrderTraversal(node.right);
+	}
+
+	public void printPostOrderTraversal() {
+		printPostOrderTraversal(root);
+		System.out.println();
+	}
+
+	public void printPostOrderTraversal(TreeNode node) {
+		if (node == null) return;
+		System.out.print(node.val + " ");
+		printPostOrderTraversal(node.right);
+		printPostOrderTraversal(node.left);
 	}
 
 	public static void main(String[] args) {
@@ -55,6 +80,8 @@ class MyBinarySearchTree {
 		tree.add(8);
 		tree.add(9);
 		tree.printInOrderTraversal();
+		tree.printPreOrderTraversal();
+		tree.printPostOrderTraversal();
 	}
 
 }
