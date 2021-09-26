@@ -44,7 +44,7 @@ class TreeNode {
 	}
 
 	public void insertInOrder(int d) {
-		if (d < data) {
+		if (d <= data) {
 			if (left == null) left = new TreeNode(d);
 			else left.insertInOrder(d);
 		} else {
