@@ -9,7 +9,7 @@ String printBinary(double num){
 	while (num > 0) {
 		if (builder.length() > 32) return "ERROR";
 
-		int r = num*2;
+		double r = num*2;
 		if (r > 1) {
 			builder.append(1);
 			num = r - 1;
