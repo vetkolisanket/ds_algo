@@ -1,0 +1,6 @@
+You have nine balls. Eight are of the same weight, and one is heavier. You are given a balance which tells you only whether the left side or the right side is heavier. Find the heavy ball in just two uses of the scale.
+
+A first approach is to divide the balls in sets of four, with the ninth ball sitting off to the side. The heavy ball is in the heavier set. If they are the same weight, then we know that the ninth ball is the heavy one. Repli- cating this approach for the remaining sets would result in a worst case of three weighings-one too many!
+This is an imbalance in the worst case: the ninth ball takes just one weighing to discover if it's heavy, whereas others take three. If we penalize the ninth ball by putting more balls off to the side, we can lighten the load on the others. This is an example of"worst case balancing."
+If we divide the balls into sets of three items each, we will know after just one weighing which set has the heavy one.We can even formalize this into a rule: given N balls, where N is divisible by 3, one use of the scale will point us to a set of balls with the heavy ball.
+For the final set of three balls, we simply repeat this: put one ball off to the side and weigh two. Pick the heavier of the two. Or, if the balls are the same weight, pick the third one.
