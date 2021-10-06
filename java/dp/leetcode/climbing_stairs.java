@@ -28,6 +28,26 @@ Constraints:
 1 <= n <= 45
 */
 
+//More readable and concise soln
+class Solution {
+    public int climbStairs(int n) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        return noOfWays(n, map);
+    }
+    
+    private int noOfWays(int n, Map<Integer, Integer> map) {
+        if (n <= 0) return 0;
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        if (map.containsKey(n)) return map.get(n);
+        int ways = noOfWays(n-1, map) + noOfWays(n-2, map);
+        map.put(n, ways);
+        return ways;
+    }
+    
+}
+
+//Older soln
 class Solution {
     public int climbStairs(int n) {
         int[] arr = new int[n];
