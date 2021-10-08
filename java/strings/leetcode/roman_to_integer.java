@@ -107,6 +107,34 @@ class Solution {
 /*
 Another approach
 
+class Solution {
+    public int romanToInt(String s) {
+        int ans = 0;
+        int length = s.length();
+        int last = 1000;
+        for (int i = 0; i < length; i++) {
+            int val = getVal(s.charAt(i));
+            if (val > last) ans -= last*2;
+            ans += val;
+            last = val;
+        }
+        return ans;
+    }
+    
+    public int getVal(char c) {
+        switch (c) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            default : return 1000;
+        }
+    }
+    
+}
+
  public int romanToInt(String s) {
     int nums[]=new int[s.length()];
     for(int i=0;i<s.length();i++){
