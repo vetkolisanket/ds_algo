@@ -26,6 +26,39 @@ Constraints:
 All the integers of nums are unique.
 */
 
+//Faster soln
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> list = new ArrayList();
+        generate(list, 0, nums);
+        return list;
+    }
+    
+    private void generate(List<List<Integer>> list, int i, int[] nums) {
+        if (i == nums.length) {
+            List<Integer> tempList = new ArrayList();
+            for (int j = 0; j < nums.length; j++) {
+                tempList.add(nums[j]);
+            }
+            list.add(tempList);
+        } else {
+            for (int j = i; j < nums.length; j++) {
+                swap(nums, i, j);
+                generate(list, i+1, nums);
+                swap(nums, i, j);
+            }
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+}
+
+//Backtrack soln
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> list = new ArrayList();
