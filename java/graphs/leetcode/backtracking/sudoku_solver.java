@@ -30,6 +30,50 @@ board[i][j] is a digit or '.'.
 It is guaranteed that the input board has only one solution.
 */
 
+//Faster soln
+class Solution {
+    public void solveSudoku(char[][] board) {
+        solve(board, 0, 0);
+    }
+    
+    private boolean solve(char[][] board, int row, int col) {
+        if (col == board[0].length) {
+            col = 0;
+            row++;
+        }
+        
+        if (row == board.length) return true;
+        
+        if (board[row][col] != '.') return solve(board, row, col+1);
+        for (char num = '1'; num <= '9'; ++num) {
+            if (isValid(board, row, col, num)) {
+                board[row][col] = num;
+                    
+                if (solve(board, row, col)) return true;
+                else board[row][col] = '.';
+            }
+        }
+        return false;
+    }
+    
+    private boolean isValid(char[][] board, int row, int col, char num) {
+        for (int i = 0; i < board.length; i++) {
+            if (board[row][i] == num || board[i][col] == num) return false;
+        }
+        
+        int boxRow = row/3*3;
+        int boxCol = col/3*3;
+        for (int i = boxRow; i < boxRow+3; ++i) {
+            for (int j = boxCol; j < boxCol+3; ++j) {
+                if (board[i][j] == num) return false;
+            }
+        }
+        return true;
+    }
+    
+}
+
+//Original soln
 class Solution {
     public void solveSudoku(char[][] board) {
         solve(board, 0, 0);
