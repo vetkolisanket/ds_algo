@@ -39,6 +39,24 @@ Constraints:
 It's guaranteed that the answer will be less than or equal to 2 * 109.
 */
 
+//My soln on another attempt
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] arr = new int[m][n];
+        int paths = computePaths(arr, 0, 0, m, n);
+        return paths;
+    }
+    
+    private int computePaths(int[][] arr, int i, int j, int m, int n) {
+        if (i == m-1 || j == n-1) return 1;
+        if (arr[i][j] > 0) return arr[i][j];
+        int paths = computePaths(arr, i+1, j, m, n) + computePaths(arr, i, j+1, m, n);
+        arr[i][j] = paths;
+        return arr[i][j];
+    }
+    
+}
+
 //My soln using memoization
 class Solution {
     public int uniquePaths(int m, int n) {
