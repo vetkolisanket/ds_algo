@@ -34,6 +34,8 @@ The list is guaranteed to be sorted in ascending order.
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+//Simple soln
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode node = head;
@@ -43,5 +45,24 @@ class Solution {
             } else node = node.next;
         }
         return head;
+    }
+}
+
+//Faster soln
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return head;
+        ListNode temp = new ListNode(head.val-1, head);
+        ListNode prev = temp;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            while (cur != null && cur.next != null && cur.val == cur.next.val) {
+                cur = cur.next;
+            }
+            prev.next = cur;
+            prev = cur;
+            cur = cur.next;
+        }
+        return temp.next;
     }
 }
