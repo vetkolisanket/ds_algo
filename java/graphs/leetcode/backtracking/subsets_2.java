@@ -65,3 +65,28 @@ class Solution {
         }
     }
 }
+
+//Another approach
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList();
+        generate(0, nums, new ArrayList(), res, false);
+        return res;
+    }
+    
+    
+    private void generate(int i, int[] nums, List<Integer> temp, List<List<Integer>> res, boolean shouldAddDup) {
+        if (i == nums.length) {
+            res.add(new ArrayList(temp));
+        } else {
+            generate(i+1, nums, temp, res, false);
+            if (i>0 && nums[i] == nums[i-1] && !shouldAddDup) return;
+            temp.add(nums[i]);
+            generate(i+1, nums, temp, res, true);
+            temp.remove(temp.size()-1);
+        }
+    }
+    
+
+}
