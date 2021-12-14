@@ -58,7 +58,7 @@ The number of nodes in head is in the range [0, 2 * 104].
  *     }
  * }
  */
-//O(lgn) soln
+//O(n) soln
 class Solution {
     
     ListNode listNode;
