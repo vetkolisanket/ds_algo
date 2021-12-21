@@ -45,3 +45,29 @@ class Solution {
         return sb.toString().equals(sb.reverse().toString());
     }
 }
+
+//2 pointer technique, won't require extra space
+class Solution {
+    public boolean isPalindrome(String s) {
+        int head = 0, tail = s.length() - 1;
+        while (head < tail) {
+            while (head < tail && !Character.isLetterOrDigit(s.charAt(head))) head++;
+            while (head < tail && !Character.isLetterOrDigit(s.charAt(tail))) tail--;
+            if (head < tail && Character.toLowerCase(s.charAt(head)) != Character.toLowerCase(s.charAt(tail))) return false;
+            else {
+                head++;
+                tail--;
+            }
+        }
+        return true;
+    }
+}
+
+//3 line soln, a bit slower
+class Solution {
+    public boolean isPalindrome(String s) {
+        String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String reverse = new StringBuilder(actual).reverse().toString();
+        return actual.equals(reverse);
+    }
+}
