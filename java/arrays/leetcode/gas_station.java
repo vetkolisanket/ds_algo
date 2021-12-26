@@ -43,6 +43,11 @@ cost.length == n
 
 */
 
+/*
+1, if sum of gas is more than sum of cost, then there must be a solution. And the question guaranteed that the solution is unique(The first one I found is the right one).
+2, The tank should never be negative, so restart whenever there is a negative number.
+*/
+
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int sumGas = 0, sumCost = 0, tank = 0, start = 0;
