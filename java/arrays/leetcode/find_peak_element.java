@@ -30,6 +30,20 @@ Constraints:
 nums[i] != nums[i + 1] for all valid i.
 */
 
+//O(lg(n)) using iteration
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int start = 0, end = nums.length-1;
+        while (start < end) {
+            int mid1 = start + (end-start)/2;
+            int mid2 = mid1+1;
+            if (nums[mid1] > nums[mid2]) end = mid1;
+            else start = mid2;
+        }
+        return start;
+    }
+}
+
 //O(lg(n)) soln using recursion
 class Solution {
     public int findPeakElement(int[] nums) {
@@ -42,6 +56,16 @@ class Solution {
         int mid2 = mid1+1;
         if (nums[mid1] > nums[mid2]) return helper(start, mid1, nums);
         else return helper(mid2, end, nums);
+    }
+}
+
+//Another O(n) soln
+class Solution {
+    public int findPeakElement(int[] nums) {
+        for (int i=1;i<nums.length;i++) {
+            if (nums[i] < nums[i-1]) return i-1;
+        }
+        return nums.length-1;
     }
 }
 
