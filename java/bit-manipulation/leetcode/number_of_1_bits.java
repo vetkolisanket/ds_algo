@@ -34,6 +34,27 @@ The input must be a binary string of length 32.
 Follow up: If this function is called many times, how would you optimize it?
 */
 
+//Its recursive approach
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        return n != 0 ? 1 + hammingWeight(n & n-1) : 0;
+    }
+}
+
+//An even faster soln
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            n &= n-1;
+            count++;
+        }
+        return count;
+    }
+}
+
 //Better soln
 public class Solution {
     // you need to treat n as an unsigned value
