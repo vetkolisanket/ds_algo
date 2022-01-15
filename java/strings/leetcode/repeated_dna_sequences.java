@@ -26,6 +26,7 @@ Constraints:
 s[i] is either 'A', 'C', 'G', or 'T'.
 */
 
+//My soln
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         int len = s.length();
@@ -40,5 +41,18 @@ class Solution {
             map.put(ss, map.getOrDefault(ss, 0)+1);
         }
         return list;
+    }
+}
+
+//A smaller but slower soln
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        int len = s.length();
+        Set<String> words = new HashSet(), repeated = new HashSet();
+        for (int i=0;i<=len-10;i++) {
+            String ss = s.substring(i, i+10);
+            if (!words.add(ss)) repeated.add(ss);
+        }
+        return new ArrayList(repeated);
     }
 }
