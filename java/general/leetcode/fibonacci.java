@@ -31,6 +31,22 @@ Constraints:
 0 <= n <= 30
 */
 
+//Another go at iterative soln
+class Solution {
+    public int fib(int n) {
+        if (n < 2) return n;
+        int pre = 0;
+        int cur = 1;
+        int res = 0;
+        for (int i=2;i<=n;i++) {
+            res = pre + cur;
+            pre = cur;
+            cur = res;
+        }
+        return res;
+    }
+}
+
 //Iterative soln
 class Solution {
     public int fib(int n) {
