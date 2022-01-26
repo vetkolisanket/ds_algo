@@ -28,6 +28,19 @@ Constraints:
 1 <= n <= 45
 */
 
+//Attempt after watching dp video by free code camp on YouTube
+class Solution {
+    public int climbStairs(int n) {
+        if (n <= 3) return n;
+        int pre = 2, cur = 3;
+        for (int i = 4; i <= n; i++) {
+            cur += pre;
+            pre = cur - pre;
+        }
+        return cur;
+    }
+}
+
 //More readable and concise soln
 class Solution {
     public int climbStairs(int n) {
