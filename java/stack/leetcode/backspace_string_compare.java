@@ -33,6 +33,35 @@ s and t only contain lowercase letters and '#' characters.
 Follow up: Can you solve it in O(n) time and O(1) space?
 */
 
+//O(n+m) time and O(1) space soln
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+        int i = s.length()-1;
+        int j = t.length()-1;
+        int sCount = 0;
+        int tCount = 0;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0 && (s.charAt(i) == '#' || sCount > 0)) {
+                if (s.charAt(i) == '#') sCount++;
+                else sCount--;
+                i--;
+            }
+            char left = i < 0 ? '@' : s.charAt(i);
+            while (j >= 0 && (t.charAt(j) == '#' || tCount > 0)) {
+                if (t.charAt(j) == '#') tCount++;
+                else tCount--;
+                j--;
+            }
+            char right = j < 0 ? '@' : t.charAt(j);
+            if (left != right) return false;
+            i--;
+            j--;
+        }
+        return true;
+    }
+}
+
+//My O(n+m) time and space soln
 class Solution {
     public boolean backspaceCompare(String s, String t) {
         Stack<Character> sStack = new Stack();
