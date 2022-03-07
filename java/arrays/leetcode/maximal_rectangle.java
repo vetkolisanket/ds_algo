@@ -55,7 +55,7 @@ class Solution {
         int maxArea = 0;
         for (int i=0;i<n;i++) {
             //Variable to store the starting index of current height
-            int curLeft = 0 
+            int curLeft = 0;
             //Variable to store the ending index of current height
             int curRight = m;
             for (int j=0;j<m;j++) {
