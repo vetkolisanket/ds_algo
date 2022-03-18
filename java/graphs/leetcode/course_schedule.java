@@ -32,6 +32,45 @@ All the pairs prerequisites[i] are unique.
 
 */
 
+//Using adjacency list
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] adjList = new ArrayList[numCourses];
+        int[] inDegree = new int[numCourses];
+        
+        for (int i=0;i<numCourses;i++) {
+            adjList[i] = new ArrayList();
+        }
+        
+        Arrays.fill(inDegree, 0);
+        
+        for (int[] pre: prerequisites) {
+            adjList[pre[1]].add(pre[0]);
+            inDegree[pre[0]]++;
+        }
+        
+        Queue<Integer> q = new ArrayDeque();
+        int count = 0;
+        for (int i=0;i<numCourses;i++) {
+            if (inDegree[i] == 0) {
+                q.offer(i);
+            }
+        }
+        
+        while (!q.isEmpty()) {
+            int val = q.poll();
+            count++;
+            for (int i: adjList[val]) {
+                    inDegree[i]--;
+                    if (inDegree[i] == 0) q.offer(i);
+            }
+        }
+        
+        return count == numCourses;
+    }
+}
+
+//Using adjacency matrix
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int[][] matrix = new int[numCourses][numCourses];
