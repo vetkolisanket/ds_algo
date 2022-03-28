@@ -32,6 +32,55 @@ Constraints:
 1 <= n <= 2^31 - 1
 */
 
+//Using Floyd Marshall Cycle Detection Algorithm (Tortoise-Hare Algorithm) (Fast Slow pointer algorithm)
+class Solution {
+    
+    public boolean isHappy(int n) {
+        int slow = n, fast = n;
+        do {
+            slow = getSumOfSquareOfDigits(slow);
+            fast = getSumOfSquareOfDigits(fast);
+            fast = getSumOfSquareOfDigits(fast);
+            if (slow == 1 || fast == 1) return true;
+        } while (slow != fast);
+        return false;
+    }
+    
+    private int getSumOfSquareOfDigits(int n) {
+        int num = 0;
+        while (n > 0) {
+            num += Math.pow(n%10, 2);
+            n /= 10;
+        }
+        return num;
+    }
+}
+
+//Iteratively
+class Solution {
+    
+    public boolean isHappy(int n) {
+        Set<Integer> set = new HashSet();
+        
+        while (set.add(n)) {
+            n = getSumOfSquareOfDigits(n);
+            if (n == 1) return true;
+        }
+        return false;
+    }
+    
+    private int getSumOfSquareOfDigits(int n) {
+        int num = 0;
+        while (n > 0) {
+            num += Math.pow(n%10, 2);
+            n /= 10;
+        }
+        return num;
+    }
+}
+
+
+//Using recursion
 class Solution {
     
     Set<Integer> set = new HashSet();
