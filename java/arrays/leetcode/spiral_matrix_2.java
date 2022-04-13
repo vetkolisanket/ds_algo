@@ -46,3 +46,28 @@ class Solution {
         return res;
     }
 }
+
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] arr = new int[n][n];
+        int left=0, top=0, right=n-1, bottom=n-1;
+        int val = 1;
+        int n2 = n*n;
+        while  (val <= n2) {
+            for (int i=left;i<=right && val <= n2;i++) {
+                arr[top][i] = val++;
+            }
+            for (int i=top+1;i<bottom && val <= n2;i++) {
+                arr[i][right] = val++;
+            }
+            for (int i=right;i>=left && val <= n2;i--) {
+                arr[bottom][i] = val++;
+            }
+            for(int i=bottom-1;i>top && val <= n2;i--) {
+                arr[i][left] = val++;
+            }
+            left++; top++; right--; bottom--;
+        }
+        return arr;
+    }
+}
