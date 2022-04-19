@@ -59,6 +59,27 @@ class Solution {
     }
 }
 
+//Soln using recursion where O(H) space is used and time complexity should be O(H+k)
+class Solution {
+    
+    int count = 0;
+    
+    public int kthSmallest(TreeNode root, int k) {
+        return inOrderTraversal(root, k);
+    }
+    
+    private int inOrderTraversal(TreeNode node, int k) {
+        if (node == null) return -1;
+        int val = inOrderTraversal(node.left, k);
+        if (count == k) return val;
+        count++;
+        if (count == k) {
+            return node.val;
+        }
+        return inOrderTraversal(node.right, k);
+    }
+}
+
 //My soln using a list and inorder traversal
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
