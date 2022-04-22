@@ -26,6 +26,26 @@ Constraints:
 0 ≤ arr[i] ≤ MAX_INT for every i, 0 ≤ i < MAX_INT
 */
 
+//A slightly better soln
+static int getDifferentNumber(int[] arr) {
+    // your code goes here
+    int n = arr.length;
+    for (int i=0;i<n;i++) {
+      int temp = arr[i];
+      while (temp < n && arr[temp] != temp) {
+        int temp2 = arr[temp];
+        arr[temp] = temp;
+        temp = temp2;
+      }
+    }
+    for (int i=0;i<n;i++) {
+      if (arr[i] != i) {
+        return i;
+      }
+    }
+    return n;
+}
+
 //My soln after a lot of help from the interviewer and committing interview costing mistakes
 import java.io.*;
 import java.util.*;
