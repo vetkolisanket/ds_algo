@@ -39,7 +39,62 @@ If graph[u] contains v, then graph[v] contains u.
 
 */
 
-//Coloring using DFS
+//Using BFS
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int[] color = new int[graph.length];
+        Queue<Integer> queue = new ArrayDeque();
+        
+        for (int i=0;i<graph.length;i++) {
+            if (color[i] == 0) {
+                queue.offer(i);
+                color[i] = -1;
+                
+                while (!queue.isEmpty()) {
+                    int node = queue.poll();
+                    for (int nbh: graph[node]) {
+                        if (color[nbh] == 0) {
+                            queue.offer(nbh);
+                            color[nbh] = -color[node];
+                        } else if (color[nbh] == color[node]) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
+
+//Using DFS
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int[] colors = new int[graph.length];
+        
+        for (int i=0;i<graph.length;i++) {
+            if (colors[i] == 0 && !validColor(graph, i, 1, colors)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean validColor(int[][] graph, int i, int color, int[] colors) {
+        if (colors[i] != 0) {
+            return colors[i] == color;
+        }
+        colors[i] = color;
+        for (int nbh: graph[i]) {
+            if (!validColor(graph, nbh, -color, colors)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+//Leetcode soln
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
