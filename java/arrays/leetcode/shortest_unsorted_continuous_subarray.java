@@ -1,7 +1,6 @@
 /*
 581. Shortest Unsorted Continuous Subarray
 
-581. Shortest Unsorted Continuous Subarray
 Medium
 
 5893
@@ -41,6 +40,33 @@ Constraints:
 Follow up: Can you solve it in O(n) time complexity?
 */
 
+//O(n) soln
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        int start=-1, end=-1;
+        int left=0,right=nums.length-1;
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        while (right >= 0) {
+            if (nums[left] < max) {
+                end = left;
+            } else {
+                max = nums[left];
+            }
+            
+            if (nums[right] > min) {
+                start = right;
+            } else {
+                min = nums[right];
+            }
+            
+            left++;
+            right--;
+        }
+        return start == -1 ? 0 : end-start+1;
+    }
+}
+
+//O(nlgn) soln
 class Solution {
     public int findUnsortedSubarray(int[] nums) {
         int[] snums = nums.clone();
