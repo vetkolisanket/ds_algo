@@ -32,6 +32,33 @@ flowers[i].length == 2
 1 <= persons[i] <= 10^9
 */
 
+//Using tree map
+class Solution {
+    public int[] fullBloomFlowers(int[][] flowers, int[] persons) {
+        // 0: Bloom, 1: Person 2: Wilt
+        TreeMap<Integer, Integer> map = new TreeMap();
+        for (int[] flower: flowers) {
+            map.put(flower[0], map.getOrDefault(flower[0], 0)+1);
+            map.put(flower[1]+1, map.getOrDefault(flower[1]+1, 0)-1);
+        }
+        TreeMap<Integer, Integer> sum = new TreeMap();
+        int pre = 0;
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            pre += entry.getValue();
+            sum.put(entry.getKey(), pre);
+        }
+        int[] res = new int[persons.length];
+        for (int i=0;i<persons.length;i++) {
+            Map.Entry<Integer, Integer> entry = sum.floorEntry(persons[i]);
+            if (entry != null) {
+                res[i] = entry.getValue();
+            }
+        }
+        return res;
+    }
+}
+
+//Using priority queue
 class Solution {
     // 0: Bloom 1: Person 2: Wilt/Drop
     public int[] fullBloomFlowers(int[][] flowers, int[] persons) {
