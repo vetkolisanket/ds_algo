@@ -54,6 +54,10 @@ The values of the integers in the nested list is in the range [-10^6, 10^6].
  *     public List<NestedInteger> getList();
  * }
  */
+
+/*Let N be the total no. of integers in the flattened list and L be the total 
+no. of lists within the parent nested list and D be the maximum depth of the
+nesting, then time complexity is O(N+L) and space complexity is O(N+D)*/
 public class NestedIterator implements Iterator<Integer> {
     
     List<Integer> list;
