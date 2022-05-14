@@ -62,7 +62,7 @@ class Node {
 };
 */
 
-//3 Pointer soln, which is faster
+//3 Pointer soln, which is faster and uses no constant space
 class Solution {
     public Node connect(Node root) {
         if (root == null) return null;

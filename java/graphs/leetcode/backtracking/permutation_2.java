@@ -23,6 +23,38 @@ Constraints:
 1 <= nums.length <= 8
 -10 <= nums[i] <= 10
 */
+
+//Leetcode premium soln
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> list = new ArrayList();
+        Map<Integer, Integer> map = new HashMap();
+        for (int num: nums) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        backtrack(list, nums.length, map, new LinkedList());
+        return list;
+    }
+    
+    private void backtrack(List<List<Integer>> list, int n, Map<Integer, Integer> map, LinkedList<Integer> temp) {
+        if (temp.size() == n) {
+            list.add(new ArrayList(temp));
+            return;
+        }
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            int key = entry.getKey();
+            int count = entry.getValue();
+            if (count == 0) continue;
+            map.put(key, count-1);
+            temp.addLast(key);
+            backtrack(list, n, map, temp);
+            temp.removeLast();
+            map.put(key, count);
+        }
+    }
+}
+
+//Discussion soln
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         Arrays.sort(nums);
