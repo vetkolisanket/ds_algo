@@ -55,7 +55,7 @@ class Solution {
     }
 }
 
-//Another soln, easy to understand and implement O(n!)
+//Another soln, easy to understand and implement O(n!) time complexity and O(n) space complexity
 class Solution {
     
     int size;
