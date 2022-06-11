@@ -53,16 +53,41 @@ class Solution {
         }
         return soln;
     }
+}
+
+//Another soln, easy to understand and implement O(n!) time complexity and O(n) space complexity
+class Solution {
     
-    private boolean validate(boolean[][] board, int x, int y) {
-        for (int i=0;i<board.length;i++) {
-            for (int j=0;j<y;j++) {
-                if (board[i][j] && (x==i || x+j==y+i || x+y==i+j)) {
-                    return false;
-                }
-            }
+    int size;
+    int count;
+    
+    public int totalNQueens(int n) {
+        size = n;
+        count = 0;
+        backtrack(0, new HashSet(), new HashSet(), new HashSet());
+        return count;
+    }
+    
+    private void backtrack(int row, Set<Integer> colSet, Set<Integer> diagonalSet, Set<Integer> antiDiagonalSet) {
+        if (row == size) {
+            count++;
+            return;
         }
-        return true;
+        for (int col = 0; col < size; col++) {
+            int diagonal = row-col;
+            int antiDiagonal = row+col;
+            if (colSet.contains(col) || diagonalSet.contains(diagonal) || antiDiagonalSet.contains(antiDiagonal)) continue;
+            
+            colSet.add(col);
+            diagonalSet.add(diagonal);
+            antiDiagonalSet.add(antiDiagonal);
+            
+            backtrack(row+1, colSet, diagonalSet, antiDiagonalSet);
+            
+            colSet.remove(col);
+            diagonalSet.remove(diagonal);
+            antiDiagonalSet.remove(antiDiagonal);
+        }
     }
 }
 
