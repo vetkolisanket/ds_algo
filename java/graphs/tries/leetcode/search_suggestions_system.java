@@ -82,6 +82,33 @@ class Solution {
     }
 }
 
+//My soln from another attempt
+class Solution {
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        Arrays.sort(products);
+        List<String> productList = Arrays.asList(products);
+        List<List<String>> res = new ArrayList();
+        int length = searchWord.length();
+        for (int i=0;i<length;i++) {
+            productList = getSuggestions(productList, searchWord.substring(0, i+1));
+            if (productList.size() > 3) {
+                res.add(productList.subList(0, 3));
+            } else res.add(productList);
+        }
+        return res;
+    }
+    
+    private List<String> getSuggestions(List<String> list, String s) {
+        List<String> suggestions = new ArrayList();
+        for (String word: list) {
+            if (word.startsWith(s)) {
+                suggestions.add(word);
+            }
+        }
+        return suggestions;
+    }
+}
+
 //Sort and binary search
 class Solution {
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
