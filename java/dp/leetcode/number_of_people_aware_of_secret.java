@@ -42,17 +42,22 @@ class Solution {
     private final int MOD = 1000000007;
     
     public int peopleAwareOfSecret(int n, int delay, int forget) {
+	//n -> no. of day to iterate through, forget -> length upto which a person will know secret
         int[][] dp = new int[n][forget];
         int sum = 0;
         dp[0][0] = 1;
         for (int i=1;i<n;i++) {
+	    //No. of people who would be told secret today
+	    //Starting from delay (0 indexed) upto forget-1 (0 indexed) as those days people would be able to tell secret to todays day
             for (int j=delay-1;j<forget-1;j++) {
                 dp[i][0] = (dp[i][0] + dp[i-1][j])%MOD;
             }
+	    //Moving no. of people who were knowing secret by one day
             for (int j=1;j<forget;j++) {
                 dp[i][j] = dp[i-1][j-1];
             }
         }
+	//No. of people who know secret on nth day will be the sum of people who know on their respective day
         for (int i=0;i<forget;i++) {
             sum = (sum+dp[n-1][i])%MOD;
         }
