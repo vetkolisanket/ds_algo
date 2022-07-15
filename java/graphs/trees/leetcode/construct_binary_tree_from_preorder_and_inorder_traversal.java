@@ -42,6 +42,8 @@ inorder is guaranteed to be the inorder traversal of the tree.
  *     }
  * }
  */
+
+//TC O(n) SC O(n)
 class Solution {
     
     Map<Integer, Integer> map = new HashMap();
