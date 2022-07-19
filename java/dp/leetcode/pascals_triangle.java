@@ -23,6 +23,7 @@ Constraints:
 1 <= numRows <= 30
 */
 
+//TC O(n^2) SC O(1) where n is the no. of rows
 class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> res = new ArrayList();
