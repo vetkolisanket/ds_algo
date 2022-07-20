@@ -28,6 +28,7 @@ s and words[i] consist of only lowercase English letters.
 
 */
 
+//TC O(S.length + summation(words[i].length)) SC O(words.length)
 class Solution {
     
     class Node {
