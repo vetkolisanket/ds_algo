@@ -37,6 +37,7 @@ Follow up: Could you do it in one pass?
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+//TC O(n) SC O(1) where n is the no. of nodes to reverse
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if (head == null) return null;
