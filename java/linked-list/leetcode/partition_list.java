@@ -26,7 +26,7 @@ The number of nodes in the list is in the range [0, 200].
 
 */
 
-
+//TC O(n) SC O(1) where n is the length of the list
 //A more readable soln
 class Solution {
     public ListNode partition(ListNode head, int x) {
