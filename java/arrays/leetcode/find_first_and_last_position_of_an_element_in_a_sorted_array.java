@@ -31,7 +31,7 @@ nums is a non-decreasing array.
 -109 <= target <= 109
 */
 
-//TC O(nlog(n)) SC O(1)
+//TC O(log(n)) SC O(1)
 class Solution {
     public int[] searchRange(int[] nums, int target) {
         int[] output = new int[2];
