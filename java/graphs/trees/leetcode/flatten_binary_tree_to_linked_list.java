@@ -47,7 +47,23 @@ Follow up: Can you flatten the tree in-place (with O(1) extra space)?
  * }
  */
 
-//In place soln
+//Another in place soln
+class Solution {
+    
+    TreeNode head = null;
+    
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+        
+        flatten(root.right);
+        flatten(root.left);
+        root.right = head;
+        root.left = null;
+        head = root;
+    }
+}
+
+//In place soln TC O(n) SC O(1)
 class Solution {
     public void flatten(TreeNode root) {
         while (root != null) {
@@ -64,7 +80,7 @@ class Solution {
     }
 }
 
-//Extra space soln
+//Extra space soln TC O(n) SC O(n)
 class Solution {
     public void flatten(TreeNode root) {
         if (root == null) return;
@@ -82,5 +98,22 @@ class Solution {
         list.add(node);
         if (node.left != null) flatten(node.left, list);
         if (node.right != null) flatten(node.right, list);
+    }
+}
+
+//Another soln using stack TC O(n) SC O(n)
+class Solution {
+    public void flatten(TreeNode root) {
+        Stack<TreeNode> stack = new Stack();
+        if (root != null) stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+            if (!stack.isEmpty()) {
+                node.right = stack.peek();
+            }
+            node.left = null;
+        }
     }
 }
