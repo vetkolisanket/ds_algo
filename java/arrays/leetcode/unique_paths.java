@@ -40,6 +40,7 @@ It's guaranteed that the answer will be less than or equal to 2 * 109.
 */
 
 //Another attempt after watching dp video of freeCodeCamp from youtube
+//TC O(mn) SC O(mn)
 class Solution {
     public int uniquePaths(int m, int n) {
         int[][] arr = new int[m][n];
