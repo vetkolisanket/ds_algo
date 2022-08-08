@@ -49,3 +49,21 @@ class Solution {
         return len;
     }
 }
+
+//Soln from 2nd attempt TC O(nlog(n)) SC O(n)
+class Solution {
+    
+    public int lengthOfLIS(int[] nums) {
+        int[] arr = new int[nums.length];
+        int max = 0;
+        Arrays.fill(arr, Integer.MAX_VALUE);
+        for (int num: nums) {
+            int pos = Arrays.binarySearch(arr, num);
+            if (pos < 0) {
+                arr[-pos-1] = num;
+                max = Math.max(max, -pos);
+            }
+        }
+        return max;
+    }
+}
