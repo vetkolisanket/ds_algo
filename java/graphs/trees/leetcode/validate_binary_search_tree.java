@@ -44,6 +44,8 @@ The number of nodes in the tree is in the range [1, 104].
  *     }
  * }
  */
+
+//TC O(N) since we have to visit each node SC O(N) since the tree can be completely skewed (linked list) where N is the no. of nodes
 class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
