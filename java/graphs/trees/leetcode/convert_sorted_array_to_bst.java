@@ -44,6 +44,8 @@ nums is sorted in a strictly increasing order.
  *     }
  * }
  */
+
+//TC O(n) SC O(log(n)) where n is the length of the array
 class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
         return getBST(nums, 0, nums.length-1);
