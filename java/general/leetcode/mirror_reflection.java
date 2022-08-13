@@ -28,6 +28,24 @@ Constraints:
 1 <= q <= p <= 1000
 */
 
+//Soln with explanation
+class Solution {
+    public int mirrorReflection(int p, int q) {
+        int m = 1, n = 1;
+        /*We want to find m, n such m*p == n*q. This will ensure light will reach a corner after n reflections and m mirrors will be required for it to reach corner*/
+        while (m*p != n*q) {
+            n++;
+            m = n*q/p;
+        }
+        /*If no. of reflections is even, then light will meet receptor 2, as that is the only receptor on even side*/
+        if (n%2 == 0) return 2;
+        /*If the no. of mirrors required is even, the light will meet receptor 0*/
+        if (m%2 == 0) return 0;
+        /*If the no. of mirrors required is odd, the light will meet receptor 1*/
+        return 1;
+    }
+}
+
 //TC O(log(p)) SC O(1)
 class Solution {
     public int mirrorReflection(int p, int q) {
