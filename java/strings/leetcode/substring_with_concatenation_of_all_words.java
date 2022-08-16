@@ -32,6 +32,98 @@ s consists of lower-case English letters.
 words[i] consists of lower-case English letters.
 */
 
+//Soln from 2nd attempt TC O(abn + (ab)^2) and SC O(ab) where a is the no. of words, b is length of each word and n is the length of the string
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> list = new ArrayList();
+        Map<String, Integer> wordMap = new HashMap();
+        for (String word: words) {
+            wordMap.put(word, wordMap.getOrDefault(word, 0) + 1);
+        }
+        int sLen = s.length(), len = words.length, wLen = words[0].length();
+        for (int i=0;i<=sLen-len*wLen;i++) {
+            Map<String, Integer> includedMap = new HashMap(wordMap);
+            int wordCount = 0;
+            for (int j=i;j<i+len*wLen;j += wLen) {
+                String ss = s.substring(j, j+wLen);
+                if (includedMap.getOrDefault(ss, 0) != 0) {
+                    includedMap.put(ss, includedMap.get(ss)-1);
+                    wordCount++;
+                } else break;
+            }
+            if (wordCount == len) list.add(i);
+        }
+        return list;
+    }
+}
+
+//A faster soln using sliding window TC O(a + nb) SC O(a + b)
+class Solution {
+    private HashMap<String, Integer> wordCount = new HashMap();
+    private int n;
+    private int wordLength;
+    private int substringSize;
+    private int k;
+    
+    public List<Integer> findSubstring(String s, String[] words) {
+        n = s.length();
+        k = words.length;
+        wordLength = words[0].length();
+        substringSize = wordLength * k;
+        
+        for (String word: words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        
+        List<Integer> answer = new ArrayList();
+        for (int i = 0; i < wordLength; i++) {
+            slidingWindow(i, s, answer);
+        }
+        
+        return answer;
+    }
+    
+    private void slidingWindow(int left, String s, List<Integer> answer) {
+        HashMap<String, Integer> wordsFound = new HashMap();
+        int wordsUsed = 0;
+        boolean excessWord = false;
+        
+        for (int right = left; right <= n - wordLength; right += wordLength) {
+            String sub = s.substring(right, right + wordLength);
+            if (!wordCount.containsKey(sub)) {
+                wordsFound.clear();
+                wordsUsed = 0;
+                excessWord = false;
+                left = right + wordLength;
+            } else {
+                while (right - left == substringSize || excessWord) {
+                    String leftmostWord = s.substring(left, left + wordLength);
+                    left += wordLength;
+                    wordsFound.put(leftmostWord, wordsFound.get(leftmostWord) - 1);
+                    
+                    if (wordsFound.get(leftmostWord) >= wordCount.get(leftmostWord)) {
+                        excessWord = false;
+                    } else {
+                        wordsUsed--;
+                    }
+                }
+                
+                wordsFound.put(sub, wordsFound.getOrDefault(sub, 0) + 1);
+                if (wordsFound.get(sub) <= wordCount.get(sub)) {
+                    wordsUsed++;
+                } else {
+                    excessWord = true;
+                }
+                
+                if (wordsUsed == k && !excessWord) {
+                    answer.add(left);
+                }
+            }
+        }
+    }
+}
+
+
 class Solution {
     public static List<Integer> findSubstring(String S, String[] L) {
     List<Integer> res = new ArrayList<Integer>();

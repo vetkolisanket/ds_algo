@@ -25,7 +25,7 @@ Constraints:
 s consists of only lowercase English letters.
 */
 
-//My soln
+//My soln TC O(n) SC O(1) since there can at most be 26 unique characters
 class Solution {
     public int firstUniqChar(String s) {
         Map<Character, Integer> map = new HashMap();
@@ -58,5 +58,25 @@ class Solution {
             }
         }
         return res == length ? -1 : res;
+    }
+}
+
+//Soln from 2nd attempt
+class Solution {
+    public int firstUniqChar(String s) {
+        TreeMap<Integer, Character> treeMap = new TreeMap();
+        Map<Character, Integer> map = new HashMap();
+        int len = s.length();
+        for (int i=0;i<len;i++) {
+            char c = s.charAt(i);
+            if (!map.containsKey(c)) {
+                treeMap.put(i, c);
+                map.put(c, i);
+            } else treeMap.remove(map.get(c));
+        }
+        for (Map.Entry<Integer, Character> entry: treeMap.entrySet()) {
+            return entry.getKey();
+        }
+        return -1;
     }
 }
