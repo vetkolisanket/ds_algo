@@ -57,6 +57,7 @@ class Solution {
     }
 }
 
+//TC O(n^2) SC O(1) where n is the length of the square matrix
 class Solution {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
