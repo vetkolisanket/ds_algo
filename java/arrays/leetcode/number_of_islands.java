@@ -35,6 +35,7 @@ n == grid[i].length
 grid[i][j] is '0' or '1'.
 */
 
+//TC O(m*n) SC O(m*n) where m,n are no. of rows, columns in matrix respectively
 class Solution {
     public int numIslands(char[][] grid) {
         int count = 0;
