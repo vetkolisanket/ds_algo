@@ -54,6 +54,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
  *     }
  * }
  */
+//Recursive soln TC O(N) SC O(N)
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new LinkedList();
@@ -70,7 +71,7 @@ class Solution {
     
 }
 
-//Iterative soln
+//Iterative soln TC O(N) SC O(N)
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new LinkedList();
