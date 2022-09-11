@@ -28,6 +28,7 @@ Constraints:
 0 <= prices[i] <= 1000
 */
 
+//TC O(nk) SC O(nk)
 class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
