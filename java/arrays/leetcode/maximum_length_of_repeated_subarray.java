@@ -1,0 +1,41 @@
+/*
+718. Maximum Length of Repeated Subarray
+
+Given two integer arrays nums1 and nums2, return the maximum length of a subarray that appears in both arrays.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
+Output: 3
+Explanation: The repeated subarray with maximum length is [3,2,1].
+Example 2:
+
+Input: nums1 = [0,0,0,0,0], nums2 = [0,0,0,0,0]
+Output: 5
+ 
+
+Constraints:
+
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 100
+
+*/
+
+//DP soln TC O(M*N) SC O(M*N) where M,N are the length of the arrays
+class Solution {
+    public int findLength(int[] A, int[] B) {
+        int ans = 0;
+        int[][] memo = new int[A.length + 1][B.length + 1];
+        for (int i = A.length - 1; i >= 0; --i) {
+            for (int j = B.length - 1; j >= 0; --j) {
+                if (A[i] == B[j]) {
+                    memo[i][j] = memo[i+1][j+1] + 1;
+                    if (ans < memo[i][j]) ans = memo[i][j];
+                }
+            }
+        }
+        return ans;
+    }
+}
