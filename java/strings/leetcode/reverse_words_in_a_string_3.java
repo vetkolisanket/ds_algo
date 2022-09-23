@@ -25,6 +25,24 @@ All the words in s are separated by a single space.
 
 */
 
+//My soln TC O(N) SC O(N)
+class Solution {
+    public String reverseWords(String s) {
+        String[] arr = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String str: arr) {
+            int index = sb.length();
+            for (char c: str.toCharArray()) {
+                sb.insert(index, c);
+            }
+            sb.append(" ");
+        }
+        sb.setLength(sb.length()-1);
+        return sb.toString();
+    }
+}
+
+//Another soln which takes O(N) time and O(1) space
 class Solution {
 
     public String reverseWords(String s) {
