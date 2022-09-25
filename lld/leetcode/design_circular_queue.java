@@ -88,6 +88,70 @@ class MyCircularQueue {
     }
 }
 
+//Another approach using user defined data type Node, following linked list approach
+
+class MyCircularQueue {
+    
+    class Node {
+        int val;
+        Node next;
+        
+        public Node(int val) {
+            this.val = val;
+        }
+    }
+    
+    private Node head, tail;
+    int capacity, count;
+
+    public MyCircularQueue(int k) {
+        capacity = k;
+        count = 0;
+    }
+    
+    public boolean enQueue(int value) {
+        if (count == capacity) return false;
+        Node node = new Node(value);
+        if (count == 0) {
+            head = tail = node;
+        } else {
+            tail.next = node;
+            tail = tail.next;
+        }
+        count++;
+        return true;
+    }
+    
+    public boolean deQueue() {
+        if (count == 0) return false;
+        if (count == 1) {
+            head = tail = null;
+        } else {
+            head = head.next;
+        }
+        count--;
+        return true;
+    }
+    
+    public int Front() {
+        if (head == null) return -1;
+        return head.val;
+    }
+    
+    public int Rear() {
+        if (tail == null) return -1;
+        return tail.val;
+    }
+    
+    public boolean isEmpty() {
+        return count == 0;
+    }
+    
+    public boolean isFull() {
+        return count == capacity;
+    }
+}
+
 /**
  * Your MyCircularQueue object will be instantiated and called as such:
  * MyCircularQueue obj = new MyCircularQueue(k);
