@@ -37,7 +37,69 @@ n == dominoes.length
 dominoes[i] is either 'L', 'R', or '.'.
 */
 
+//Faster soln TC O(N) SC O(N)
+class Solution {
+    public String pushDominoes(String dominoes) {
+        int n = dominoes.length();
+        int[] indexes = new int[n+2];
+        char[] symbols = new char[n+2];
+        indexes[0] = -1;
+        symbols[0] = 'L';
+        int len = 1;
+        for (int i=0;i<n;i++) {
+            if (dominoes.charAt(i) != '.') {
+                indexes[len] = i;
+                symbols[len++] = dominoes.charAt(i);
+            }
+        }
+        indexes[len] = n;
+        symbols[len] = 'R';
+        char[] arr = dominoes.toCharArray();
+        for (int i=0;i<len;i++) {
+            char x = symbols[i];
+            char y = symbols[i+1];
+            int left = indexes[i];
+            int right = indexes[i+1];
+            if (x == y) {
+                for (int j=left+1;j<right;j++) {
+                    arr[j] = x;
+                }
+            } else if (x > y) { //RL
+                for (int j=left+1;j<right;j++) {
+                    arr[j] = right-j == j-left ? '.' : right-j > j-left ? 'R' : 'L';
+                }
+            }
+        }
+        return new String(arr);
+    }
+}
 
+//Another interesting approach using forces from both sides on the current domino TC O(N) SC O(N)
+class Solution {
+    public String pushDominoes(String dominoes) {
+        int n = dominoes.length();
+        int[] forces = new int[n];
+        int force = 0;
+        for (int i=0;i<n;i++) {
+            if (dominoes.charAt(i) == 'R') force = n;
+            else if (dominoes.charAt(i) == 'L') force = 0;
+            else force = Math.max(force-1, 0);
+            forces[i] = force;
+        }
+        force = 0;
+        for (int i=n-1;i>=0;i--) {
+            if (dominoes.charAt(i) == 'L') force = n;
+            else if (dominoes.charAt(i) == 'R') force = 0;
+            else force = Math.max(force-1, 0);
+            forces[i] -= force;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<n;i++) {
+            sb.append(forces[i] == 0 ? '.' : forces[i] > 0 ? 'R' : 'L');
+        }
+        return sb.toString();
+    }
+}
 
 //My soln TC O(N^2) SC O(N)
 class Solution {
