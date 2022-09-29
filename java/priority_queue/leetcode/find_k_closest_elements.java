@@ -27,7 +27,24 @@ arr is sorted in ascending order.
 -10^4 <= arr[i], x <= 10^4
 */
 
-
+//A faster soln using modified version of binary search
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int left = 0, right = arr.length-k;
+        while (left < right) {
+            int mid = left + (right-left)/2;
+            if (x-arr[mid] > arr[mid+k] - x) {
+                left = mid+1;
+            } else right = mid;
+        }
+        
+        List<Integer> ans = new ArrayList();
+        for (int i=0;i<k;i++) {
+            ans.add(arr[left+i]);
+        }
+        return ans;
+    }
+}
 
 //My soln using priority queue TC O(N + klog(N)) SC O(N)
 class Solution {
