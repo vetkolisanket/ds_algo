@@ -49,6 +49,27 @@ Constraints:
 s contains only digits and may contain leading zero(s).
 */
 
+//DP soln using TC O(n) SC O(1)
+class Solution {
+    public int numDecodings(String s) {
+        if (s.charAt(0) == '0') return 0;
+        int n = s.length();
+        int oneBack = 1, twoBack = 1;
+        for (int i=1;i<n;i++) {
+            int current = 0;
+            if (s.charAt(i) != '0') current += oneBack;
+            int val = Integer.valueOf(s.substring(i-1, i+1));
+            if (val >= 10 && val <= 26) {
+                current += twoBack;
+            }
+            twoBack = oneBack;
+            oneBack = current;
+        }
+        return oneBack;
+    }
+}
+
+//DP soln using TC O(n) SC O(n)
 class Solution {
     public int numDecodings(String s) {
         int n = s.length();
