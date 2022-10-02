@@ -82,3 +82,34 @@ class Solution {
         return set.areConnected(source, destination);
     }
 }
+
+//Using DFS TC O(V+E) SC O(V)
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        HashSet<Integer>[] graph = new HashSet[n];
+        for (int i=0;i<n;i++) {
+            graph[i] = new HashSet<Integer>();
+        }
+        for (int[] edge: edges) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        if (graph[source].contains(destination)) return true;
+        boolean[] visited = new boolean[n];
+        return dfs(graph, visited, source, destination);
+    }
+    
+    private boolean dfs(HashSet<Integer>[] graph, boolean[] visited, int source, int destination) {
+        if (source == destination) return true;
+        boolean seen = false;
+        visited[source] = true;
+        for (int node: graph[source]) {
+            if (!visited[node]) {
+                seen |= dfs(graph, visited, node, destination);
+                if (seen) break;
+            }
+        }
+        return seen;
+    }
+}
+
