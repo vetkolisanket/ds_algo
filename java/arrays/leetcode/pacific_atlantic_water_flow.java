@@ -101,3 +101,97 @@ class Solution {
         return reachable;
     }
 }
+
+//My soln using DFS on second attempt TC O(m*n) SC O(m*n)
+class Solution {
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        Set<Pair<Integer, Integer>> atlantic = new HashSet();
+        Set<Pair<Integer, Integer>> pacific = new HashSet();
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] dirs = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+        boolean[][] visited = new boolean[m][n];
+        for (int i=0;i<m;i++) {
+            for (int j=0;j<n;j++) {
+                if (i == 0 || j == 0) {
+                    pacific.add(new Pair(i, j));
+                    dfs(i, j, pacific, dirs, heights, visited);
+                }
+                if (i == m-1 || j == n-1) {
+                    atlantic.add(new Pair(i, j));
+                    dfs(i, j, atlantic, dirs, heights, visited);
+                }
+            }
+        }
+        List<List<Integer>> list = new ArrayList();
+        for (Pair<Integer, Integer> pair: pacific) {
+            if (atlantic.contains(pair)) {
+                List<Integer> temp = new ArrayList();
+                temp.add(pair.getKey());
+                temp.add(pair.getValue());
+                list.add(temp);
+            }
+        }
+        return list;
+    }
+    
+    private void dfs(int row, int col, Set<Pair<Integer, Integer>> set, int[][] dirs, int[][] heights, boolean[][] visited) {
+        visited[row][col] = true;
+        for (int[] dir: dirs) {
+            int newRow = row+dir[0];
+            int newCol = col+dir[1];
+            if (newRow >= 0 && newRow < heights.length && newCol >= 0 && newCol < heights[0].length && !visited[newRow][newCol] && heights[newRow][newCol] >= heights[row][col]) {
+                if (set.add(new Pair(newRow, newCol))) {
+                    dfs(newRow, newCol, set, dirs, heights, visited);
+                }
+            }
+        }
+        visited[row][col] = false;
+    }
+}
+
+//Slightly cleaner DFS same complexity as above TC O(m*n) SC O(m*n)
+class Solution {
+    
+    private static final int[][] dirs = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+    private int rows, cols;
+    
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        rows = heights.length;
+        cols = heights[0].length;
+        boolean[][] pacificReachable = new boolean[rows][cols];
+        boolean[][] atlanticReachable = new boolean[rows][cols];
+        for (int i=0;i<rows;i++) {
+            dfs(i, 0, pacificReachable, heights);
+            dfs(i, cols-1, atlanticReachable, heights);
+        }
+        for (int i=0;i<cols;i++) {
+            dfs(0, i, pacificReachable, heights);
+            dfs(rows-1, i, atlanticReachable, heights);
+        }
+        List<List<Integer>> list = new ArrayList();
+        for (int i=0;i<rows;i++) {
+            for (int j=0;j<cols;j++) {
+                if (pacificReachable[i][j] && atlanticReachable[i][j]) {
+                    list.add(List.of(i, j));
+                }
+            }
+        }
+        return list;
+    }
+    
+    private void dfs(int row, int col, boolean[][] reachable, int[][] heights) {
+        reachable[row][col] = true;
+        for (int[] dir: dirs) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            
+            if (newRow == -1 || newRow == rows || newCol == -1 || newCol == cols) {
+                continue;
+            }
+            if (reachable[newRow][newCol]) continue;
+            if (heights[newRow][newCol] < heights[row][col]) continue;
+            dfs(newRow, newCol, reachable, heights);
+        }
+    }
+}

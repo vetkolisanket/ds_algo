@@ -33,6 +33,32 @@ properties[i].length == 2
 1 <= attacki, defensei <= 10^5
 */
 
+//Greedy soln TC O(N+K) SC O(K) where N is the no. of characters and K is the maxAttack value
+class Solution {
+    public int numberOfWeakCharacters(int[][] properties) {
+        int maxAttack = 0;
+        for (int[] property: properties) {
+            maxAttack = Math.max(maxAttack, property[0]);
+        }
+        int[] maxDefense = new int[maxAttack+2];
+        for (int[] property: properties) {
+            int attack = property[0];
+            int defense = property[1];
+            maxDefense[attack] = Math.max(maxDefense[attack], defense);
+        }
+        for (int i=maxDefense.length-2;i>=0;i--) {
+            maxDefense[i] = Math.max(maxDefense[i], maxDefense[i+1]);
+        }
+        int numWeakCharacters = 0;
+        for (int[] property: properties) {
+            int attack = property[0];
+            int defense = property[1];
+            if (defense < maxDefense[attack+1]) numWeakCharacters++;
+        }
+        return numWeakCharacters;
+    }
+}
+
 //Soln using sorting TC O(Nlog(N)) SC O(log(N))
 class Solution {
     public int numberOfWeakCharacters(int[][] properties) {
