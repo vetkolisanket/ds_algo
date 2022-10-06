@@ -61,3 +61,22 @@ class Solution {
         return ans;
     }
 }
+
+//Same soln with simplified if else block
+class Solution {
+    public int bagOfTokensScore(int[] tokens, int power) {
+        Arrays.sort(tokens);
+        int score = 0, start = 0, end = tokens.length-1, maxScore = 0;
+        while (start <= end) {
+            if (power >= tokens[start]) {
+                score++;
+                power -= tokens[start++];
+                maxScore = Math.max(maxScore, score);
+            } else if (score > 0) {
+                score--;
+                power += tokens[end--];
+            } else break;
+        }
+        return maxScore;
+    }
+}
