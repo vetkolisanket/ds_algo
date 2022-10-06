@@ -25,10 +25,12 @@ class UnionFind {
     }
 
     public int find(int x){
-        while (arr[x] != x) {
-            x = arr[x];
+        int u = x;
+        while (arr[u] != u) {
+            u = arr[u];
         }
-        return x;
+        arr[x] = u;
+        return u;
     }
 
     public boolean connected(int x, int y) {
