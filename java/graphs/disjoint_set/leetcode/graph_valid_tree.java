@@ -75,3 +75,33 @@ class Solution {
         return set.count == 1;
     }
 }
+
+//Iterative DFS TC O(V+E) SC O(V+E)
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        List<List<Integer>> adjList = new ArrayList();
+        for (int i=0;i<n;i++) {
+            adjList.add(new ArrayList());
+        }
+        for (int[] edge: edges) {
+            adjList.get(edge[0]).add(edge[1]);
+            adjList.get(edge[1]).add(edge[0]);
+        }
+        Set<Integer> seen = new HashSet();
+        Stack<Integer> stack = new Stack();
+        Map<Integer, Integer> parent = new HashMap();
+        stack.push(0);
+        parent.put(0, -1);
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            seen.add(node);
+            for (int neighbour: adjList.get(node)) {
+                if (parent.get(node) == neighbour) continue;
+                if (parent.containsKey(neighbour)) return false;
+                stack.push(neighbour);
+                parent.put(neighbour, node);
+            }
+        }
+        return seen.size() == n;
+    }
+}
