@@ -30,6 +30,60 @@ There are no self-loops or repeated edges.
 */
 
 
+//Slightly faster union find/disjoint set soln using advanced graph theory logic, that if a graph is a valid tree, it will have exactly n-1 edges and 
+//all of the edges will connect two unconnected components
+class Solution {
+    
+    class DisjointSet {
+        
+        int root[], rank[], count;
+        
+        public DisjointSet(int n) {
+            count = n;
+            rank = new int[n];
+            root = new int[n];
+            for (int i=0;i<n;i++) {
+                rank[i] = 1;
+                root[i] = i;
+            }
+        }
+        
+        public int find(int x) {
+            if (x == root[x]) return x;
+            return root[x] = find(root[x]);
+        }
+        
+        public boolean connected(int x, int y) {
+            return find(x) == find(y);
+        }
+        
+        public boolean union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            if (rootX == rootY) return false;
+            if (rank[rootX] > rank[rootY]) {
+                root[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                root[rootX] = rootY;
+            } else {
+                root[rootY] = rootX;
+                rank[rootX]++;
+            }
+            return true;
+        }
+        
+    }
+    
+    public boolean validTree(int n, int[][] edges) {
+        if (edges.length != n-1) return false;
+        DisjointSet set = new DisjointSet(n);
+        for (int[] edge: edges) {
+            if (!set.union(edge[0], edge[1])) return false;
+        }
+        return true;
+    }
+}
+
 //Using disjoint set quick find TC O(EV) SC = O(V) where E is the no. of edges and V is the no. of vertices in the graph
 class Solution {
     
