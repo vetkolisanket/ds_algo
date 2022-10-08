@@ -19,6 +19,14 @@ Constraints:
 -10^4 <= target <= 10^4
 */
 
+/*
+For an interview, we recommend focusing on the Two Pointers approach above. It's easier to get it right and adapt for other variations of 3Sum. 
+Interviewers love asking follow-up problems like 3Sum Smaller!
+If an interviewer asks you whether you can achieve O(1) memory complexity, you can use the selection sort instead of a built-in sort in the Two 
+Pointers approach. It will make it a bit slower, though the overall time complexity will be still O(n^2).
+*/
+
+//TC O(n^2) SC O(log(n)) to O(n) depending on the sorting algo used underneath Arrays.sort() which is usually a variation of quick sort
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
