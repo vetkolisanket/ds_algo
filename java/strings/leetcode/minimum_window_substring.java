@@ -38,6 +38,41 @@ s and t consist of uppercase and lowercase English letters.
 Follow up: Could you find an algorithm that runs in O(m + n) time?
 */
 
+//Soln from another attempt from PotD TC O(m+n) SC O(m+n)
+class Solution {
+    public String minWindow(String s, String t) {
+        int m = s.length(), n = t.length();
+        int count = 0, min = m+1, start = 0, end = 0;
+        String ans = "";
+        Map<Character, Integer> map = new HashMap();
+        for (char c: t.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        while (end < m) {
+            char c = s.charAt(end);
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) - 1);
+                if (map.get(c) >= 0) count++;
+                while (count == n) {
+                    if (end - start < min) {
+                        min = end - start;
+                        ans = s.substring(start, end+1);
+                    }
+                    char startChar = s.charAt(start);
+                    if (map.containsKey(startChar)) {
+                        map.put(startChar, map.get(startChar) + 1);
+                        if (map.get(startChar) > 0) count--;
+                    }
+                    start++;
+                }
+            }
+            end++;
+        }
+        return ans;
+    }
+}
+
+
 //Another O(m+n) soln which is faster
 class Solution {
     public String minWindow(String s, String t) {
