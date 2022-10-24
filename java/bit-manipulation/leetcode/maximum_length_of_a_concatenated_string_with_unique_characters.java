@@ -40,6 +40,48 @@ Constraints:
 arr[i] contains only lowercase English letters.
 */
 
+//A more efficient soln with better space complexity TC O(2^N) SC O(N)
+class Solution {
+    public int maxLength(List<String> arr) {
+        Set<Integer> optSet = new HashSet();
+        for (String word: arr) {
+            addToSet(word, optSet);
+        }
+        int[] optArr = new int[optSet.size()];
+        int i = 0;
+        for (int num: optSet) {
+            optArr[i++] = num;
+        }
+        
+        return dfs(optArr, 0, 0);
+    }
+    
+    private void addToSet(String word, Set<Integer> set) {
+        int charBitSet = 0;
+        for (char c: word.toCharArray()) {
+            int mask = 1 << c - 'a';
+            if ((charBitSet & mask) != 0) return;
+            charBitSet += mask;
+        }
+        set.add((word.length() << 26) + charBitSet);
+    }
+    
+    private int dfs(int[] optArr, int pos, int res) {
+        int oldBitSet = (res) & ((1 << 26) - 1);
+        int oldLen = res >> 26;
+        int best = oldLen;
+        for (int i=pos;i<optArr.length;i++) {
+            int charBitSet = optArr[i];
+            int newLen = (charBitSet >> 26) + oldLen;
+            int newBitSet = charBitSet & ((1 << 26) - 1);
+            if ((newBitSet & oldBitSet) != 0) continue;
+            int newRes = (newLen << 26) + (newBitSet + oldBitSet);
+            best = Math.max(best, dfs(optArr, i+1, newRes));
+        }
+        return best;
+    }
+}
+
 //Soln using bit manipulation TC O(2^N) SC O(2^min(N,K)) where N is the no. of strings and K is the no. of unique characters that appear in arr
 class Solution {
     public int maxLength(List<String> arr) {
