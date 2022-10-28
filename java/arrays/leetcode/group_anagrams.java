@@ -28,6 +28,7 @@ Constraints:
 strs[i] consists of lowercase English letters.
 */
 
+//My soln TC O(NK) SC O(NK) where N is the no. of strings and K is the length of the largest string
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> res = new ArrayList();
