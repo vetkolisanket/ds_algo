@@ -76,3 +76,23 @@ class Solution {
         }
     }
 }
+
+//A more space efficient soln TC O(M*N) SC O(1)
+class Solution {
+    public int[] findBall(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length, arr[] = new int[cols];
+        for (int col=0;col<cols;col++) {
+            int curCol = col;
+            for (int row=0;row<rows;row++) {
+                int nextCol = curCol + grid[row][curCol];
+                if (nextCol < 0 || nextCol == cols || grid[row][curCol] != grid[row][nextCol]) {
+                    arr[col] = -1;
+                    break;
+                }
+                arr[col] = nextCol;
+                curCol = nextCol;
+            }
+        }
+        return arr;
+    }
+}
