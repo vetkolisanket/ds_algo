@@ -96,3 +96,26 @@ class Solution {
         return arr;
     }
 }
+
+//Simpler DFS approach TC O(M*N) SC O(M)
+class Solution {
+    public int[] findBall(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int[] arr = new int[cols];
+        for (int i=0;i<cols;i++) {
+            arr[i] = getEndCol(grid, 0, i);
+        }
+        return arr;
+    }
+    
+    private int getEndCol(int[][] grid, int row, int col) {
+        if (row == grid.length) {
+            return col;
+        }
+        int nextCol = col + grid[row][col];
+        if (nextCol < 0 || nextCol == grid[0].length || grid[row][col] != grid[row][nextCol]) {
+            return -1;
+        }
+        return getEndCol(grid, row+1, nextCol);
+    }
+}
