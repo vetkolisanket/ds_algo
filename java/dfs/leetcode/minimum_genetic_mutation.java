@@ -74,3 +74,37 @@ class Solution {
         return ans;
     }
 }
+
+//Using BFS TC O(N) SC O(1), given string length and no. of unique chars are fixed
+class Solution {
+    public int minMutation(String start, String end, String[] bank) {
+        List<String> bankList = Arrays.asList(bank);
+        if (!bankList.contains(end)) return -1;
+        int steps = 0;
+        Queue<String> queue = new ArrayDeque();
+        Set<String> seen = new HashSet();
+        queue.offer(start);
+        seen.add(start);
+        char[] chars = new char[]{'A', 'C', 'G', 'T'};
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                String cur = queue.poll();
+                if (cur.equals(end)) {
+                    return steps;
+                }
+                for (char c: chars) {
+                    for (int i=0;i<8;i++) {
+                        String s = cur.substring(0, i) + c + cur.substring(i+1, 8);
+                        if (!seen.contains(s) && bankList.contains(s)) {
+                            seen.add(s);
+                            queue.offer(s);
+                        }
+                    }
+                }
+            }
+            steps++;
+        }
+        return -1;
+    }
+}
