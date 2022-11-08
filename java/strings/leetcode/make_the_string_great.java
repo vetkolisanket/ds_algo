@@ -40,6 +40,30 @@ s contains only lower and upper case English letters.
 
 */
 
+//Soln using stack TC O(N) SC O(N)
+class Solution {
+    public String makeGood(String s) {
+        Stack<Character> stack = new Stack();
+        for (int i=0;i<s.length();++i) {
+            if (stack.isEmpty()) {
+                stack.push(s.charAt(i));
+            } else {
+                char c = s.charAt(i);
+                if (Math.abs(c - stack.peek()) == 32) {
+                    stack.pop();
+                } else {
+                    stack.push(c);
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c: stack) {
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+}
+
 //My soln using recursion TC O(N^2) SC O(N^2)
 class Solution {
     public String makeGood(String s) {
