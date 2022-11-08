@@ -62,3 +62,25 @@ class Solution {
         return sb.toString();
     }
 }
+
+//Iterative soln TC O(N^2) SC O(N)
+class Solution {
+    public String makeGood(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 1) {
+            boolean isBad = false;
+            for (int i=0;i<sb.length()-1;++i) {
+                if (Math.abs(sb.charAt(i) - sb.charAt(i+1)) == 32) {
+                    isBad = true;
+                    sb.deleteCharAt(i);
+                    sb.deleteCharAt(i);
+                    break;
+                }
+            }
+            if (!isBad) {
+                break;
+            }
+        }
+        return sb.toString();
+    }
+}
