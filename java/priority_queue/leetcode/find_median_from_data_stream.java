@@ -42,6 +42,54 @@ If all integer numbers from the stream are in the range [0, 100], how would you 
 If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
 */
 
+//A slightly faster soln TC O(log(N)) SC O(N)
+class MedianFinder {
+    
+    PriorityQueue<Integer> minHeap, maxHeap;
+
+    public MedianFinder() {
+        minHeap = new PriorityQueue();
+        maxHeap = new PriorityQueue<>((a, b) -> b - a);
+    }
+    
+    public void addNum(int num) {
+        int size1 = maxHeap.size(), size2 = minHeap.size();
+        if (size1 == 0 && size2 == 0) {
+            maxHeap.offer(num);
+            return;
+        }
+        if (size1 == size2) {
+            int num2 = minHeap.peek();
+            if (num > num2) {
+                maxHeap.offer(minHeap.poll());
+                minHeap.offer(num);
+            } else {
+                maxHeap.offer(num);
+            }
+        } else {
+            int num1 = maxHeap.peek();
+            if (num < num1) {
+                minHeap.offer(maxHeap.poll());
+                maxHeap.offer(num);
+            } else {
+                minHeap.offer(num);
+            }
+        }
+    }
+    
+    public double findMedian() {
+        int size1 = maxHeap.size(), size2 = minHeap.size();
+        if (size1 > size2) {
+            return (double) maxHeap.peek();
+        }
+        int num1 = maxHeap.peek();
+        int num2 = minHeap.peek();
+        return (num1 + num2)/((double)2);
+    }
+}
+
+//Another soln
+
 class MedianFinder {
 
     PriorityQueue<Integer> minHeap;
