@@ -88,6 +88,34 @@ class MedianFinder {
     }
 }
 
+//A slightly slower but more readable soln
+class MedianFinder {
+    
+    PriorityQueue<Integer> hi, lo;
+
+    public MedianFinder() {
+        lo = new PriorityQueue();
+        hi = new PriorityQueue<>((a, b) -> b - a);
+    }
+    
+    public void addNum(int num) {
+        lo.offer(num);
+        hi.offer(lo.poll());
+        if (hi.size() > lo.size()) {
+            lo.offer(hi.poll());
+        }
+    }
+    
+    public double findMedian() {
+        int size1 = lo.size();
+        int size2 = hi.size();
+        if (size1 == size2) {
+            return (lo.peek() + hi.peek()) * 0.5;
+        }
+        return lo.peek();
+    }
+}
+
 //Another soln
 
 class MedianFinder {
