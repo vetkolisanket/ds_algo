@@ -37,6 +37,33 @@ There is at least one word in s.
 Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
 */
 
+//Soln using arraylist to store words and add them in reverse order to get the result TC O(N) SC O(N)
+class Solution {
+    public String reverseWords(String s) {
+        StringBuilder sb = new StringBuilder();
+        List<String> list = new ArrayList();
+        for (char c: s.toCharArray()) {
+            if (c != ' ') {
+                sb.append(c);
+            } else if (sb.length() > 0) {
+                list.add(sb.toString());
+                sb.setLength(0);
+            }
+        }
+        if (sb.length() > 0) {
+            list.add(sb.toString());
+            sb.setLength(0);
+        }
+        for (int i=list.size()-1;i>=0;i--) {
+            sb.append(list.get(i)).append(" ");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length()-1);
+        }
+        return sb.toString();
+    }
+}
+
 //A more interview appropriate soln which is also faster
 class Solution {
     public String reverseWords(String s) {
