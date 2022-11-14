@@ -6,7 +6,8 @@ import java.util.Map;
 public class CachingLibrary {
 
     /**
-     * Let's design a caching library which should be able to cache data following different caching strategies and also should allow users to implement their own custom caching strategy, The caching library can be used on any kind of storage for e.g in memory, db, shared pref or anything
+     * Let's design a caching library which should be able to cache data following different caching strategies and also should allow users to 
+     implement their own custom caching strategy, The caching library can be used on any kind of storage for e.g in memory, db, shared pref or anything
      **/
 
     interface CacheableKey {
