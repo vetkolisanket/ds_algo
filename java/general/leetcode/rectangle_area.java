@@ -29,6 +29,29 @@ Constraints:
 
 */
 
+//A simpler and more readable soln
+class Solution {
+    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int areaOfA = (ax2 - ax1) * (ay2 - ay1);
+        int areaOfB = (bx2 - bx1) * (by2 - by1);
+        
+        int overlap = 0;
+        
+        int left = Math.max(ax1, bx1);
+        int right = Math.min(ax2, bx2);
+        int length = right - left;
+        
+        int bottom = Math.max(ay1, by1);
+        int top = Math.min(ay2, by2);
+        int breadth = top - bottom;
+        
+        if (length > 0 && breadth > 0) {
+            overlap = length * breadth;
+        }
+        return areaOfA + areaOfB - overlap;
+    }
+}
+
 //My soln TC O(1) SC O(1)
 class Solution {
     public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
