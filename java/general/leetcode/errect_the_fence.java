@@ -29,6 +29,35 @@ points[i].length == 2
 All the given points are unique.
 */
 
+//Using monotone chaning TC O(nlog(n)) SC O(n)
+class Solution {
+    public int[][] outerTrees(int[][] trees) {
+        Arrays.sort(trees, (a, b) -> {
+            return a[0] == b[0] ? a[1] - b[1] : a[0] - b[0];
+        });
+        Stack<int[]> hull = new Stack();
+        for (int i = 0; i < trees.length; i++) {
+            while (hull.size() >= 2 && orientation(hull.get(hull.size() - 2), hull.get(hull.size() - 1), trees[i]) > 0) {
+                hull.pop();
+            }
+            hull.push(trees[i]);
+        }
+        hull.pop();
+        for (int i=trees.length-1;i>=0;i--) {
+            while (hull.size() >= 2 && orientation(hull.get(hull.size() - 2), hull.get(hull.size() - 1), trees[i]) > 0) {
+                hull.pop();
+            }
+            hull.push(trees[i]);
+        }
+        Set<int[]> set = new HashSet(hull);
+        return set.toArray(new int[set.size()][]);
+    }
+    
+    private int orientation(int[] p, int[] q, int[] r) {
+        return (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
+    }
+}
+
 //Soln using Graham Scan TC O(nlog(n)) SC O(n)
 class Solution {
     public int[][] outerTrees(int[][] points) {
