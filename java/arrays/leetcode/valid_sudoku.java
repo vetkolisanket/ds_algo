@@ -135,3 +135,25 @@ class Solution {
         return i/3 + (j/3)*3;
     }
 }
+
+//My soln from another attempt TC O(N^2) SC O(N^2) where N is the no. of rows/cols in the matrix which is 9 in this case
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        boolean[][] rows = new boolean[9][9];
+        boolean[][] cols = new boolean[9][9];
+        boolean[][] boxes = new boolean[9][9];
+        for (int i=0;i<9;i++) {
+            for (int j=0;j<9;j++) {
+                char ch = board[i][j];
+                if (ch == '.') continue;
+                int val = ch - '1';
+                int boxRow = (i/3)*3+j/3;
+                if (rows[i][val] || cols[j][val] || boxes[boxRow][val]) return false;
+                rows[i][val] = true;
+                cols[j][val] = true;
+                boxes[boxRow][val] = true;
+            }
+        }
+        return true;
+    }
+}
