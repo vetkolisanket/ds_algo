@@ -36,6 +36,8 @@ board and word consists of only lowercase and uppercase English letters.
 Follow up: Could you use search pruning to make your solution faster with a larger board?
 */
 
+//Soln using backtracking TC O(N*3^L) SC O(L) where N is the no. of cells in the board, L is the length of the word. It is 3^L instead of 4^L because 
+//after the first cell, all cells will have 3 options to travel to as they would have come to the current cell via some parent cell
 class Solution {
     public boolean exist(char[][] board, String word) {
         if (board.length == 0) return false;
