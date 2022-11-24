@@ -49,6 +49,30 @@ board[i].length == 9
 board[i][j] is a digit 1-9 or '.'.
 */
 
+//Better space complexity soln using bitwise manipulation to store a rows info
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int n = board.length;
+        int[] rows = new int[n];
+        int[] cols = new int[n];
+        int[] boxes = new int[n];
+        for (int i=0;i<n;i++) {
+            for (int j=0;j<n;j++) {
+                char ch = board[i][j];
+                if (ch == '.') continue;
+                int val = 1 << (ch - '1');
+                if ((rows[i] & val) != 0) return false;
+                if ((cols[j] & val) != 0) return false;
+                if ((boxes[(i/3)*3+j/3] & val) != 0) return false;
+                rows[i] |= val;
+                cols[j] |= val;
+                boxes[(i/3)*3+j/3] |= val;
+            }
+        }
+        return true;
+    }
+}
+
 //Faster soln
 class Solution {
     public boolean isValidSudoku(char[][] board) {
@@ -133,5 +157,27 @@ class Solution {
     
     private int getGridNo(int i, int j) {
         return i/3 + (j/3)*3;
+    }
+}
+
+//My soln from another attempt TC O(N^2) SC O(N^2) where N is the no. of rows/cols in the matrix which is 9 in this case
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        boolean[][] rows = new boolean[9][9];
+        boolean[][] cols = new boolean[9][9];
+        boolean[][] boxes = new boolean[9][9];
+        for (int i=0;i<9;i++) {
+            for (int j=0;j<9;j++) {
+                char ch = board[i][j];
+                if (ch == '.') continue;
+                int val = ch - '1';
+                int boxRow = (i/3)*3+j/3;
+                if (rows[i][val] || cols[j][val] || boxes[boxRow][val]) return false;
+                rows[i][val] = true;
+                cols[j][val] = true;
+                boxes[boxRow][val] = true;
+            }
+        }
+        return true;
     }
 }
