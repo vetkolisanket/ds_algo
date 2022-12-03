@@ -33,6 +33,33 @@ Constraints:
 s consists of uppercase and lowercase English letters and digits.
 */
 
+//Soln using multi set and bucket sort TC O(n) SC O(n)
+class Solution {
+    public String frequencySort(String s) {
+        Map<Character, Integer> map = new HashMap();
+        for (char c: s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        int max = Collections.max(map.values());
+        List<Character>[] buckets = new ArrayList[max+1];
+        for (int i=0;i<=max;i++) {
+            buckets[i] = new ArrayList();
+        }
+        for (Map.Entry<Character, Integer> entry: map.entrySet()) {
+            buckets[entry.getValue()].add(entry.getKey());
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=max;i>0;i--) {
+            for (char c: buckets[i]) {
+                for (int j=0;j<i;j++) {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
+
 //My soln using hash map and list TC O(n + klogk) SC O(n) where n is the length of the string k is the no. of unique characters in the string
 class Solution {
     
