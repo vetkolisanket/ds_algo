@@ -41,7 +41,7 @@ Constraints:
 0 <= nums[i] <= 10^5
 */
 
-//My soln using prefix sum
+//My soln using prefix sum TC O(N) SC O(N)
 class Solution {
     public int minimumAverageDifference(int[] nums) {
         int n = nums.length;
@@ -57,6 +57,31 @@ class Solution {
             long rightSum = pSum[n-1] - pSum[i];
             long leftAvg = leftSum/(i+1);
             long rightAvg = (rightSum == 0 ? rightSum : rightSum/(n-i-1));
+            long avg = Math.abs(leftAvg - rightAvg);
+            if (avg < minAvg) {
+                minAvg = avg;
+                ans = i;
+            }
+        }
+        return ans;
+    }
+}
+
+//More memory efficient soln TC O(N) SC O(1)
+class Solution {
+    public int minimumAverageDifference(int[] nums) {
+        int n = nums.length;
+        long sum = 0;
+        for (int i=0;i<n;i++) {
+            sum += nums[i];
+        }
+        long leftSum = 0, minAvg = Long.MAX_VALUE;
+        int ans = -1;
+        for (int i=0;i<n;i++) {
+            leftSum += nums[i];
+            long rightSum = sum - leftSum;
+            long leftAvg = leftSum/(i+1);
+            long rightAvg = rightSum == 0 ? 0 : rightSum/(n-i-1);
             long avg = Math.abs(leftAvg - rightAvg);
             if (avg < minAvg) {
                 minAvg = avg;
