@@ -25,8 +25,8 @@
 - **No** - More focus on functional requirements/features than on non-functional requirements.
 
 2. What is the lowest OS version we want to support?
-Most standard third-party libraries latest versions support Android 21 and above
-TODO: List down points for this question
+- Most standard third-party libraries latest versions support Android 21 and above
+- TODO: List down points for this question
 
 3. What number of users do we expect?
 
