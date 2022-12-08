@@ -57,7 +57,16 @@
 
 ### Client-side components
 * **API Service** - Abstracts client-server communication from the rest of the system.
+  - Responsible for calling getFeeds() and getFeed() (details) function. Most probably will contain retrofit and okhttp components
 * **Persistence** - Single source of truth. The data your system receives from the API service gets persisted on the disk first and then propogated to other components
+  - Will get data from repository to save in db and pass back to be displayed on UI. Will contain saveFeeds(), saveFeedDetails(), getFeeds() and getFeedDetails() functions
 * **Repository** - A mediator between API service and persistence.
+  - Will get requests from viewmodels to get data. Depending on the network state will get data from API service, pass it to be saved in persistence or get saved data from persistence
 * **Tweet feed flow** - Component responsible for displaying infinite list of tweets
+  - Will consist of TweetFeedsActivity/Fragment and TweetFeedsViewModel. The activity/fragment will render a list of tweets and request the viewmodel to get paginated feeds and to go to TweetDetails flow on click of a particular feed. The TweetFeedsViewModel will get requests from activity/fragment and get data to fulfill the requests from repository and notify the activity/fragment on fetching the data
 * **Tweet detail flow** - Component responsible for displaying a single tweets details
+  - Will consist of TweetFeedDetailsActivity (UI) and TweetFeedDetailsViewModel. The UI will request the viewmodel to get details of a tweet and render it on receving the data. The ViewModel will get the data from repository and notify the UI via livedata
+  
+### Deep Dive
+#### Tweet Feed Flow
+  - **Architecture Pattern** - MVVM would be preferrable because of its benefits like loose coupling between View and ViewModel and ViewModel surviving configuration change and being lifecycle aware. MVP can also be used for its simplicity.
