@@ -21,20 +21,24 @@
 ## Clarifying questions
 1. Do we need to support emerging markets?
 
-- **Yes** - The app should be as small as possible. [For every 6 Mb increase in app size, we lose 1% users during installation](https://medium.com/googleplaydev/shrinking-apks-growing-installs-5d3fcba23ce2). The app should be optimized for low-end devices and slower network. The app should limit the number and frequency of network requests and rely heavily on caching. There should be higher focus on making the app offline first.
+- **Yes** - The app should be as small as possible. [For every 6 Mb increase in app size, we lose 1% users during installation](https://medium.com/googleplaydev/shrinking-apks-growing-installs-5d3fcba23ce2). The app should be optimized for low-end devices and slower network. The app should limit the number and frequency of network requests and rely heavily on caching. There should be higher focus on making the app offline first. We would also have to think of supporting lower OS versions of android
 - **No** - More focus on functional requirements/features than on non-functional requirements.
 
-2. What number of users do we expect?
+2. What is the lowest OS version we want to support?
+- Most standard third-party libraries latest versions support Android 21 and above
+- TODO: List down points for this question
+
+3. What number of users do we expect?
 
 - **A few hundred users** - Lesser focus on limiting the number and frequency of network requests.
 - **Million users** - Should use caching wherever possible/applicable. Discuss exponential back-off and API rate limiting.
 
-3. Is the user group controlled or anyone can install and use the app?
+4. Is the user group controlled or anyone can install and use the app?
 
 - **User group controlled** - Lesser focus on making the app backward compatible, can discuss how to implement force upgrade.
 - **Anyone can install the app** - Think of backward compatibility and keeping features configurable via backend or remote config. A/B experimenting new features, staged rollout etc.
 
-4. How big is the engineering team?
+5. How big is the engineering team?
 
 - **Small (2-4) people** - Lesser focus on breaking the app into modules
 - **Big (20-100) people** - Should describe breaking down features/layers into modules so that different teams can work independently on different modules. In case of twitter we can discuss breaking down app into app, feeds, network/communication, config, logger modules.
@@ -52,3 +56,8 @@
 * **CDN (Content Delivery Network)** - Responsible for delivering static content to clients. For this example it can be images
 
 ### Client-side components
+* **API Service** - Abstracts client-server communication from the rest of the system.
+* **Persistence** - Single source of truth. The data your system receives from the API service gets persisted on the disk first and then propogated to other components
+* **Repository** - A mediator between API service and persistence.
+* **Tweet feed flow** - Component responsible for displaying infinite list of tweets
+* **Tweet detail flow** - Component responsible for displaying a single tweets details

@@ -110,3 +110,97 @@ class Solution {
         return findMaxProfit(jobs, startTime, length, 0);
     }
 }
+
+//My soln from another attempt when i was not able to solve on my own and had to revisit the soln TC O(Nlog(N)) SC O(N)
+class Solution {
+
+    Integer[] memo;
+
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n = startTime.length;
+        memo = new Integer[n];
+        int[][] jobs = new int[n][3];
+        for (int i=0;i<n;i++) {
+            jobs[i][0] = startTime[i];
+            jobs[i][1] = endTime[i];
+            jobs[i][2] = profit[i];
+        }
+        Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
+        return maxProfit(jobs, 0);
+    }
+
+    private int maxProfit(int[][] jobs, int position) {
+        if (position == jobs.length) return 0;
+        if (memo[position] != null) return memo[position];
+
+        int nextIndex = findNextIndex(jobs, jobs[position][1]);
+        int maxProfit = Math.max(maxProfit(jobs, position+1), jobs[position][2] + maxProfit(jobs, nextIndex));
+        return memo[position] = maxProfit;
+    }
+
+    private int findNextIndex(int[][] jobs, int endTime) {
+        int start = 0, end = jobs.length-1, nextIndex = jobs.length;
+        while (start <= end) {
+            int mid = start + (end-start)/2;
+            if (jobs[mid][0] >= endTime) {
+                nextIndex = mid;
+                end = mid-1;
+            } else {
+                start = mid+1;
+            }
+        }
+        return nextIndex;
+    }
+}
+
+//My soln after understanding bottom up dp with binary search and attempting on my own TC O(Nlog(N)) SC O(N)
+class Solution {
+
+    Integer[] memo;
+
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n = startTime.length;
+        memo = new Integer[n+1];
+        int[][] jobs = new int[n][3];
+        for (int i=0;i<n;i++) {
+            jobs[i][0] = startTime[i];
+            jobs[i][1] = endTime[i];
+            jobs[i][2] = profit[i];
+        }
+        Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
+        return maxProfit(jobs);
+    }
+
+    private int maxProfit(int[][] jobs) {
+        for (int i=jobs.length-1;i>=0;i--) {
+            if (i == jobs.length-1) {
+                memo[i] = jobs[i][2];
+                continue;
+            }
+            int nextIndex = findNextIndex(jobs, jobs[i][1]);
+            int curProfit = 0;
+            if (nextIndex == jobs.length) {
+                curProfit = jobs[i][2];
+            } else {
+                curProfit = jobs[i][2] + memo[nextIndex];
+            }
+            int maxProfit = Math.max(curProfit, memo[i+1]);
+            memo[i] = maxProfit;
+        }
+        return memo[0];
+    }
+
+    private int findNextIndex(int[][] jobs, int endTime) {
+        int start = 0, end = jobs.length-1, nextIndex = jobs.length;
+        while (start <= end) {
+            int mid = start + (end - start)/2;
+            if (jobs[mid][0] >= endTime) {
+                nextIndex = mid;
+                end = mid-1;
+            } else {
+                start = mid+1;
+            }
+        }
+        return nextIndex;
+    }
+}
