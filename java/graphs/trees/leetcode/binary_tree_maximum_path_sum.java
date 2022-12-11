@@ -44,6 +44,9 @@ The number of nodes in the tree is in the range [1, 3 * 10^4].
  *     }
  * }
  */
+
+//Soln TC O(N) SC O(N)
+
 class Solution {
     
     int maxVal = Integer.MIN_VALUE;
