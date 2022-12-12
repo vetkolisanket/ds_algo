@@ -28,6 +28,20 @@ Constraints:
 1 <= n <= 45
 */
 
+//Soln from another attempt TC O(N) SC O(1)
+class Solution {
+    public int climbStairs(int n) {
+        if (n == 1) return 1;
+        int pre = 1, cur = 1, ans = 0;
+        for (int i=2;i<=n;i++) {
+            ans = cur + pre;
+            pre = cur;
+            cur = ans;
+        }
+        return ans;
+    }
+}
+
 //Attempt after watching dp video by free code camp on YouTube
 class Solution {
     public int climbStairs(int n) {
