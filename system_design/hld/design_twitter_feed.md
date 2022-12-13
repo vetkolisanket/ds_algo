@@ -72,3 +72,42 @@
   - **Architecture Pattern** - MVVM would be preferrable because of its benefits like loose coupling between View and ViewModel and ViewModel surviving configuration change and being lifecycle aware. MVP can also be used for its simplicity. 
   - **Flow** - UI (Activity/Fragment) will make request to view model to get data. The view model can contain the pagination logic and make paginated request to repository to get data. The repository will call API service to get data. On receiving data from API service, the repository can persist the data in persistence and notify the UI about the data. The UI can update itself accordingly. For pagination we can make the initial call as soon as the UI loads (onCreate after initialising view model and observers). For pagination we can make the call in a prefetching manner (eager fetch) i.e. as soon as the user comes to (n-5)th item we fetch the next paginated data, where n is the no. of items in the feed. That improves user experience.
   - **Pagination** - For pagination we can go with offset cursor/seek pagination as offset pagination can lead to issues (duplicates or miss some data) and keyset pagination might not be possible as our feed logic can be complicated and may not have some sort of ordering, but some sort of logic over offset or keyset pagination should also be fine
+  - **Dependency Injection** - Helps to build an isolated and testable module. In this case the view model will be provided by view model provider. The repository, persistence and API service can be provided using dagger or hilt.
+  - **Image Loading** - As of now my standard answer would be use glide or picasso, but I should know their internal workings. I should discuss about low res vs full res image loading, assigning priority to images being loaded, loading a low res + high res image and replacing the low res image with high res on its load to improve user experience. I can discuss 
+    - caching
+      - disk cache
+      - memory cache
+    - caching strategies
+      - LRU
+      - LFU
+    - mapping url to key
+  
+##### Components
+  - **Feed API Service** - abstracts Twitter Feed API client. Provides the functionality to request paginated data from the backend. Injected via DI-graph
+  - **Feed persistence** - abstact cached paginated data storage. Injected via DI-graph.
+  - **Get paginated feeds use case** - triggers fetching next/prev page of data. Redirects the newly fetched page response into a persistence layer.
+  - **Feed repository** - consolidates remote and cached responses into a Pager object through Remote Mediator
+  - **Tweet like use case** - triggers tweet like/unlike flow (calls API)
+  - **Tweet details use case** - triggers tweet details flow (opens Tweet Details UI)
+  - **Image loader** - abstracts image loading from image loading library. Injected via DI-graph.
+  
+#### Tweet Detail Flow
+  
+### API Design
+  
+### Realtime notifications
+  
+### Protocols
+  
+### Pagination
+  
+### Authentication
+  
+### Data storage
+  
+#### Storage Location
+  
+#### Storage Type
+  
+#### Best Practices
+  
