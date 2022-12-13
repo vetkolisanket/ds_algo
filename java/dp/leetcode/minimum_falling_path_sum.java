@@ -58,3 +58,30 @@ class Solution {
         return minSum;
     }
 }
+
+//A more space efficient soln TC O(N^2) SC O(N)
+class Solution {
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int[] dp = matrix[n-1].clone();
+        for (int i=n-2;i>=0;i--) {
+            int[] cur = new int[n];
+            for (int j=0;j<n;j++) {
+                cur[j] = dp[j];
+                if (j > 0) {
+                    cur[j] = Math.min(cur[j], dp[j-1]);
+                }
+                if (j < n-1) {
+                    cur[j] = Math.min(cur[j], dp[j+1]);
+                }
+                cur[j] += matrix[i][j];
+            }
+            dp = cur;
+        }
+        int minSum = Integer.MAX_VALUE;
+        for (int i=0;i<n;i++) {
+            minSum = Math.min(minSum, dp[i]);
+        }
+        return minSum;
+    }
+}
