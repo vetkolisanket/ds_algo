@@ -27,6 +27,7 @@ Constraints:
 0 <= nums[i] <= 400
 */
 
+//Soln using dp TC O(N) SC O(1)
 class Solution {
     public int rob(int[] nums) {
         int preMax = 0, curMax = 0;

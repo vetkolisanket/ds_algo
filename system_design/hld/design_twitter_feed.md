@@ -70,7 +70,7 @@
 ### Deep Dive
 #### Tweet Feed Flow
   - **Architecture Pattern** - MVVM would be preferrable because of its benefits like loose coupling between View and ViewModel and ViewModel surviving configuration change and being lifecycle aware. MVP can also be used for its simplicity. 
-  - **Flow** - UI (Activity/Fragment) will make request to view model to get data. The view model can contain the pagination logic and make paginated request to repository to get data. The repository will call API service to get data. On receiving data from API service, the repository can persist the data in persistence and notify the UI about the data. The UI can update itself accordingly. For pagination we can make the initial call as soon as the UI loads (onCreate after initialising view model and observers). For pagination we can make the call in a prefetching manner (eager fetch) i.e. as soon as the user comes to (n-5)th item we fetch the next paginated data, where n is the no. of items in the feed. That improves user experience.
+  - **Flow** - UI (Activity/Fragment) will make request to view model to get data. The view model can contain the pagination logic and trigger get paginated feeds use case which will make paginated request to repository to get data. The repository will call API service to get data. On receiving data from API service, the repository can persist the data in persistence and notify the UI about the data. The UI can update itself accordingly. For pagination we can make the initial call as soon as the UI loads (onCreate after initialising view model and observers). For pagination we can make the call in a prefetching manner (eager fetch) i.e. as soon as the user comes to (n-5)th item we fetch the next paginated data, where n is the no. of items in the feed. That improves user experience.
   - **Pagination** - For pagination we can go with offset cursor/seek pagination as offset pagination can lead to issues (duplicates or miss some data) and keyset pagination might not be possible as our feed logic can be complicated and may not have some sort of ordering, but some sort of logic over offset or keyset pagination should also be fine
   - **Dependency Injection** - Helps to build an isolated and testable module. In this case the view model will be provided by view model provider. The repository, persistence and API service can be provided using dagger or hilt.
   - **Image Loading** - As of now my standard answer would be use glide or picasso, but I should know their internal workings. I should discuss about low res vs full res image loading, assigning priority to images being loaded, loading a low res + high res image and replacing the low res image with high res on its load to improve user experience. I can discuss 
@@ -92,14 +92,25 @@
   - **Image loader** - abstracts image loading from image loading library. Injected via DI-graph.
   
 #### Tweet Detail Flow
+  - **Architecture Pattern** - Would go ahead with MVVM. But can work with MVP also if needed.
+  - **Flow** - UI will receive the id of the tweet whose detail needs to be loaded via intent from tweet feeds UI or via deeplink or notification. UI will request the view model to fetch the details for this tweet id. View model will trigger the Get tweet details use case which will use feed repository to get tweet details. The repository will hit the Feed API service to get data, store the successful response in the persistence layer and notify UI to update view
+  - **Dependency Injection** - The view model will be provided by view model provider. The repository, persistence and API service can be provided using dagger or hilt.
+  - **Image Loading** - Same as for tweet feed flow.
   
 ### API Design
+  - GET v1/feeds?limit=x&&offset=y
+  - GET v1/feed/<feed-id>
+  - PUT v1/feed/<feed-id>?action=<like or unlike>
   
 ### Realtime notifications
+  - Push notifications - to notify someone liking your tweet
+  - Server-sent events - to update like count on a real-time basis
   
 ### Protocols
+  - Can go ahead with REST for its simplicity and it suits the requirements
   
 ### Pagination
+  - Can go ahead with offset pagination for its simplicity. We can include the first tweets id to work around some of the issues of offset pagination. If the team is comfortable around working with cursor/seek pagination we can go ahead with that as well
   
 ### Authentication
   
