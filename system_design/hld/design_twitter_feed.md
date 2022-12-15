@@ -113,12 +113,26 @@
   - Can go ahead with offset pagination for its simplicity. We can include the first tweets id to work around some of the issues of offset pagination. If the team is comfortable around working with cursor/seek pagination we can go ahead with that as well
   
 ### Authentication
+  - Login using phone number or email, store the auth token received during login and use it as a means of identification/authentication when requesting data from API service
+  - <b>TODO: </b> Can discuss authorization header and how to handle 401 Unauthorized response
+  - <b>TODO: </b> Can discuss Rate limiting strategies 429 Too Many Requests
   
 ### Data storage
+  - Store the token received after onboarding in encrypted shared preferences
+  - Store the tweet gist and tweet details in SQLite database using room
+  - Images can be stored in internal storage and referred in the db via uri where they are stored. When a tweet info is deleted we can delete the corresponding image as well from internal storage.
   
 #### Storage Location
+  - Internal
+  - External
+  - Media scoped
   
 #### Storage Type
+  - Document
+  - Cached
+  - Temp
   
 #### Best Practices
+  - Clean the DB periodically, you can run a job on work manager or perform cleanup as soon as the app opens. Clean data older than x days or when db grows more than a particular size or limit the number of entries to 500.
+  - 
   
