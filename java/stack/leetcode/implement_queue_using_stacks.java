@@ -93,3 +93,43 @@ class MyQueue {
  * int param_3 = obj.peek();
  * boolean param_4 = obj.empty();
  */
+
+//Amortized O(1) TC soln
+class MyQueue {
+
+    Deque<Integer> stack1, stack2;
+    int front;
+
+    public MyQueue() {
+        stack1 = new ArrayDeque();
+        stack2 = new ArrayDeque();
+    }
+    
+    public void push(int x) {
+        if (stack1.isEmpty()) {
+            front = x;
+        }
+        stack1.push(x);
+    }
+    
+    public int pop() {
+        if (!stack2.isEmpty()) {
+            return stack2.pop();
+        }
+        while (!stack1.isEmpty()) {
+            stack2.push(stack1.pop());
+        }
+        return stack2.pop();
+    }
+    
+    public int peek() {
+        if (!stack2.isEmpty()) {
+            return stack2.peek();
+        }
+        return front;
+    }
+    
+    public boolean empty() {
+        return stack1.isEmpty() && stack2.isEmpty();
+    }
+}
