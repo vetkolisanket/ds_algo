@@ -40,7 +40,7 @@ Constraints:
 tokens[i] is either an operator: "+", "-", "*", or "/", or an integer in the range [-200, 200].
 */
 
-//Faster soln
+//Faster soln TC O(N) SC O(N)
 class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack();
