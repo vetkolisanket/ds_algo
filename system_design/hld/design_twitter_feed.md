@@ -44,7 +44,7 @@
 - **Big (20-100) people** - Should describe breaking down features/layers into modules so that different teams can work independently on different modules. In case of twitter we can discuss breaking down app into app, feeds, network/communication, config, logger modules.
 
 ## High-level diagram
-
+![tweet feed flow](../images/tweet-feed-flow.png)
 
 ### Server-side components
 * **Backend** - Abstraction for the server/backend where we make api call/network requests to get data to be rendered. In case of this problem we can have following api calls
