@@ -83,7 +83,7 @@ class Solution {
     }
 }
 
-//Using DFS TC O(V+E) SC O(V)
+//Using DFS TC O(V+E) SC O(V+E)
 class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
         HashSet<Integer>[] graph = new HashSet[n];
