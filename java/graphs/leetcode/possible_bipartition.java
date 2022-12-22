@@ -73,3 +73,90 @@ class Solution {
         return true;
     }
 }
+
+//DFS soln TC O(V+E) SC O(V+E)
+class Solution {
+    public boolean possibleBipartition(int n, int[][] dislikes) {
+        List<Integer>[] adjList = new ArrayList[n+1];
+        for (int i=1;i<=n;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int[] dislike: dislikes) {
+            adjList[dislike[0]].add(dislike[1]);
+            adjList[dislike[1]].add(dislike[0]);
+        }
+        int[] groups = new int[n+1];
+        Arrays.fill(groups, -1);
+        for (int i=1;i<=n;i++) {
+            if (groups[i] != -1) continue;
+            if (!dfs(adjList, groups, i, 0)) return false;
+        }
+        return true;
+    }
+
+    private boolean dfs(List<Integer>[] adjList, int[] groups, int source, int group) {
+        groups[source] = group;
+        for (int neighbour: adjList[source]) {
+            if (groups[neighbour] == group) return false;
+            if (groups[neighbour] == -1 && !dfs(adjList, groups, neighbour, 1-group)) return false;
+        }
+        return true;
+    }
+}
+
+//Soln using UnionFind TC O(V+E) SC O(V+E)
+class Solution {
+
+    class UnionFind {
+
+        private int n, parent[], rank[];
+
+        public UnionFind(int n) {
+            this.n = n;
+            parent = new int[n];
+            rank = new int[n];
+            for (int i=0;i<n;i++) {
+                parent[i] = i;
+            }
+        }
+
+        public int find(int x) {
+            if (x == parent[x]) return x;
+            return parent[x] = find(parent[x]);
+        }
+
+        public void union(int x, int y) {
+            x = find(x);
+            y = find(y);
+            if (x == y) return;
+            if (rank[x] > rank[y]) {
+                parent[y] = x;
+            } else if (rank[x] < rank[y]) {
+                parent[x] = y;
+            } else {
+                parent[y] = x;
+                rank[x]++;
+            }
+        }
+
+    }
+
+    public boolean possibleBipartition(int n, int[][] dislikes) {
+        List<Integer>[] adjList = new ArrayList[n+1];
+        for (int i=1;i<=n;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int[] dislike: dislikes) {
+            adjList[dislike[0]].add(dislike[1]);
+            adjList[dislike[1]].add(dislike[0]);
+        }
+        UnionFind uf = new UnionFind(n+1);
+        for (int node=1;node<=n;node++) {
+            for (int neighbour: adjList[node]) {
+                if (uf.find(node) == uf.find(neighbour)) return false;
+                uf.union(adjList[node].get(0), neighbour);
+            }
+        }
+        return true;
+    }
+}
