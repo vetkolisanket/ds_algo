@@ -44,9 +44,16 @@
 6. We would want to show different feed at different times of the year as well as in different regions, hence we should keep our UI as flexible as possible. I'd recommend using Server-driven UI for this usecase. 
     1. For server-driven UI we can create our own framework, or use Jetpack Compose or one of the 3rd party tools available like epoxy, proteus, litho, graywater etc
     2. If we are going to use our own framework we can use inheritance and abstraction to create an entity framework to support different types of views. 
-    3. We can use the concepty of Suppressed Entity to support backward compatibility. What a suppressed entity basically is, is when a new entity is added to the framework which was not supported in a previous version our parser will default such entities to a suppressed entity which will have a view type mapped to it which has 0 height or which has its visibility set to gone
+    3. We can use the concept of Suppressed Entity to support backward compatibility. What a suppressed entity basically is, is when a new entity is added to the framework which was not supported in a previous version our parser will default such entities to a suppressed entity which will have a view type mapped to it which has 0 height or which has its visibility set to gone
+
+**Key things to mention** - Pagination, API contract, network->DB->UI flow, offline flow handling, Server driven UI, Suppressed Entity
 
 ## Cart flow
+1. In case of cart, it is important to keep the cart in sync and consistent with backend. We can sync the cart whenever the app opens and whenever user modifies the cart
+2. In case of conflict we can use a simple strategy of last write wins i.e. if there are two or more updates to cart which are conflicting we can use the update with higher timestamp and discard the others as that was the latest decision made by the user
+3. We can store the current cart status in DB and not shared preferences as the size of the cart can become large.
+4. In case of API failure while syncing cart we can show the cart which we have stored in DB.
+5. To keep the cart in sync across devices we can push the updates to all other devices via notification
 
 ## Product details flow
 
