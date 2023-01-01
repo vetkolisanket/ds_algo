@@ -54,3 +54,26 @@ class Solution {
         return true;
     }
 }
+
+//Another approach using a map and a set TC O(M) SC O(M) where M is the no. of characters in S
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split(" ");
+        if (pattern.length() != words.length) return false;
+        Map<Character, String> map = new HashMap();
+        Set<String> set = new HashSet();
+        for (int i=0;i<words.length;i++) {
+            char c = pattern.charAt(i);
+            String word = words[i];
+            if (map.containsKey(c)) {
+                if (!word.equals(map.get(c))) return false;
+            } else {
+                if (set.contains(word)) return false;
+                map.put(c, word);
+                set.add(word);
+            }
+        }
+        return true;
+    }
+}
+
