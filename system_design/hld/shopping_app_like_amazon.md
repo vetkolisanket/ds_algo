@@ -63,3 +63,4 @@
 1. Profile can contain users basic content like his name, list of addresses (billing, shipping), payment related info, wishlist, purchase history, wallet etc
 
 ## Search flow
+1. For search we can use similar construct as we used for feed page. We can have a server driven UI of sorts and it can be a hybrid of products and offers
