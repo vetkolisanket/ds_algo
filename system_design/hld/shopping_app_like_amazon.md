@@ -56,7 +56,11 @@
 5. To keep the cart in sync across devices we can push the updates to all other devices via notification
 
 ## Product details flow
+1. Product detail UI will receive a product id in its intent and pass this intent to view model/presenter to get the product info. View model will request the product repository to get product details. The product repository will make a network request to fetch product details and pass it to the view model who will publish the response which the UI will be listening to.
+2. I would not like to store product info offline as the content is price sensitive and prices can change anytime, but if there is a good reason we can store product info in product table and show some sort of a visual indicator, to let the user know that prices might have changed or maybe hide the price and notify the user that prices are not visible becuase he is offline
 
 ## Profile flow
+1. Profile can contain users basic content like his name, list of addresses (billing, shipping), payment related info, wishlist, purchase history, wallet etc
 
 ## Search flow
+1. For search we can use similar construct as we used for feed page. We can have a server driven UI of sorts and it can be a hybrid of products and offers
