@@ -47,3 +47,28 @@ class Solution {
         return ans;
     }
 }
+
+//Another soln using counting sort TC O(m+n) SC O(m) where m is the max val in costs and n is the length of costs array
+class Solution {
+    public int maxIceCream(int[] costs, int coins) {
+        int max = 0;
+        int ans = 0;
+        for (int cost: costs) {
+            max = Math.max(max, cost);
+        }
+        int[] arr = new int[max+1];
+        for (int cost: costs) {
+            arr[cost]++;
+        }
+        for (int i=1;i<=max;i++) {
+            if (arr[i] == 0) continue;
+            if (coins <= i*arr[i]) {
+                ans += coins/i;
+                break;
+            }
+            ans += arr[i];
+            coins -= i*arr[i];
+        }
+        return ans;
+    }
+}
