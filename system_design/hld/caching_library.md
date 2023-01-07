@@ -18,3 +18,20 @@
 ### Out of scope
 - User-defined eviction policies
 - Cross-platform support
+
+## Client Public API
+Cache:
+- init(config: CacheConfig)
+- set(key: String, val: [byte]): CacheTask
+- get(key: String): CacheTask
+- clear(key: String): CacheTask
+- clearAll()
+
+CacheConfig:
+- init(maxMemomryCacheSize: Int, maxDiskCacheSize: Int)
+
+CacheTask:
+- isSuccessful(): Boolean
+- getData(): [byte]?
+- getErrorMessage(): String?
+- addOnCompleteCallback(callback: (CacheTask) -> Unit)
