@@ -81,3 +81,20 @@ class Solution {
         return total+tank < 0 ? -1 : start;
     }
 }
+
+//Soln from another attempt TC O(N) SC O(1)
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int idx = -1, rem = 0, sum = 0;
+        for (int i=0;i<gas.length;i++) {
+            int diff = gas[i] - cost[i];
+            int pre = rem;
+            rem += diff;
+            sum += diff;
+            if (rem < 0) rem = 0;
+            else if (rem >= 0 && pre == 0) idx = i;
+        }
+        return sum >= 0 ? idx : -1;
+    }
+}
+

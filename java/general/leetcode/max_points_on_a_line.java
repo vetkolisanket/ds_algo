@@ -25,6 +25,24 @@ points[i].length == 2
 All the points are unique.
 */
 
+//Soln from another attempt TC O(n^2) SC O(n^2)
+class Solution {
+    public int maxPoints(int[][] points) {
+        int n = points.length;
+        if (n < 3) return n;
+        int ans = 0;
+        for (int i=0;i<n;i++) {
+            Map<Double, Integer> map = new HashMap();
+            for (int j=0;j<n;j++) {
+                if (i == j) continue;
+                map.merge(Math.atan2(points[j][1] - points[i][1], points[j][0] - points[i][0]), 1, Integer::sum);
+            }
+            ans = Math.max(ans, Collections.max(map.values())+1);
+        }
+        return ans;
+    }
+}
+
 //Faster soln
 class Solution {
     public int maxPoints(int[][] points) {
