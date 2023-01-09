@@ -74,3 +74,6 @@ key | String
 access_count | Int
 last_accessed | Date
 size | Int
+
+#### Two ways of storing data
+- Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated
