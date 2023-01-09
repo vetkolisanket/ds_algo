@@ -55,3 +55,22 @@ CacheTask:
 - Journal keeps a log of every read or write operation and updates the metadata accordingly
 - In case of cache overflow, cache eviction decides which data to evict with the help of metadata stored in journal and the pre-defined eviction policy.
 - Data is returned to the dispatcher via callbacks (or other asynchronous mechanism which then forwards it asynchronously to the client)
+
+## Deep dive
+
+### Dispatcher
+- Its main job is to simplify read/write concurrency.
+- It can use executor or coroutines to asynchronously perform the requested operation
+- It will pass the response receieved via worked/coroutine and pass it on the main thread to the client
+
+### Journal
+- Its responsibility is to store and update metadata related to cached data
+- Each time the cache is accessed, the journal updates the access count, last access time. When a new data gets written, a new entry is created into the journal consisting of access count, last access time stamp and size of the data. Id can be the key against which the data gets stored. Journal data can be stored in a text/binary file or in a relational database. Relational database would be preferred as it allows partial updates, querying and data integrity.
+
+
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
