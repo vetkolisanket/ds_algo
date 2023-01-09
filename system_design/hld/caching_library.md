@@ -35,3 +35,6 @@ CacheTask:
 - getData(): [byte]?
 - getErrorMessage(): String?
 - addOnCompleteCallback(callback: (CacheTask) -> Unit)
+
+## High Level Diagram
+[Caching library high-level diagram](../images/caching-library-hld.png)
