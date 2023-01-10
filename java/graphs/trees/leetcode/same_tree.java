@@ -45,6 +45,8 @@ The number of nodes in both trees is in the range [0, 100].
  *     }
  * }
  */
+
+//TC O(N) SC O(N)
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null || q == null) return p == q;
