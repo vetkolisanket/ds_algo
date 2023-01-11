@@ -107,3 +107,49 @@ size | Int
 data | BLOB
   
 </div>
+
+### Cache Eviction
+When an item needs to be stored, the cache eviction checks if the size of the in-memory cache or persistent storage has exceeded the configured size, if it has it evicts data following the defined cache eviction policy until enough space is available for the new item. We can run prepared queries to make the eviction operations fast.
+
+## Follow-up questions
+### Storing sensitive information
+Dont't have much knowledge around this, but as per the referenced doc we can encrypt the entire cache or let user decide which data to encrypt depending on the application requirement. To the best of my knowledge Android does not provide a secure built-in database at the moment, so as a workaround we can use a 3rd-party library like SQLCipher to encrypt the whole database or encrypt just the data BLOB (under the strong assumption that the cache keys do not store any sensitive information).
+
+For a general purpose use case we can go ahead with BLOB encrytion approach letting the user choose which data to encrypt rather than encrypting all data or the entire database, also adding 3rd party library can cause licensing issue and binary/version incompatibility with the host application. The encryption key can be generated and stored in keystore/keychain. We should also store an encrypted flag in journal to identify encrypted data
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+data | BLOB
+encrypted | Bool
+  
+</div>
+
+Many application have their own encryption stack, so we can provide them a way to provide their encryption implementation by exposing some APIs
+
+CacheEncryption:
+- encrypt(data: [byte]): [byte]
+- decrypt(data: [byte]): [byte]
+
+CacheConfig:
+- setCacheEncryption(encryption: CacheEncryption)
+
+This way application can have better control over data privacy e.g. by downloading encryption key from backend on user login etc.
+
+### Cross-platform support
+Don't have much knowledge around this but we can try separating the code into two parts
+1. common code - this would be shared across platforms (written in C/C++). Journal, Cache Eviction and Database will be part of the common code
+2. platform specific code - written in (java/kotlin). Dispatcher, in-memory storage can be part of platform specific code
+
+Native code (C/C++) is 
+1. difficult to debug
+2. hard to debug crash logs
+3. can crash the application instead of throwing exceptions
+4. need to compile for all supported architechtures (arm7, arm64, x86)
+5. difficult to develop as compared to modern languages
+6. android developers are less likely to contribute to it
