@@ -67,6 +67,7 @@ CacheTask:
 - Its responsibility is to store and update metadata related to cached data
 - Each time the cache is accessed, the journal updates the access count, last access time. When a new data gets written, a new entry is created into the journal consisting of access count, last access time stamp and size of the data. Id can be the key against which the data gets stored. Journal data can be stored in a text/binary file or in a relational database. Relational database would be preferred as it allows partial updates, querying and data integrity.
 
+<div align="center">
 
 name | type
 --- | ---
@@ -74,6 +75,8 @@ key | String
 access_count | Int
 last_accessed | Date
 size | Int
+  
+</div>
 
 #### Two ways of storing data
 - Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated. To solve for the data inconsistency issue we can keep a state variable whose values will be ```CLEAN```, ```DIRTY```. Whenever data is going to be created/updated against a key we will mark its journal entry state as ```DIRTY``` and set it back to ```CLEAN``` when the write is successful. On journal initialisation we can delete ```DIRTY``` entries and their corresponding data if any. The advantage of this approach is if the device runs low on memory user can clear app cache (including binary files) from app settings
