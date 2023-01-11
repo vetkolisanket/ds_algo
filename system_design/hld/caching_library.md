@@ -76,4 +76,31 @@ last_accessed | Date
 size | Int
 
 #### Two ways of storing data
-- Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated
+- Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated. To solve for the data inconsistency issue we can keep a state variable whose values will be ```CLEAN```, ```DIRTY```. Whenever data is going to be created/updated against a key we will mark its journal entry state as ```DIRTY``` and set it back to ```CLEAN``` when the write is successful. On journal initialisation we can delete ```DIRTY``` entries and their corresponding data if any. The advantage of this approach is if the device runs low on memory user can clear app cache (including binary files) from app settings
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+path | String
+state | Int
+  
+</div>
+
+- Data can be stored alongside journal entry as a BLOB. This approach simplifies implementation as we don't need to worry about synchronisation. The journal and persistent storage tables can be combined into one. The disadvantage of this approach is we can't remove the data when device runs low on memory like we could in the previous approach. This approach feels simpler to implement but it'll make the table bloated with data
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+data | BLOB
+  
+</div>
