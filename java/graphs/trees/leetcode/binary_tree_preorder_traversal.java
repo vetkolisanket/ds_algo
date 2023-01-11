@@ -44,7 +44,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
  *     }
  * }
  */
-//Iterative approach
+//Iterative approach TC O(n) SC O(n)
 class Solution {
     
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -61,7 +61,7 @@ class Solution {
     }
 }
 
-//Recursive approach
+//Recursive approach TC O(n) SC O(n)
 class Solution {
     
     List<Integer> list = new ArrayList();
@@ -71,6 +71,34 @@ class Solution {
             list.add(root.val);
             preorderTraversal(root.left);
             preorderTraversal(root.right);
+        }
+        return list;
+    }
+}
+
+//Soln using Morris traversal TC O(n) SC O(1)
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        TreeNode curr = root, last = null;
+        while (curr != null) {
+            if (curr.left == null) {
+                list.add(curr.val);
+                curr = curr.right;
+            } else {
+                last = curr.left;
+                while (last.right != null && last.right != curr) {
+                    last = last.right;
+                }
+                if (last.right == null) {
+                    last.right = curr;
+                    list.add(curr.val);
+                    curr = curr.left;
+                } else {
+                    last.right = null;
+                    curr = curr.right;
+                }
+            }
         }
         return list;
     }
