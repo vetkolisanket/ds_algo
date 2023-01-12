@@ -67,6 +67,7 @@ CacheTask:
 - Its responsibility is to store and update metadata related to cached data
 - Each time the cache is accessed, the journal updates the access count, last access time. When a new data gets written, a new entry is created into the journal consisting of access count, last access time stamp and size of the data. Id can be the key against which the data gets stored. Journal data can be stored in a text/binary file or in a relational database. Relational database would be preferred as it allows partial updates, querying and data integrity.
 
+<div align="center">
 
 name | type
 --- | ---
@@ -74,6 +75,81 @@ key | String
 access_count | Int
 last_accessed | Date
 size | Int
+  
+</div>
 
 #### Two ways of storing data
-- Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated
+- Data can be stored separately as binary files and its path can be stored in the journal. The problem with this approach is, it can lead to inconsistency between the data and journal in cases when journal gets updated but data writing fails. This can be minimised by updating the journal only when data write is successful, but still there can be synchronisation issues and handling this can make the design complicated. To solve for the data inconsistency issue we can keep a state variable whose values will be ```CLEAN```, ```DIRTY```. Whenever data is going to be created/updated against a key we will mark its journal entry state as ```DIRTY``` and set it back to ```CLEAN``` when the write is successful. On journal initialisation we can delete ```DIRTY``` entries and their corresponding data if any. The advantage of this approach is if the device runs low on memory user can clear app cache (including binary files) from app settings
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+path | String
+state | Int
+  
+</div>
+
+- Data can be stored alongside journal entry as a BLOB. This approach simplifies implementation as we don't need to worry about synchronisation. The journal and persistent storage tables can be combined into one. The disadvantage of this approach is we can't remove the data when device runs low on memory like we could in the previous approach. This approach feels simpler to implement but it'll make the table bloated with data
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+data | BLOB
+  
+</div>
+
+### Cache Eviction
+When an item needs to be stored, the cache eviction checks if the size of the in-memory cache or persistent storage has exceeded the configured size, if it has it evicts data following the defined cache eviction policy until enough space is available for the new item. We can run prepared queries to make the eviction operations fast.
+
+## Follow-up questions
+### Storing sensitive information
+Dont't have much knowledge around this, but as per the referenced doc we can encrypt the entire cache or let user decide which data to encrypt depending on the application requirement. To the best of my knowledge Android does not provide a secure built-in database at the moment, so as a workaround we can use a 3rd-party library like SQLCipher to encrypt the whole database or encrypt just the data BLOB (under the strong assumption that the cache keys do not store any sensitive information).
+
+For a general purpose use case we can go ahead with BLOB encrytion approach letting the user choose which data to encrypt rather than encrypting all data or the entire database, also adding 3rd party library can cause licensing issue and binary/version incompatibility with the host application. The encryption key can be generated and stored in keystore/keychain. We should also store an encrypted flag in journal to identify encrypted data
+
+<div align="center">
+  
+name | type
+--- | ---
+key | String
+access_count | Int
+last_accessed | Date
+size | Int
+data | BLOB
+encrypted | Bool
+  
+</div>
+
+Many application have their own encryption stack, so we can provide them a way to provide their encryption implementation by exposing some APIs
+
+CacheEncryption:
+- encrypt(data: [byte]): [byte]
+- decrypt(data: [byte]): [byte]
+
+CacheConfig:
+- setCacheEncryption(encryption: CacheEncryption)
+
+This way application can have better control over data privacy e.g. by downloading encryption key from backend on user login etc.
+
+### Cross-platform support
+Don't have much knowledge around this but we can try separating the code into two parts
+1. common code - this would be shared across platforms (written in C/C++). Journal, Cache Eviction and Database will be part of the common code
+2. platform specific code - written in (java/kotlin). Dispatcher, in-memory storage can be part of platform specific code
+
+Native code (C/C++) is 
+1. difficult to debug
+2. hard to debug crash logs
+3. can crash the application instead of throwing exceptions
+4. need to compile for all supported architechtures (arm7, arm64, x86)
+5. difficult to develop as compared to modern languages
+6. android developers are less likely to contribute to it
