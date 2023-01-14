@@ -34,6 +34,39 @@ parent represents a valid tree.
 s consists of only lowercase English letters.
 */
 
+//Soln using DFS TC O(n) SC O(n)
+class Solution {
+
+    private int ans = 1;
+
+    public int longestPath(int[] parent, String s) {
+        int n = parent.length;
+        List<Integer>[] adjList = new ArrayList[n];
+        for (int i=0;i<n;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int i=1;i<n;i++) {
+            adjList[i].add(parent[i]);
+            adjList[parent[i]].add(i);
+        }
+        dfs(adjList, 0, -1, 1, s);
+        return ans;
+    }
+
+    private int dfs(List<Integer>[] adjList, int cur, int pre, int len, String s) {
+        int max = 0;
+        for (int neighbour: adjList[cur]) {
+            if (neighbour == pre) continue;
+            int child = dfs(adjList, neighbour, cur, len, s);
+            ans = Math.max(ans, max+child+1);
+            max = Math.max(max, child);
+        }
+        if (pre == -1 || s.charAt(cur) != s.charAt(pre)) return max+1;
+        return 0;
+    }
+}
+
+//Soln
 class Solution {
     
     int ans = 1;
