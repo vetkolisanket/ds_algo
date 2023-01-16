@@ -42,6 +42,8 @@ newInterval.length == 2
 0 <= start <= end <= 105
 */
 
+
+//Soln using linear search TC O(N) SC O(1)
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> list = new ArrayList();
