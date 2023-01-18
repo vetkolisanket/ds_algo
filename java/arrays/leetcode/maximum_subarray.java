@@ -31,6 +31,7 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 */
 
+//Soln using Kadane's algorithm TC O(n) SC O(1)
 class Solution {
     public int maxSubArray(int[] nums) {
         int ans = nums[0];
