@@ -19,3 +19,6 @@
 - Sign-up and log-in
 - Delete/Edit message
 - Group chats
+
+## HLD
+![chat-app flow](../images/chat-app.svg)
