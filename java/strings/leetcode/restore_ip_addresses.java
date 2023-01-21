@@ -155,3 +155,49 @@ class Solution {
                 .toString();
     }
 }
+
+//Soln using backtracking
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList();
+        backtrack(s, ans, 0, new ArrayList());
+        return ans;
+    }
+
+    private void backtrack(String s, List<String> ans, int start, List<Integer> dots) {
+        if (dots.size() == 3) {
+            if (isValid(s.substring(start))) {
+                ans.add(merge(s, dots));
+            }
+            return;
+        }
+        int numCharsRemaining = s.length() - start;
+        int numValsRemaining = 4 - dots.size();
+        if (numCharsRemaining < numValsRemaining || numCharsRemaining > 3*numValsRemaining) return;
+        for (int i=1;i<4 && i < numCharsRemaining;i++) {
+            if (isValid(s.substring(start, start+i))) {
+                dots.add(i);
+                backtrack(s, ans, start+i, dots);
+                dots.remove(dots.size()-1);
+            }
+        }
+    }
+
+    private boolean isValid(String s) {
+        if (s.length() == 1) return true;
+        if (s.charAt(0) == '0') return false;
+        return Integer.parseInt(s) <= 255;
+    }
+
+    private String merge(String s, List<Integer> dots) {
+        StringBuilder sb = new StringBuilder();
+        int val = 0;
+        for (int i=0;i<dots.size();i++) {
+            sb.append(s.substring(val, val+dots.get(i)))
+            .append(".");
+            val += dots.get(i);
+        }
+        sb.append(s.substring(val));
+        return sb.toString();
+    }
+}
