@@ -111,3 +111,47 @@ class Solution {
     }
     
 }
+
+//Soln from another attempt
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList();
+        int len = s.length();
+        if (len < 4 || len > 12) return ans;
+        for (char c: s.toCharArray()) {
+            if (c < '0' || c > '9') return ans;
+        }
+        for (int i=1;i<4;i++) {
+            for (int j=i+1;j<Math.min(i+4, len-1);j++) {
+                for (int k=j+1;k<Math.min(j+4, len);k++) {
+                    if (isValid(s, i, j, k)) {
+                        ans.add(merge(s, i, j, k));
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    private boolean isValid(String s, int i, int j, int k) {
+        return isValid(s.substring(0, i)) && isValid(s.substring(i, j)) && isValid(s.substring(j, k)) && isValid(s.substring(k));
+    }
+
+    private boolean isValid(String s) {
+        if (s.length() == 1) return true;
+        if (s.charAt(0) == '0') return false;
+        return Integer.parseInt(s) <= 255;
+    }
+
+    private String merge(String s, int i, int j, int k) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(s.substring(0, i))
+                .append(".")
+                .append(s.substring(i, j))
+                .append(".")
+                .append(s.substring(j, k))
+                .append(".")
+                .append(s.substring(k))
+                .toString();
+    }
+}
