@@ -41,3 +41,15 @@
 - **Attachment Provider** - Responsible for loading attachments from gallery and camera into memory
 - **Navigation** - Responsible for coordinating flow logic between chat lobby and chat room. Helps decouple components of the system from each other
 - **App Module** - Responsible for gluing the system together 
+
+## Deep Dive
+
+### API Service
+- Abstraction of newtwork communication layer. Idea is to isolate low-level transport primitives from the rest of the app to promote modularity and testability.
+- The communication between the client and the server can be split up into 3 major categories
+
+#### Bi-directional communication layer
+- This is required for real-time communication between two clients. Each client will establish bi-directional connection with the server for sending/receiving messages and status.
+- We need to decide between TCP (connection-based) and UDP (connectionless) protocols
+    - TCP-based clients establish virtual connection and guarantee order delivery of messages by retransmitting lost packets. Because of this they are more expensive in terms of battery life (especially on flaky networks where connection has to be established multiple times). Another disadvantage is the 64k limit on connection count for host ports and bigger packet header size as compared to UDP. Some examples of TCP-based protocols are Web Sockets (Slack), XMPP (WhatsApp, Zoom, Google Talk) and MQTT (IoT, Smart Home)
+    - UDP-based clients are lightweight and don't require any handshakes, but they don't guarantee ordered delivery of messages and has no error checking beyond simple checksums. Some examples of UDP-based protocols are WebRTC (Discord, Google Hangouts, Facebook Messenger)
