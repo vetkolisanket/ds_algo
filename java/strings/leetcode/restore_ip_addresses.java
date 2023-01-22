@@ -111,3 +111,93 @@ class Solution {
     }
     
 }
+
+//Soln from another attempt
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList();
+        int len = s.length();
+        if (len < 4 || len > 12) return ans;
+        for (char c: s.toCharArray()) {
+            if (c < '0' || c > '9') return ans;
+        }
+        for (int i=1;i<4;i++) {
+            for (int j=i+1;j<Math.min(i+4, len-1);j++) {
+                for (int k=j+1;k<Math.min(j+4, len);k++) {
+                    if (isValid(s, i, j, k)) {
+                        ans.add(merge(s, i, j, k));
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    private boolean isValid(String s, int i, int j, int k) {
+        return isValid(s.substring(0, i)) && isValid(s.substring(i, j)) && isValid(s.substring(j, k)) && isValid(s.substring(k));
+    }
+
+    private boolean isValid(String s) {
+        if (s.length() == 1) return true;
+        if (s.charAt(0) == '0') return false;
+        return Integer.parseInt(s) <= 255;
+    }
+
+    private String merge(String s, int i, int j, int k) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(s.substring(0, i))
+                .append(".")
+                .append(s.substring(i, j))
+                .append(".")
+                .append(s.substring(j, k))
+                .append(".")
+                .append(s.substring(k))
+                .toString();
+    }
+}
+
+//Soln using backtracking TC O(N*M^N) SC O(M*N) where N is the no. of integers the string is to be split into and M is the max length of each integer
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList();
+        backtrack(s, ans, 0, new ArrayList());
+        return ans;
+    }
+
+    private void backtrack(String s, List<String> ans, int start, List<Integer> dots) {
+        if (dots.size() == 3) {
+            if (isValid(s.substring(start))) {
+                ans.add(merge(s, dots));
+            }
+            return;
+        }
+        int numCharsRemaining = s.length() - start;
+        int numValsRemaining = 4 - dots.size();
+        if (numCharsRemaining < numValsRemaining || numCharsRemaining > 3*numValsRemaining) return;
+        for (int i=1;i<4 && i < numCharsRemaining;i++) {
+            if (isValid(s.substring(start, start+i))) {
+                dots.add(i);
+                backtrack(s, ans, start+i, dots);
+                dots.remove(dots.size()-1);
+            }
+        }
+    }
+
+    private boolean isValid(String s) {
+        if (s.length() == 1) return true;
+        if (s.charAt(0) == '0') return false;
+        return Integer.parseInt(s) <= 255;
+    }
+
+    private String merge(String s, List<Integer> dots) {
+        StringBuilder sb = new StringBuilder();
+        int val = 0;
+        for (int i=0;i<dots.size();i++) {
+            sb.append(s.substring(val, val+dots.get(i)))
+            .append(".");
+            val += dots.get(i);
+        }
+        sb.append(s.substring(val));
+        return sb.toString();
+    }
+}
