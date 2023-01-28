@@ -79,3 +79,48 @@ class SummaryRanges {
  * obj.addNum(value);
  * int[][] param_2 = obj.getIntervals();
  */
+
+//Soln using tree map instead of tree set TC O(log(n)) for insert O(n) for getinterval SC O(n)
+class SummaryRanges {
+
+    TreeMap<Integer, Integer> map;
+
+    public SummaryRanges() {
+        map = new TreeMap();
+    }
+    
+    public void addNum(int value) {
+        int left = value, right = value;
+        Map.Entry<Integer, Integer> floorEntry = map.floorEntry(value);
+        if (floorEntry != null) {
+            if (floorEntry.getValue() >= value) return;
+            if (floorEntry.getValue() == value-1) {
+                left = floorEntry.getKey();
+            }
+        }
+        Map.Entry<Integer, Integer> highEntry = map.higherEntry(value);
+        if (highEntry != null && highEntry.getKey() == value+1) {
+            right = highEntry.getValue();
+            map.remove(value+1);
+        }
+        map.put(left, right);
+    }
+    
+    public int[][] getIntervals() {
+        if (map.isEmpty()) return new int[0][2];
+        int[][] ans = new int[map.size()][2];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            ans[i][0] = entry.getKey();
+            ans[i++][1] = entry.getValue();
+        }
+        return ans;
+    }
+}
+
+/**
+ * Your SummaryRanges object will be instantiated and called as such:
+ * SummaryRanges obj = new SummaryRanges();
+ * obj.addNum(value);
+ * int[][] param_2 = obj.getIntervals();
+ */
