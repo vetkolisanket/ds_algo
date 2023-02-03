@@ -75,3 +75,11 @@ Params:
 
 - HELLO and MSG_READ messages will be bi-directional implying they can be sent by both the client and server. HELLO will be sent by client to establish connection and server can reply back with a hello as an acknoledgement. MSG_READ a client will send as an acknowledgement for message read and server will forward this to the other client part of the chat room.
 - When the app goes in background we don't need to keep the socket connection alive, we can use push notifications to let the client know of new messages and bring the app back in foreground
+
+#### HTTP-based layer
+- Request-response layer for getting paginated list of chats or message history
+- REST protocol could be a good choice since we don't need request customisation to think of GraphQL which will also increase backend complexity
+- Potential endpoints
+    - ``GET /login`` - initiates a new client session and returns a JSON Web Token which will be used to authorizing further requests
+    - ``GET /chats?after_id=<X>&limit=<Y>`` - receives a paginated list of chats
+    - ``GET /chats/<chat_id>/messages?after_id=<X>&limit=<Y>`` - receives a paginated list of messages from a specific chat
