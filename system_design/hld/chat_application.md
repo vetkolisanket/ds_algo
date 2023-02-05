@@ -81,5 +81,12 @@ Params:
 - REST protocol could be a good choice since we don't need request customisation to think of GraphQL which will also increase backend complexity
 - Potential endpoints
     - ``GET /login`` - initiates a new client session and returns a JSON Web Token which will be used to authorizing further requests
-    - ``GET /chats?after_id=<X>&limit=<Y>`` - receives a paginated list of chats
-    - ``GET /chats/<chat_id>/messages?after_id=<X>&limit=<Y>`` - receives a paginated list of messages from a specific chat
+    - ``GET /chats?before_id=<X>&limit=<Y>`` - receives a paginated list of chats
+    - ``GET /chats/<chat_id>/messages?before_id=<X>&limit=<Y>`` - receives a paginated list of messages from a specific chat
+- JWT token is needed for authentication. Every request after login should include Authorization header: ``Authorization: Bearer <token>``
+- ``before_id`` used while getting chats or messages is for cursor based pagination, it contains the id of the chat/message before which ``limit`` no. of chat/messages are to be fetched. We can also used keyset based pagination based on timestamp of the last message, but it might not be reliable as we cannot trust a clients device clock.
+- Some of the HTTP response codes we can discuss are:
+    - ``401 Unauthorized`` - the client auth token is missing or expired or incorrect. A login request must be made to get a new auth token to proceed further
+    - ``Unprocessable Entity`` - the client request data in malformed and should not be retried
+    - ``429 Too Many Requests`` - the client reached the rate-limiting threshold
+    - ``500 Internal Server Error`` - the client should use exponential back-off to retry the failed request
