@@ -27,6 +27,8 @@ nums.length == 2n
 1 <= nums[i] <= 10^3
 */
 
+
+//Soln TC O(n) SC O(1)
 class Solution {
     public int[] shuffle(int[] nums, int n) {
         int arr[] = new int[nums.length];
@@ -35,5 +37,22 @@ class Solution {
             arr[k+1] = nums[j];
         }
         return arr;
+    }
+}
+
+//In-place soln TC O(n) SC O(1)
+class Solution {
+    public int[] shuffle(int[] nums, int n) {
+        for (int i=n;i<2*n;i++) {
+            int secondNum = nums[i] << 10;
+            nums[i-n] |= secondNum;
+        }
+        for (int i=n-1;i>=0;i--) {
+            int secondNum = nums[i] >> 10;
+            int firstNum = nums[i] & ((1 << 10) - 1);
+            nums[2*i+1] = secondNum;
+            nums[2*i] = firstNum;
+        }
+        return nums;
     }
 }
