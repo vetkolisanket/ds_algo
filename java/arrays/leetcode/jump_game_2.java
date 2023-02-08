@@ -28,6 +28,7 @@ Constraints:
 0 <= nums[i] <= 1000
 */
 
+//Greedy soln TC O(N) SC O(1)
 class Solution {
     public int jump(int[] nums) {
         int jumps = 0, curEnd = 0, curFarthest = 0;
