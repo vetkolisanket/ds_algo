@@ -58,7 +58,7 @@ roads represents a valid tree.
 1 <= seats <= 10^5
 */
 
-//Soln using DFS TC O(N) SC O(N) where N is the no. of cities i.e. roads.length+1
+//Soln using DFS TC O(N) SC O(N) where N is the no. of cities i.e. roads.length+1, to build the adjList and traverse it
 class Solution {
     
     long ans = 0;
