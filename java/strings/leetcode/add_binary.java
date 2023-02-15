@@ -22,6 +22,23 @@ a and b consist only of '0' or '1' characters.
 Each string does not contain leading zeros except for the zero itself.
 */
 
+//Soln from another attempt TC O(m+n) SC O(1) where m and n are length of string a and b respectively
+class Solution {
+    public String addBinary(String a, String b) {
+        int m = a.length() - 1, n = b.length() - 1, carry = 0;
+        StringBuilder sb = new StringBuilder();
+        while (m >= 0 || n >= 0) {
+            int val1 = m >= 0 ? a.charAt(m--) - '0' : 0;
+            int val2 = n >= 0 ? b.charAt(n--) - '0' : 0;
+            int sum = val1 + val2 + carry;
+            sb.append(sum%2);
+            carry = sum/2;
+        }
+        if (carry != 0) sb.append(carry);
+        return sb.reverse().toString();
+    }
+}
+
 //A faster soln
 class Solution {
     public String addBinary(String a, String b) {
