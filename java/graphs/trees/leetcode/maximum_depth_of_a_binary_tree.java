@@ -47,6 +47,8 @@ The number of nodes in the tree is in the range [0, 10^4].
  *     }
  * }
  */
+
+//Soln TC O(n) SC O(n)
 class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
