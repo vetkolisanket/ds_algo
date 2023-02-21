@@ -90,3 +90,23 @@ Params:
     - ``Unprocessable Entity`` - the client request data in malformed and should not be retried
     - ``429 Too Many Requests`` - the client reached the rate-limiting threshold
     - ``500 Internal Server Error`` - the client should use exponential back-off to retry the failed request
+
+#### Cloud messaging layer
+- A typical push payload will look something like
+```
+{
+    user_id: String,
+    messages: [
+        {
+            user_name: String,
+            text: String,
+            created_at: long
+        },
+        ....
+    ]
+}
+```
+    - We need both user_id and user_name because user_id will be used to verify the receiver is the same user who is intended to recieve the message, there is a chance that a new user has logged in on the same device, we won't want to show him the messages of the previous user, user_name will be used with text which will contain the first 100-120 characters of the message to display in the notification in system tray
+    
+#### API Service Diagram
+![API Service Diagram](../images/chat-app-api-service-diagram.png)
