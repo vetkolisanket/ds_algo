@@ -110,3 +110,31 @@ Params:
     
 #### API Service Diagram
 ![API Service Diagram](../images/chat-app-api-service-diagram.png)
+
+- Having separate interfaces (protocols) between network layer and business logic layer: ChatLobbyService (receive a list of chats, create/delete chats) and ChatRoomService (receive message history, send/receive messages, download/upload attachments) allows us to decouple different modules of the app, for e.g. the Chat Lobby flow can recieve the ChatLobbyService via DI and use the exposed APIs via interface without having to know the underlying network module implementation. It also simplifies development/testing and developers can swap real implementation with fake/mock service and provide data from disk or memory
+- We can also add a model convertor layer to transform network layer data models into business layer model objects, this helps us keep the business layer not be affected by changes in network layer model contracts
+e.g. consider the api sends you response in following format
+
+
+```
+ChatMessageData:
++ id: String
++ user_id: String
++ text: String
++ status: String
++ created_at: Long
++ attachments: String // comma-separated list
+```
+
+You can transform into business logic layer which will be more contextual
+
+
+```
+ChatMessage
++ id: String
++ userId: String
++ text: String
++ status: ChatMessageStatus
++ createdAt: Date
++ attachments: [Attachments]
+```
