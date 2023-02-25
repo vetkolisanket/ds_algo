@@ -28,6 +28,7 @@ Constraints:
 0 <= prices[i] <= 10^4
 */
 
+//TC O(n) SC O(1)
 class Solution {
     public int maxProfit(int[] prices) {
         int maxProfit = 0;
