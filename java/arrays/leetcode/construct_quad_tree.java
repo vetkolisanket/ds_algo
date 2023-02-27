@@ -64,7 +64,6 @@ n == grid.length == grid[i].length
 n == 2x where 0 <= x <= 6
 */
 
-//Soln using recursion TC O(N^2.log(N)) SC O(log(N))
 /*
 // Definition for a QuadTree node.
 class Node {
@@ -105,6 +104,7 @@ class Node {
 };
 */
 
+//Soln using recursion TC O(N^2.log(N)) SC O(log(N))
 class Solution {
     public Node construct(int[][] grid) {
         int n = grid.length;
