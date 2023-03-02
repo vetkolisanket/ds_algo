@@ -138,3 +138,66 @@ ChatMessage
 + createdAt: Date
 + attachments: [Attachments]
 ```
+
+### Data Model
+- We would use relational database (ORM) to store chats, messages, users and attachment
+
+```
+Chat
++ id: String (Primary Key)
++ last_message_user_id: String (Foreign Key)
++ last_message_id: String (Foreign Key)
+```
+
+- The chat table consists of chat id, id of the last message in the chat and the id of the user who sent the last message in the chat
+
+```
+User
++ id: String (Primary Key)
++ name: String
++ profile_pic_url: String
+```
+
+- The user table consists of user's id, his name to be displayed and url of his profile pic
+
+```
+Message
++ id: String (Primary Key)
++ chat_id: String (Foreign Key)
++ user_id: String (Foreign Key)
++ created_at: Long
++ text: String
++ status: String
++ attachment: String
+```
+
+- Message table consists of messages from all chats. We would store message id, id of the chat of which the message is part of, id of the user who created the message, time at which the message was created, message text, status of the message can be `PENDING`, `SENT`, `READ`, `FAILED` and comma-separated list of attachment ids
+
+```
+Attachment
++ id: String
++ url: String
++ thumb_url: String
++ path: String
++ thumb_path: String
++ status: String
++ total_size: Long
++ progress_size: Long
+```
+
+- The attachment table will consist of all the attachments of all the messages from all the chats. We would store the id of the attachment, its urls (original and thumb), path where the attachment is downloaded and stored (path and thumb_path), status can be `UPLOADING`, `DOWNLOADING`, `FAILED`, `READY`, total file size and progress file size (uploaded/downloaded bytes)
+- We can join the chat table with message table on `last_message_id` and User table on `last_user_id` to get a list of recent chats. Each result could be represented by the following model class
+
+```
+ChatInfo
++ chatId: String
++ lastUserName: String
++ lastUserId: String
++ lastMessageText: String
++ lastMessageTimestamp: Long
+```
+
+- We can get a list of messages for a specific chat by selecting on `chat_id` column
+- We can use client-generated 128-bit UUIDs as ids for messages and attachments. Outgoing messages can be identified by `user_id` and outgoing attachments by empty urls. Once an attachments is uploaded it is indistinguishable from a remote attachment
+- The advantage of such an approach is its simplicity and idempotency, the disadvantage is given the ids are generated on client side they are less reliable and less secure compared to backend generation
+- Alternatively we can maintain server and local ids. All local operations will be done using local id and backend operations using server id. We would also need to build a bijection between the two
