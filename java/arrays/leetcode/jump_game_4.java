@@ -38,7 +38,7 @@ Constraints:
 
 */
 
-//Soln using BFS
+//Soln using BFS TC O(N) SC O(N)
 class Solution {
     public int minJumps(int[] arr) {
         int n = arr.length;
@@ -73,6 +73,56 @@ class Solution {
                     queue.offer(node-1);
                 }
             }
+            steps++;
+        }
+        return -1;
+    }
+}
+
+//Soln using bidirectional BFS TC O(N) SC O(N)
+class Solution {
+    public int minJumps(int[] arr) {
+        int n = arr.length;
+        if (n == 1) return 0;
+        Map<Integer, List<Integer>> graph = new HashMap();
+        for (int i=0;i<arr.length;i++) {
+            graph.computeIfAbsent(arr[i], v -> new LinkedList()).add(i);
+        }
+        Set<Integer> cur = new HashSet(), other = new HashSet(), visited = new HashSet();
+        cur.add(0);
+        other.add(n-1);
+        visited.add(0);
+        visited.add(n-1);
+        int steps = 0;
+        while (!cur.isEmpty()) {
+            if (cur.size() > other.size()) {
+                Set<Integer> temp = cur;
+                cur = other;
+                other = temp;
+            }
+            Set<Integer> nex = new HashSet();
+            for (int node: cur) {
+                for (int child: graph.get(arr[node])) {
+                    if (other.contains(child)) return steps+1;
+                    if (!visited.contains(child)) {
+                        visited.add(child);
+                        nex.add(child);
+                    }
+                }
+                graph.get(arr[node]).clear();
+                if (other.contains(node+1) || other.contains(node-1)) {
+                    return steps+1;
+                }
+                if (node+1 < n && !visited.contains(node+1)) {
+                    visited.add(node+1);
+                    nex.add(node+1);
+                }
+                if (node-1 >= 0 && !visited.contains(node-1)) {
+                    visited.add(node-1);
+                    nex.add(node-1);
+                }
+            }
+            cur = nex;
             steps++;
         }
         return -1;
