@@ -200,4 +200,5 @@ ChatInfo
 - We can get a list of messages for a specific chat by selecting on `chat_id` column
 - We can use client-generated 128-bit UUIDs as ids for messages and attachments. Outgoing messages can be identified by `user_id` and outgoing attachments by empty urls. Once an attachments is uploaded it is indistinguishable from a remote attachment
 - The advantage of such an approach is its simplicity and idempotency, the disadvantage is given the ids are generated on client side they are less reliable and less secure compared to backend generation
-- Alternatively we can maintain server and local ids. All local operations will be done using local id and backend operations using server id. We would also need to build a bijection between the two
+- Alternatively we can maintain server and local ids. All local operations will be done using local id and backend operations using server id. We would also need to build a bijection (one-to-one mapping) between the two
+- 
