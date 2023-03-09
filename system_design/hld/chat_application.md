@@ -106,7 +106,8 @@ Params:
     ]
 }
 ```
-    - We need both user_id and user_name because user_id will be used to verify the receiver is the same user who is intended to recieve the message, there is a chance that a new user has logged in on the same device, we won't want to show him the messages of the previous user, user_name will be used with text which will contain the first 100-120 characters of the message to display in the notification in system tray
+
+- We need both user_id and user_name because user_id will be used to verify the receiver is the same user who is intended to recieve the message, there is a chance that a new user has logged in on the same device, we won't want to show him the messages of the previous user, user_name will be used with text which will contain the first 100-120 characters of the message to display in the notification in system tray
     
 #### API Service Diagram
 ![API Service Diagram](../images/chat-app-api-service-diagram.png)
