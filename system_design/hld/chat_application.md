@@ -201,4 +201,9 @@ ChatInfo
 - We can use client-generated 128-bit UUIDs as ids for messages and attachments. Outgoing messages can be identified by `user_id` and outgoing attachments by empty urls. Once an attachments is uploaded it is indistinguishable from a remote attachment
 - The advantage of such an approach is its simplicity and idempotency, the disadvantage is given the ids are generated on client side they are less reliable and less secure compared to backend generation
 - Alternatively we can maintain server and local ids. All local operations will be done using local id and backend operations using server id. We would also need to build a bijection (one-to-one mapping) between the two
-- 
+
+- For attachments we can keep a single table for uploads and downloads, this will simplify the design since we will only have to join a single table and all information related to attachments will be in one place. We can differentiate between uploads and downloads by the value of the url column, the rows which have a url but no local path are to be downloaded and the ones which have local path but no url are to be uploaded, once an attachment is downloaded/uploaded they will be indistinguishable from each other and if we do want to distinguish them we can do so on the basis of user id who created the attachment by making a join on message, user and attachment table
+- We can have 3-4 statuses for attachment table namely `READY`, `UPLOAD`, `DOWNLOAD`, `FAILURE`. A `READY` status indicates the attachment has been processed (uploaded/downloaded)
+- We are storing the total size of the attachment and the progress size of the attachment in order to support resumable downloads (todo. read about this)
+- The Api Service via HTTP client will be responsible for downloading/uploading attachments. We would need a task dispatcher to limit the no. of concurrent operations
+- We can automatically download attachments on WiFi and ask for user input on cellular network. We can also provide option in settings to change this configuration for better user experience
