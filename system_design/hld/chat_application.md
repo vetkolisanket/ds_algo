@@ -208,3 +208,16 @@ ChatInfo
 - We are storing the total size of the attachment and the progress size of the attachment in order to support resumable downloads (todo. read about this)
 - The Api Service via HTTP client will be responsible for downloading/uploading attachments. We would need a task dispatcher to limit the no. of concurrent operations
 - We can automatically download attachments on WiFi and ask for user input on cellular network. We can also provide option in settings to change this configuration for better user experience
+
+- For timestamp we will use UTC timestamps (epoch) and convert them to local timestamps on client side.
+- For outgoing messages we will use local timestamp and for incoming messages we will use server timestamp. The local timestamp for outgoing messages will make sense since that is the time when the client created the message and server timestamp for incoming messages since that will be time when the message was actually sent to the server (might be delayed due to client being offline, network issue, or the client having wrong time)
+
+### Security and Privacy
+- We will be storing the messages on users device for offline browsing. Additionally we can also store the messages on server but it can make the user feel less secured. Even if we were to implement end-to-end encryption user might still feel insecure as the developer will still have access to the encryption key and an attacker who has access to server can still compromise user privacy. The **user perception** of privacy is as important as privacy implementation itself. 
+- So instead what we can do is hold the messages on server in a queue while they are yet to be delivered to the correct users and once delivered we can delete them from server
+- We can additionally give user the option to backup his chats on google drive or somewhere he trusts and can use as backup if needed in future
+
+### Conclusion
+- There are a lot of topics that can be covered in this problem statement. Don't try to go deep into detail of something unless asked explicitly to
+- Cover as much ground as possible
+- Listen to the interviewer and keep track of time
