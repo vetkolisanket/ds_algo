@@ -116,3 +116,30 @@ class Solution {
         return treeNode;
     }
 }
+
+//Soln by storing linked list values into array list TC O(n) SC O(n)
+class Solution {
+
+    List<Integer> list = new ArrayList();
+
+    public TreeNode sortedListToBST(ListNode head) {
+        populateList(head);
+        return buildBST(0, list.size()-1);
+    }
+
+    private void populateList(ListNode node) {
+        while (node != null) {
+            list.add(node.val);
+            node = node.next;
+        }
+    }
+    
+    private TreeNode buildBST(int start, int end) { 
+        if (start > end) return null;
+        int mid = (start + end) >>> 1;
+        TreeNode node = new TreeNode(list.get(mid));
+        node.left = buildBST(start, mid-1);
+        node.right = buildBST(mid+1, end);
+        return node;
+    }
+}
