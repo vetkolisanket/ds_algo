@@ -58,7 +58,7 @@ The number of nodes in head is in the range [0, 2 * 104].
  *     }
  * }
  */
-//O(n) soln
+//TC O(n) SC O(lgn) soln
 class Solution {
     
     ListNode listNode;
@@ -95,7 +95,7 @@ class Solution {
     }
 }
 
-//O(nlgn) soln
+//TC O(nlgn) SC O(lgn) soln
 class Solution {
     public TreeNode sortedListToBST(ListNode head) {
         return getTree(head, null);
