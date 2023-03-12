@@ -66,7 +66,7 @@ class Solution {
     }
 }
 
-//Using priority queue
+//Using priority queue TC O(Nlog(k)) SC O(k) where N is the total no. of items in all linked lists (or final linked list) and k is the no. of linked lists
 
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
