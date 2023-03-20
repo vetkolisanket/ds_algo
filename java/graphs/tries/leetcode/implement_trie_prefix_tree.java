@@ -36,6 +36,61 @@ word and prefix consist only of lowercase English letters.
 At most 3 * 10^4 calls in total will be made to insert, search, and startsWith.
 */
 
+//Soln using array of children
+class Trie {
+
+    class TrieNode {
+
+        TrieNode[] children;
+        boolean isWord;
+
+        public TrieNode() {
+            children = new TrieNode[26];
+            isWord = false;
+        }
+
+    }
+
+    private TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+    
+    public void insert(String word) {
+        TrieNode node = root;
+        for (char c: word.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) {
+                node.children[idx] = new TrieNode();
+            }
+            node = node.children[idx];
+        }
+        node.isWord = true;
+    }
+    
+    public boolean search(String word) {
+        TrieNode node = root;
+        for (char c: word.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) return false;
+            node = node.children[idx];
+        }
+        return node.isWord;
+    }
+    
+    public boolean startsWith(String prefix) {
+        TrieNode node = root;
+        for (char c: prefix.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) return false;
+            node = node.children[idx];
+        }
+        return true;
+    }
+}
+
+//Soln using map
 class TrieNode {
     
     Map<Character, TrieNode> children = new HashMap();

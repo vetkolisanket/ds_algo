@@ -42,6 +42,36 @@ postorder is guaranteed to be the postorder traversal of the tree.
  *     }
  * }
  */
+//Simpler soln TC O(n) SC O(n)
+class Solution {
+    
+    private Map<Integer, Integer> map = new HashMap();
+    private int[] inorder, postorder;
+    private int curIdx;
+    
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        this.inorder = inorder;
+        this.postorder = postorder;
+        curIdx = inorder.length-1;
+        for (int i=0;i<inorder.length;i++) {
+            map.put(inorder[i], i);
+        }
+        return helper(0, curIdx);
+    }
+    
+    private TreeNode helper(int left, int right) {
+        if (left > right) return null;
+        
+        int val = postorder[curIdx--];
+        TreeNode node = new TreeNode(val);
+        int idx = map.get(val);
+        node.right = helper(idx+1, right);
+        node.left = helper(left, idx-1);
+        return node;
+    }
+}
+
+
 class Solution {
     
     Map<Integer, Integer> map = new HashMap();

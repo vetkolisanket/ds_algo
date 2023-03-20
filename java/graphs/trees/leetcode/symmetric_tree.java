@@ -42,6 +42,7 @@ Follow up: Could you solve it both recursively and iteratively?
  *     }
  * }
  */
+//Recursive soln TC O(N) SC O(N)
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         return isSymmetric(root.left, root.right);
@@ -93,5 +94,26 @@ class Solution {
             }
         }
         return left == right;
+    }
+}
+
+
+//Iterative soln using queue TC O(N) SC O(N)
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList();
+        queue.offer(root.left);
+        queue.offer(root.right);
+        while (!queue.isEmpty()) {
+            TreeNode t1 = queue.poll(), t2 = queue.poll();
+            if (t1 == null && t2 == null) continue;
+            if (t1 == null || t2 == null) return false;
+            if (t1.val != t2.val) return false;
+            queue.offer(t1.left);
+            queue.offer(t2.right);
+            queue.offer(t1.right);
+            queue.offer(t2.left);
+        }
+        return true;
     }
 }

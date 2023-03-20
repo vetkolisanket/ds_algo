@@ -56,6 +56,8 @@ The depth of the tree will not exceed 10.
  *     }
  * }
  */
+
+//Soln using recursion TC O(N) SC O(H) where N is the no. of nodes in the tree and H is the height of the tree which can be N in the worst case
 class Solution {
     public int sumNumbers(TreeNode root) {
         return sumNumbers(root, 0);
