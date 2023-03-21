@@ -63,3 +63,19 @@ class Solution {
         return n*(n+1)/2;
     }
 }
+
+//A simpler soln TC O(N) SC O(1)
+class Solution {
+    public long zeroFilledSubarray(int[] nums) {
+        long ans = 0, numSubArrays = 0;
+        for (int num: nums) {
+            if (num == 0) {
+                numSubArrays++;
+                ans += numSubArrays;
+            } else {
+                numSubArrays = 0;
+            }
+        }
+        return ans;
+    }
+}
