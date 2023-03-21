@@ -79,6 +79,41 @@ class BrowserHistory {
     }
 }
 
+//A simpler soln
+class BrowserHistory {
+
+    Stack<String> back, forward;
+    String currentUrl;
+
+    public BrowserHistory(String homepage) {
+        currentUrl = homepage;
+        back = new Stack();
+        forward = new Stack();
+    }
+    
+    public void visit(String url) {
+        back.push(currentUrl);
+        currentUrl = url;
+        forward.clear();
+    }
+    
+    public String back(int steps) {
+        while (!back.isEmpty() && steps-- > 0) {
+            forward.push(currentUrl);
+            currentUrl = back.pop();
+        }
+        return currentUrl;
+    }
+    
+    public String forward(int steps) {
+        while (!forward.isEmpty() && steps-- > 0) {
+            back.push(currentUrl);
+            currentUrl = forward.pop();
+        }
+        return currentUrl;
+    }
+}
+
 /**
  * Your BrowserHistory object will be instantiated and called as such:
  * BrowserHistory obj = new BrowserHistory(homepage);
