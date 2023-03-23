@@ -1,6 +1,6 @@
 # File Downloader
 
-- Design File Downloader Library
+- Design a File Downloader Library
 
 ## Requirement Gathering
 
@@ -45,3 +45,12 @@ FileDownloadCallback:
 + onFail(request: FileDownloadRequest, error: String)
 + onCancel(request: FileDownloadRequest)
 ```
+
+- **FileDownloader** - Represents a single file downloader instance. Schedules and maintains active downloads
+- **FileDownloaderConfig** - Encapsulates file downloader config. Simplifies downloader instance creation and future refactorings. Alternatively you can suggest builder pattern
+- **FileDownloadRequest** - Encapsulates file download request (source, destination, headers etc)
+- **FileDownloadTask** - A handle to asynchronous file download operation. Is useful to pause, resume, cancel a download as well to notify download completion
+- **FileDownloadCallback** - Encapsulate completion/failure/cancel callback
+
+## High-Level Diagram
+
