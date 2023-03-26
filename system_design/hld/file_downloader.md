@@ -53,4 +53,19 @@ FileDownloadCallback:
 - **FileDownloadCallback** - Encapsulate completion/failure/cancel callback
 
 ## High-Level Diagram
+![File Downloader High Level Diagram](../images/file-downloader-hld.svg)
 
+### Components
+- **File Downloader** - The central component which provides the client API and brings all components together
+- **Download Request** - encapsulates a single file download request and is accepted by file downloader as input
+- **Download Task** - represents an asynchronous download operation produced as output by file downloader
+- **Download Dispatcher** - schedules and dispatches download operations
+- **Network Client** - handles receiving bytes over HTTP
+- **File Store** - writes file content to the disk
+
+## Deep Dive
+
+### Download Dispatcher
+- A download dispatcher consists of a queue of jobs which are processed by a pool of download workers. Each job consists of a download request, a download task and a state (`PENDING`, `ACTIVE`, `PAUSED`, `COMPLETED`, `FAILED`). A job initially is in `PENDING` state, a download worker processes a pending or paused job and moves it into `ACTIVE` state, an active job can be `PAUSED` by the user and finally a job either moves into `COMPLETED` state on successful download or `FAILED` state if user cancels the download or it fails due to some error
+
+![Download Dispatcher](../images/download-dispatcher.svg)
