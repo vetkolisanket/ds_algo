@@ -27,6 +27,7 @@ n == grid[i].length
 0 <= grid[i][j] <= 100
 */
 
+//Soln using dp TC O(m*n) SC O(1) where m,n are no. of rows and columns of the grid respectively
 class Solution {
     public int minPathSum(int[][] grid) {
         for (int i = 1; i < grid.length; i++) grid[i][0] = grid[i][0] + grid[i-1][0];
