@@ -86,3 +86,71 @@ class Solution {
         return set.size()-1;
     }
 }
+
+//Soln using DFS TC O(n+e) SC O(n+e)
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        if (connections.length < n-1) return -1;
+        List<Integer>[] adjList = new ArrayList[n];
+        for (int i=0;i<n;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int[] connection: connections) {
+            adjList[connection[0]].add(connection[1]);
+            adjList[connection[1]].add(connection[0]);
+        }
+        boolean[] visited = new boolean[n];
+        int components = 0;
+        for (int i=0;i<n;i++) {
+            if (visited[i]) continue;
+            components++;
+            dfs(adjList, visited, i);
+        }
+        return components-1;
+    }
+
+    private void dfs(List<Integer>[] adjList, boolean[] visited, int idx) {
+        visited[idx] = true;
+        for (int neighbour: adjList[idx]) {
+            if (visited[neighbour]) continue;
+            dfs(adjList, visited, neighbour);
+        }
+    }
+}
+
+//Soln using BFS TC O(n+e) SC O(n+e)
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        if (connections.length < n-1) return -1;
+        List<Integer>[] adjList = new ArrayList[n];
+        for (int i=0;i<n;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int[] connection: connections) {
+            adjList[connection[0]].add(connection[1]);
+            adjList[connection[1]].add(connection[0]);
+        }
+        int components = 0;
+        boolean[] visited = new boolean[n];
+        for (int i=0;i<n;i++) {
+            if (visited[i]) continue;
+            components++;
+            bfs(adjList, visited, i);
+        }
+        return components-1;
+    }
+
+    private void bfs(List<Integer>[] adjList, boolean[] visited, int idx) {
+        Queue<Integer> queue = new ArrayDeque();
+        queue.offer(idx);
+        visited[idx] = true;
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            for (int neighbour: adjList[node]) {
+                if (visited[neighbour]) continue;
+                visited[neighbour] = true;
+                queue.offer(neighbour);
+            }
+        }
+    }
+}
