@@ -42,6 +42,39 @@ s1.length == s2.length
 s1 and s2 consist of lower-case English letters.
 */
 
+//Soln from another attempt, not sure about TC and SC :/
+
+class Solution {
+
+    Map<String, Boolean> map = new HashMap();
+
+    public boolean isScramble(String s1, String s2) {
+        int n = s1.length();
+        if (n == 1) return s1.charAt(0) == s2.charAt(0);
+        String key = s1 + ":" + s2;
+        if (map.containsKey(key)) return map.get(key);
+        for (int i=1;i<n;i++) {
+            if (
+                (
+                    isScramble(s1.substring(0, i), s2.substring(0, i)) &&
+                    isScramble(s1.substring(i), s2.substring(i))
+                ) ||
+                (
+                    isScramble(s1.substring(0, i), s2.substring(n-i)) && 
+                    isScramble(s1.substring(i), s2.substring(0, n-i))
+                )
+            ) {
+                map.put(key, true);
+                return true;
+            }
+        }
+        map.put(key, false);
+        return false;
+    }
+}
+
+//Soln
+
 class Solution {
     
     Map<String, Boolean> map = new HashMap();
