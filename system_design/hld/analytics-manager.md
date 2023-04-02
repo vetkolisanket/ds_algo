@@ -15,3 +15,16 @@
 - System should be scalable i.e. events and parameters can be added/removed easily
 - System should be testable
 - Should be able to work in low/no network conditions (should store events in offline state and send them when the system is online)
+
+## Identifying technical requirements
+- **Accessible from anywhere** - (Analytics manager) Inject instance for each entity or use Singleton. I'd prefer singleton here as it is simpler and its sole job is to get data from entities and pass to the network layer or analytics services
+- **Multiple analytics services** - Our analytics manager should have an instance of all of them. Single method should trigger the track or send method of all of them
+- **Event name or params can change from service to service** - Each analytics service should be treated as a separate entity. To logic to change event name or param should be within this entity
+- **Should be testable** - Always work with interfaces/contracts so that instances are easily replaceable with mocks for testability
+
+## High level diagram
+![High level diagram](../images/analytics-services-hld.svg)
+
+
+
+[Reference](https://www.youtube.com/watch?v=pfrjGFDXRt4&ab_channel=iCode)
