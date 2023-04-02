@@ -23,7 +23,7 @@
 - **Should be testable** - Always work with interfaces/contracts so that instances are easily replaceable with mocks for testability
 
 ## High level diagram
-![High level diagram](../images/analytics-services-hld.svg)
+![High level diagram](../images/analytics-service-hld.svg)
 
 
 
