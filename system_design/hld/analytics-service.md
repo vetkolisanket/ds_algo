@@ -60,6 +60,8 @@ AnalyticsManager: IAnalyticsService
 - **AnalyticsManager** - This will be a singleton which will be implementing the `IAnalytics` interface and maintain a list of analytics services to which the events need to be forwarded
 - **Misc** - Each analytics service would contain a should track function which will contain the logic of whether or not a particular event be sent to that analytics servcie, each analytics service can contain a getParams function which will take the params from the send(params: Map<String, Any>) function and filter out the ones that need not be sent to that service
 
+## TODO
 
+### Custom analytics service
 
 [Reference](https://www.youtube.com/watch?v=pfrjGFDXRt4&ab_channel=iCode)
