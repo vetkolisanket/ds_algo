@@ -43,6 +43,7 @@ path consists of English letters, digits, period '.', slash '/' or '_'.
 path is a valid absolute Unix path.
 */
 
+//TC O(N) SC O(N)
 class Solution {
     public String simplifyPath(String path) {
         Deque<String> stack = new LinkedList();
