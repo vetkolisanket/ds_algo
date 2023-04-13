@@ -47,3 +47,19 @@ class Solution {
         return j == m && stack.isEmpty();
     }
 }
+
+//A relatively cleaner soln same complexity
+class Solution {
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack<Integer> stack = new Stack();
+        int j = 0, n = pushed.length;
+        for (int val: pushed) {
+            stack.push(val);
+            while (j < n && !stack.isEmpty() && stack.peek() == popped[j]) {
+                stack.pop();
+                j++;
+            }
+        }
+        return j == n;
+    }
+}
