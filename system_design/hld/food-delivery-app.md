@@ -22,6 +22,7 @@
 
 ### High-level diagram
 
+![Food delivery app high-level diagram](../images/food-delivery-app.svg)
 
 
 ![Food delivery app](../images/food-ordering-app.png)
