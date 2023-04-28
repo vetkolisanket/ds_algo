@@ -72,3 +72,52 @@ class Solution {
         }
     }
 }
+
+//Soln using bfs TC O(N^2*M) SC O(N^2)
+class Solution {
+    public int numSimilarGroups(String[] strs) {
+        int n = strs.length;
+        Map<Integer, List<Integer>> adjList = new HashMap();
+        for (int i=0;i<n;i++) {
+            for (int j=i+1;j<n;j++) {
+                if (isSimilar(strs[i], strs[j])) {
+                    adjList.computeIfAbsent(i, k -> new ArrayList()).add(j);
+                    adjList.computeIfAbsent(j, k -> new ArrayList()).add(i);
+                }
+            }
+        }
+        int ans = 0;
+        boolean[] visited = new boolean[n];
+        for (int i=0;i<n;i++) {
+            if (!visited[i]) {
+                bfs(i, adjList, visited);
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    private boolean isSimilar(String a, String b) {
+        int diff = 0;
+        int m = a.length();
+        for (int i=0;i<m;i++) {
+            if (a.charAt(i) != b.charAt(i)) diff++;
+        }
+        return diff == 0 || diff == 2;
+    }
+
+    private void bfs(int node, Map<Integer, List<Integer>> adjList, boolean[] visited) {
+        Queue<Integer> q = new ArrayDeque();
+        q.offer(node);
+        while (!q.isEmpty()) {
+            node = q.poll();
+            visited[node] = true;
+            if (!adjList.containsKey(node)) continue;
+            for (int neighbour: adjList.get(node)) {
+                if (!visited[neighbour]) {
+                    q.offer(neighbour);
+                }
+            }
+        }
+    }
+}
