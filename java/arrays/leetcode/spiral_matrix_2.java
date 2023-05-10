@@ -21,6 +21,33 @@ Constraints:
 1 <= n <= 20
 */
 
+//Soln from an attempt TC O(N*N) SC O(1)
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] ans = new int[n][n];
+        int val = 1, left = 0, right = n-1, top = 0, bottom = n-1;
+        while (val <= n*n) {
+            for (int i=left;i<=right && val <= n*n;i++) {
+                ans[top][i] = val++;
+            }
+            top++;
+            for (int i=top;i<=bottom && val <= n*n;i++) {
+                ans[i][right] = val++;
+            }
+            right--;
+            for (int i=right;i>=left && val <= n*n;i--) {
+                ans[bottom][i] = val++;
+            }
+            bottom--;
+            for (int i=bottom;i>=top && val <= n*n;i--) {
+                ans[i][left] = val++;
+            }
+            left++;
+        }
+        return ans;
+    }
+}
+
 class Solution {
     public int[][] generateMatrix(int n) {
         int[][] res = new int[n][n];
