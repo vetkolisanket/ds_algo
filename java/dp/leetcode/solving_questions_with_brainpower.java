@@ -59,4 +59,17 @@ class Solution {
     }
 }
 
+//Soln using recursive dp TC O(N) SC O(N)
+class Solution {
+    public long mostPoints(int[][] questions) {
+        long[] memo = new long[questions.length];
+        return dfs(questions, memo, 0);
+    }
 
+    private long dfs(int[][] questions, long[] memo, int idx) {
+        if (idx >= questions.length) return 0;
+        if (memo[idx] != 0) return memo[idx];
+        memo[idx] = Math.max(dfs(questions, memo, idx+1), questions[idx][0] + dfs(questions, memo, idx+questions[idx][1]+1));
+        return memo[idx];
+    }
+}
