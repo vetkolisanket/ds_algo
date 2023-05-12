@@ -25,6 +25,34 @@ n == matrix[i].length
 -100 <= matrix[i][j] <= 100
 */
 
+//Soln from another attempt TC O(m*n) SC O(1)
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> list = new ArrayList();
+        int m = matrix.length, n = matrix[0].length;
+        int left = 0, right = n-1, top = 0, bottom = m-1;
+        while (list.size() < m*n) {
+            for (int i = left; i <= right && list.size() < m*n; i++) {
+                list.add(matrix[top][i]);
+            }
+            top++;
+            for (int i = top; i <= bottom && list.size() < m*n; i++) {
+                list.add(matrix[i][right]);
+            }
+            right--;
+            for (int i = right; i >= left && list.size() < m*n; i--) {
+                list.add(matrix[bottom][i]);
+            }
+            bottom--;
+            for (int i = bottom; i >= top && list.size() < m*n; i--) {
+                list.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return list;
+    }
+}
+
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> res = new ArrayList();
