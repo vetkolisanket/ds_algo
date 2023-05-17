@@ -76,3 +76,29 @@ class Solution {
         return ans;
     }
 }
+
+//Soln by reversing the end half of the linked list taking no extra space TC O(N) SC O(1)
+class Solution {
+    public int pairSum(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode prev = null;
+        while (slow != null) {
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+        int ans = 0;
+        slow = head;
+        while (prev != null) {
+            ans = Math.max(ans, slow.val + prev.val);
+            slow = slow.next;
+            prev = prev.next;
+        }
+        return ans;
+    }
+}
