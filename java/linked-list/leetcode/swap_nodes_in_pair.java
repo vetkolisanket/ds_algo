@@ -36,6 +36,8 @@ The number of nodes in the list is in the range [0, 100].
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+//Recursive soln TC O(N) SC O(1)
 class Solution {
     public ListNode swapPairs(ListNode head) {
         if(head == null || head.next == null) return head;
