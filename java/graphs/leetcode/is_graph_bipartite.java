@@ -39,7 +39,7 @@ If graph[u] contains v, then graph[v] contains u.
 
 */
 
-//Using BFS
+//Using BFS TC O(V+E) SC O(V) where V is the no. of vertices and E is the no. of edges in the graph
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int[] color = new int[graph.length];
@@ -67,7 +67,7 @@ class Solution {
     }
 }
 
-//Using DFS
+//Using DFS TC O(V+E) SC O(V) where V is the no. of vertices and E is the no. of edges in the graph
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int[] colors = new int[graph.length];
