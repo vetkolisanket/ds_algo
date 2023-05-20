@@ -43,6 +43,8 @@ Ai, Bi, Cj, Dj consist of lower case English letters and digits.
 
 */
 
+
+//Soln using DFS TC O(M*N) SC O(N) where M is the no. of queries and N is the no. of equations
 class Solution {
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
         Map<String, Map<String, Double>> graph = new HashMap();
@@ -101,5 +103,53 @@ class Solution {
             }
             return res;
         }
+    }
+}
+
+//Another DFS soln from another attempt TC O(M*N) SC O(N)
+class Solution {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        Map<String, Map<String, Double>> map = new HashMap();
+        for (int i=0;i<equations.size();i++) {
+            List<String> equation = equations.get(i);
+            String dividend = equation.get(0);
+            String divisor = equation.get(1);
+            double quotient = values[i];
+            map.computeIfAbsent(dividend, k -> new HashMap()).put(divisor, quotient);
+            map.computeIfAbsent(divisor, k -> new HashMap()).put(dividend, 1/quotient);
+        }
+        double[] ans = new double[queries.size()];
+        for (int i=0;i<queries.size();i++) {
+            List<String> query = queries.get(i);
+            String dividend = query.get(0);
+            String divisor = query.get(1);
+            if (!map.containsKey(dividend) || !map.containsKey(divisor)) {
+                ans[i] = -1.0D;
+            } else if (dividend.equals(divisor)) {
+                ans[i] = 1.0D;
+            } else {
+                Set<String> visited = new HashSet();
+                ans[i] = backtrackEvaluate(map, dividend, divisor, 1, visited);
+            }
+        }
+        return ans;
+    }
+
+    private double backtrackEvaluate(Map<String, Map<String, Double>> graph, String curNode, String targetNode, double product, Set<String> visited) {
+        visited.add(curNode);
+        double ret = -1.0D;
+        Map<String, Double> neighbours = graph.get(curNode);
+        if (neighbours.containsKey(targetNode)) {
+            return product*neighbours.get(targetNode);
+        } else {
+            for (Map.Entry<String, Double> entry: neighbours.entrySet()) {
+                String node = entry.getKey();
+                if (visited.contains(node)) continue;
+                ret = backtrackEvaluate(graph, node, targetNode, product*entry.getValue(), visited);
+                if (ret != -1) break;
+            }
+        }
+        visited.remove(curNode);
+        return ret;
     }
 }
