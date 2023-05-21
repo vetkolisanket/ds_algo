@@ -43,6 +43,8 @@ Ai, Bi, Cj, Dj consist of lower case English letters and digits.
 
 */
 
+
+//Soln using DFS TC O(M*N) SC O(N) where M is the no. of queries and N is the no. of equations
 class Solution {
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
         Map<String, Map<String, Double>> graph = new HashMap();
@@ -100,6 +102,121 @@ class Solution {
                 }
             }
             return res;
+        }
+    }
+}
+
+//Another DFS soln from another attempt TC O(M*N) SC O(N)
+class Solution {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        Map<String, Map<String, Double>> map = new HashMap();
+        for (int i=0;i<equations.size();i++) {
+            List<String> equation = equations.get(i);
+            String dividend = equation.get(0);
+            String divisor = equation.get(1);
+            double quotient = values[i];
+            map.computeIfAbsent(dividend, k -> new HashMap()).put(divisor, quotient);
+            map.computeIfAbsent(divisor, k -> new HashMap()).put(dividend, 1/quotient);
+        }
+        double[] ans = new double[queries.size()];
+        for (int i=0;i<queries.size();i++) {
+            List<String> query = queries.get(i);
+            String dividend = query.get(0);
+            String divisor = query.get(1);
+            if (!map.containsKey(dividend) || !map.containsKey(divisor)) {
+                ans[i] = -1.0D;
+            } else if (dividend.equals(divisor)) {
+                ans[i] = 1.0D;
+            } else {
+                Set<String> visited = new HashSet();
+                ans[i] = backtrackEvaluate(map, dividend, divisor, 1, visited);
+            }
+        }
+        return ans;
+    }
+
+    private double backtrackEvaluate(Map<String, Map<String, Double>> graph, String curNode, String targetNode, double product, Set<String> visited) {
+        visited.add(curNode);
+        double ret = -1.0D;
+        Map<String, Double> neighbours = graph.get(curNode);
+        if (neighbours.containsKey(targetNode)) {
+            return product*neighbours.get(targetNode);
+        } else {
+            for (Map.Entry<String, Double> entry: neighbours.entrySet()) {
+                String node = entry.getKey();
+                if (visited.contains(node)) continue;
+                ret = backtrackEvaluate(graph, node, targetNode, product*entry.getValue(), visited);
+                if (ret != -1) break;
+            }
+        }
+        visited.remove(curNode);
+        return ret;
+    }
+}
+
+//Soln using union find TC O((M+N)*log^*(N)) SC O(N)
+class Solution {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        HashMap<String, Pair<String, Double>> gidWeight = new HashMap();
+
+        for (int i=0;i<equations.size(); i++) {
+            List<String> equation = equations.get(i);
+            String dividend = equation.get(0), divisor = equation.get(1);
+            double quotient = values[i];
+            union(gidWeight, dividend, divisor, quotient);
+        }
+
+        double[] results = new double[queries.size()];
+        for (int i=0;i<queries.size();i++) {
+            List<String> query = queries.get(i);
+            String dividend = query.get(0), divisor = query.get(1);
+
+            if (!gidWeight.containsKey(dividend) || !gidWeight.containsKey(divisor)) {
+                results[i] = -1.0D;
+            } else {
+                Pair<String, Double> dividendEntry = find(gidWeight, dividend);
+                Pair<String, Double> divisorEntry = find(gidWeight, divisor);
+
+                String dividendGid = dividendEntry.getKey();
+                String divisorGid = divisorEntry.getKey();
+                double dividendWeight = dividendEntry.getValue();
+                double divisorWeight = divisorEntry.getValue();
+
+                if (!dividendGid.equals(divisorGid)) {
+                    results[i] = -1.0D;
+                } else {
+                    results[i] = dividendWeight/divisorWeight;
+                }
+            }
+        }
+
+        return results;
+    }
+
+    private Pair<String, Double> find(Map<String, Pair<String, Double>> gidWeight, String nodeId) {
+        if (!gidWeight.containsKey(nodeId)) gidWeight.put(nodeId, new Pair(nodeId, 1.0D));
+
+        Pair<String, Double> entry = gidWeight.get(nodeId);
+
+        if (!entry.getKey().equals(nodeId)) {
+            Pair<String, Double> newEntry = find(gidWeight, entry.getKey());
+            gidWeight.put(nodeId, new Pair(newEntry.getKey(), entry.getValue() * newEntry.getValue()));
+        }
+
+        return gidWeight.get(nodeId);
+    }
+
+    private void union(Map<String, Pair<String, Double>> gidWeight, String dividend, String divisor, double value) {
+        Pair<String, Double> dividendEntry = find(gidWeight, dividend);
+        Pair<String, Double> divisorEntry = find(gidWeight, divisor);
+
+        String dividendGid = dividendEntry.getKey();
+        String divisorGid = divisorEntry.getKey();
+        double dividendWeight = dividendEntry.getValue();
+        double divisorWeight = divisorEntry.getValue();
+
+        if (!dividendGid.equals(divisorGid)) {
+            gidWeight.put(dividendGid, new Pair(divisorGid, divisorWeight * value / dividendWeight));
         }
     }
 }
