@@ -51,3 +51,34 @@ class Solution {
         return true;
     }
 }
+
+//Soln using gcd TC O(M+N) SC O(M+N) where M and N are the lengths of strings str1 and str2 respectively
+class Solution {
+    public String gcdOfStrings(String str1, String str2) {
+        int len1 = str1.length(), len2 = str2.length();
+        int gcd = gcd(len1, len2);
+        if (concatenates(str1, len1, str2, len2, gcd)) return str1.substring(0, gcd);
+        return "";
+    }
+
+    private int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a%b);
+    }
+
+    private boolean concatenates(String str1, int len1, String str2, int len2, int len) {
+        int val1 = len1/len, val2 = len2/len;
+        StringBuilder sb = new StringBuilder();
+        String s = str1.substring(0, len);
+        for (int i=0;i<val1;i++) {
+            sb.append(s);
+        }
+        if (!str1.equals(sb.toString())) return false;
+        sb.setLength(0);
+        for (int i=0;i<val2;i++) {
+            sb.append(s);
+        }
+        return str2.equals(sb.toString());
+    }
+}
+
