@@ -31,6 +31,26 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 
 */
 
+//Soln using two passes TC O(N) SC O(1)
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int arr[] = new int[n];
+        Arrays.fill(arr, 1);
+        int mul = 1;
+        for (int i=1;i<n;i++) {
+            mul *= nums[i-1];
+            arr[i] *= mul;
+        }
+        mul = 1;
+        for (int i=n-2;i>=0;i--) {
+            mul *= nums[i+1];
+            arr[i] *= mul;
+        }
+        return arr;
+    }
+}
+
 //Soln using extra space TC O(N) SC O(N)
 class Solution {
     public int[] productExceptSelf(int[] nums) {
