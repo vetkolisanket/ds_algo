@@ -27,6 +27,20 @@ Constraints:
 str1 and str2 consist of English uppercase letters.
 */
 
+//A simpler soln TC O(M+N) SC O(M+N)
+class Solution {
+    public String gcdOfStrings(String str1, String str2) {
+        if (!(str1+str2).equals(str2+str1)) return "";
+        int gcd = gcd(str1.length(), str2.length());
+        return str1.substring(0, gcd);
+    }
+
+    private int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a%b);
+    }
+}
+
 //Soln TC O(min(m,n)(m+n)) SC O(min(m,n))
 class Solution {
     public String gcdOfStrings(String str1, String str2) {
