@@ -53,3 +53,22 @@ class Solution {
         return true;
     }
 }
+
+//A slightly better soln TC O(N) SC O(1)
+class Solution {
+
+    private int getDiff(int x1, int x2) {
+        return x2-x1;
+    }
+
+    public boolean checkStraightLine(int[][] coordinates) {
+        int xDiff = getDiff(coordinates[0][0], coordinates[1][0]);
+        int yDiff = getDiff(coordinates[0][1], coordinates[1][1]);
+        for (int i=2;i<coordinates.length;i++) {
+            if (xDiff*getDiff(coordinates[0][1], coordinates[i][1]) != yDiff*getDiff(coordinates[0][0], coordinates[i][0])) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
