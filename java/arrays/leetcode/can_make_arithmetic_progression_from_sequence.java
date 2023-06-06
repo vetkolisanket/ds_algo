@@ -38,4 +38,51 @@ class Solution {
     }
 }
 
+//Better TC soln TC O(N) SC O(N)
+class Solution {
+    public boolean canMakeArithmeticProgression(int[] arr) {
+        int min = Arrays.stream(arr).min().getAsInt();
+        int max = Arrays.stream(arr).max().getAsInt();
 
+        if (min == max) return true;
+
+        int n = arr.length;
+        if ((max-min)%(n-1) != 0) return false;
+        int diff = (max-min)/(n-1);
+        Set<Integer> set = new HashSet();
+        for (int i=0;i<n;i++) {
+            if ((arr[i] - min)%diff != 0) return false;
+            set.add(arr[i]);
+        }
+        return set.size() == n;
+    }
+}
+
+//In-place O(N) soln TC O(N) SC O(1)
+class Solution {
+    public boolean canMakeArithmeticProgression(int[] arr) {
+        int min = Arrays.stream(arr).min().getAsInt();
+        int max = Arrays.stream(arr).max().getAsInt();
+
+        if (min == max) return true;
+
+        int n = arr.length;
+        if ((max-min)%(n-1) != 0) return false;
+        int diff = (max-min)/(n-1);
+        int i=0;
+        while (i < n) {
+            if ((arr[i]-min)%diff != 0) {
+                return false;
+            } else if ((arr[i]-min)/diff == i) {
+                i++;
+            } else {
+                int j = (arr[i]-min)/diff;
+                if (arr[j] == arr[i]) return false;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        return true;
+    }
+}
