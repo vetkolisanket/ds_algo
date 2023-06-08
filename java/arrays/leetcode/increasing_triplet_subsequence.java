@@ -31,6 +31,20 @@ Constraints:
 Follow up: Could you implement a solution that runs in O(n) time complexity and O(1) space complexity?
 */
 
+//TC O(N) SC O(1) soln from another attempt
+class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        if (nums.length < 3) return false;
+        int i = nums[0], j = Integer.MAX_VALUE;
+        for (int k=1;k<nums.length;k++) {
+            if (nums[k] > j) return true;
+            else if (nums[k] > i) j = nums[k];
+            else i = nums[k];
+        }
+        return false;
+    }
+}
+
 //O(n) time and O(1) space soln
 class Solution {
     public boolean increasingTriplet(int[] nums) {
