@@ -99,3 +99,25 @@ class Solution {
     }
     
 }
+
+//Soln from another attempt TC O(N+M) SC O(N)
+class Solution {
+    public Node cloneGraph(Node node) {
+        if (node == null) return null;
+        Map<Integer, Node> map = new HashMap();
+        return cloneGraph(node, map);
+    }
+
+    private Node cloneGraph(Node node, Map<Integer, Node> map) {
+        Node clone = new Node(node.val);
+        if (node.neighbors != null) clone.neighbors = new ArrayList();
+        map.put(node.val, clone);
+        for (Node neighbor: node.neighbors) {
+            if (!map.containsKey(neighbor.val)) {
+                cloneGraph(neighbor, map);
+            }
+            clone.neighbors.add(map.get(neighbor.val));
+        }
+        return clone;
+    }
+}
