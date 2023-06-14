@@ -57,3 +57,46 @@ class Solution {
         return ans;
     }
 }
+
+//A better TC soln using inorder traversal TC O(N) SC O(N)
+class Solution {
+
+    public int getMinimumDifference(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        inorderTraversal(root, list);
+        int ans = Integer.MAX_VALUE;
+        for (int i=1;i<list.size();i++) {
+            ans = Math.min(ans, list.get(i)-list.get(i-1));
+        }
+        return ans;
+    }
+
+    private void inorderTraversal(TreeNode node, List<Integer> list) {
+        if (node == null) return;
+        inorderTraversal(node.left, list);
+        list.add(node.val);
+        inorderTraversal(node.right, list);
+    }
+}
+
+//A more efficient soln same TC O(N) SC O(N)
+class Solution {
+
+    private int ans = Integer.MAX_VALUE;
+    private TreeNode prev = null;
+
+    public int getMinimumDifference(TreeNode root) {
+        inorderTraversal(root);
+        return ans;
+    }
+
+    private void inorderTraversal(TreeNode node) {
+        if (node == null) return;
+        inorderTraversal(node.left);
+        if (prev != null) {
+            ans = Math.min(ans, node.val - prev.val);
+        }
+        prev = node;
+        inorderTraversal(node.right);
+    }
+}
