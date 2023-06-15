@@ -69,3 +69,29 @@ class Solution {
         return ans;
     }
 }
+
+//DFS soln TC O(N) SC O(N)
+class Solution {
+    public int maxLevelSum(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        dfs(root, list, 0);
+        int ans = 0, maxSum = Integer.MIN_VALUE;
+        for (int i=0;i<list.size();i++) {
+            if (maxSum < list.get(i)) {
+                maxSum = list.get(i);
+                ans = i+1;
+            }
+        }
+        return ans;
+    }
+
+    private void dfs(TreeNode node, List<Integer> list, int level) {
+        if (level == list.size()) {
+            list.add(node.val);
+        } else {
+            list.set(level, list.get(level) + node.val);
+        }
+        if (node.left != null) dfs(node.left, list, level+1);
+        if (node.right != null) dfs(node.right, list, level+1);
+    }
+}
