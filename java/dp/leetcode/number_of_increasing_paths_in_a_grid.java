@@ -74,3 +74,36 @@ class Solution {
     }
     
 }
+
+//Soln from another attempt using memoization TC O(M*N) SC O(M*N) where M, N is the no. of rows and columns in grid respectively
+class Solution {
+
+    private final int mod = 1000000007;
+    private int m, n, memo[][];
+    private final int dirs[][] = new int[][]{{-1,0}, {0,-1}, {1,0}, {0,1}};
+
+    public int countPaths(int[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        memo = new int[m][n];
+        int ans = 0;
+        for (int i=0;i<m;i++) {
+            for (int j=0;j<n;j++) {
+                ans = (ans + dfs(grid, i, j)) % mod;
+            }
+        }
+        return ans;
+    }
+
+    private int dfs(int[][] grid, int row, int col) {
+        if (memo[row][col] != 0) return memo[row][col];
+        int ans = 1;
+        for (int[] dir: dirs) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            if (newRow == -1 || newRow == m || newCol == -1 || newCol == n || grid[newRow][newCol] >= grid[row][col]) continue;
+            ans = (ans + dfs(grid, newRow, newCol)) % mod;
+        }
+        return memo[row][col] = ans;
+    }
+}
