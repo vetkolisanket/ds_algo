@@ -42,6 +42,7 @@ Constraints:
 1 <= k, candidates <= costs.length
 */
 
+//Soln using priority queue TC O((K+M)logM) SC O(M) where M is the no. of candidates
 class Solution {
     public long totalCost(int[] costs, int k, int candidates) {
         PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> {
@@ -71,5 +72,43 @@ class Solution {
             else pq.offer(new int[]{costs[high], high--});
         }
         return total;
+    }
+}
+
+//Similar soln from another attempt using Pair ds TC O((K+M)logM) SC O(M)
+class Solution {
+    public long totalCost(int[] costs, int k, int candidates) {
+        long ans = 0;
+        PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<Pair<Integer, Integer>>((a, b) -> {
+            if (a.getKey() == b.getKey()) {
+                return a.getValue() - b.getValue();
+            }
+            return a.getKey() - b.getKey();
+        });
+        int n = costs.length, i = 0, j = n-1;
+        if (n <= 2*candidates) {
+            for (i=0;i<n;i++) {
+                pq.offer(new Pair(costs[i], i));
+            }
+        } else {
+            for (i=0;i<candidates;i++) {
+                pq.offer(new Pair(costs[i], i));
+            }
+            for (j=n-1;j>=n-candidates;j--) {
+                pq.offer(new Pair(costs[j], j));
+            }
+        }
+        while (k-- > 0) {
+            Pair<Integer, Integer> pair = pq.poll();
+            ans += pair.getKey();
+            if (i <= j) {
+                if (pair.getValue() < i) {
+                    pq.offer(new Pair(costs[i], i++));
+                } else {
+                    pq.offer(new Pair(costs[j], j--));
+                }
+            }
+        }
+        return ans;
     }
 }
