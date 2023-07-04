@@ -24,7 +24,7 @@ Constraints:
 Each element in nums appears exactly three times except for one element which appears once.
 */
 
-//Easier to understand soln
+//Easier to understand soln TC O(N) SC O(1)
 class Solution {
     public int singleNumber(int[] nums) {
         int ones = 0, twos = 0;
