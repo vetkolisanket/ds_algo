@@ -24,6 +24,21 @@ Constraints:
 Each element in nums appears exactly three times except for one element which appears once.
 */
 
+//Another soln might be simpler to understand TC O(N) SC O(1)
+class Solution {
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        for (int i=0;i<32;i++) {
+            int val = 0;
+            for (int num: nums) {
+                val += ((num >> i) & 1);
+            }
+            ans |= ((val % 3) << i);
+        }
+        return ans;
+    }
+}
+
 //Easier to understand soln TC O(N) SC O(1)
 class Solution {
     public int singleNumber(int[] nums) {
