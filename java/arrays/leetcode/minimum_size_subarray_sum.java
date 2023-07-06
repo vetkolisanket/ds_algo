@@ -30,7 +30,7 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).
 */
 
-//An O(n) soln
+//A TC O(n) SC O(1) soln
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
         int ans = Integer.MAX_VALUE;
