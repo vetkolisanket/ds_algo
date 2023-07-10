@@ -41,7 +41,7 @@ The number of nodes in the tree is in the range [0, 105].
  *     }
  * }
  */
-//BFS
+//BFS TC O(N) SC O(N)
 class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
@@ -63,7 +63,7 @@ class Solution {
     }
 }
 
-//DFS soln
+//DFS soln TC O(N) SC O(N)
 class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
