@@ -71,3 +71,39 @@ class Solution {
         }
     }
 }
+
+//Soln using BFS TC O(N) SC O(N)
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        Map<Integer, List<Integer>> graph = new HashMap();
+        buildGraph(graph, root, null);
+        List<Integer> list = new ArrayList();
+        Set<Integer> visited = new HashSet();
+        Queue<Integer> queue = new ArrayDeque();
+        queue.offer(target.val);
+        int dist = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int cur = queue.poll();
+                visited.add(cur);
+                if (dist == k) list.add(cur);
+                for (int neighbour: graph.getOrDefault(cur, new ArrayList<>())) {
+                    if (visited.contains(neighbour)) continue;
+                    queue.offer(neighbour);
+                }
+            }
+            if (++dist > k) break;
+        }
+        return list;
+    }
+
+    private void buildGraph(Map<Integer, List<Integer>> graph, TreeNode cur, TreeNode parent) {
+        if (cur != null && parent != null) {
+            graph.computeIfAbsent(cur.val, k -> new ArrayList()).add(parent.val);
+            graph.computeIfAbsent(parent.val, k -> new ArrayList()).add(cur.val);
+        }
+        if (cur.left != null) buildGraph(graph, cur.left, cur);
+        if (cur.right != null) buildGraph(graph, cur.right, cur);
+    }
+}
