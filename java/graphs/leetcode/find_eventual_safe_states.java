@@ -35,6 +35,7 @@ The graph may contain self-loops.
 The number of edges in the graph will be in the range [1, 4 * 10^4].
 */
 
+//Soln using DFS TC O(V+E) SC O(V+E)
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
         List<Integer> list = new ArrayList();
