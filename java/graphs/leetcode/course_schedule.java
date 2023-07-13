@@ -32,6 +32,37 @@ All the pairs prerequisites[i] are unique.
 
 */
 
+//Soln using cycle detection TC O(M+N) SC O(M+N) where M is the no. of courses and N is the length of prerequisites array
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] adjList = new ArrayList[numCourses];
+        for (int i=0;i<numCourses;i++) {
+            adjList[i] = new ArrayList();
+        }
+        for (int[] prerequisite: prerequisites) {
+            adjList[prerequisite[1]].add(prerequisite[0]);
+        }
+        int[] visited = new int[numCourses];
+        for (int i=0;i<numCourses;i++) {
+            if (hasCycle(i, adjList, visited)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean hasCycle(int i, List<Integer>[] adjList, int[] visited) {
+        if (visited[i] == 1) return true;
+        if (visited[i] == 2) return false;
+        visited[i] = 1;
+        for (int neighbour: adjList[i]) {
+            if (hasCycle(neighbour, adjList, visited)) return true;
+        }
+        visited[i] = 2;
+        return false;
+    }
+}
+
 //Using adjacency list
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
