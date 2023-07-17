@@ -1,5 +1,68 @@
 # Mobile System Design Concepts
 
+## Things to study/revise
+
+- [ ] Login/Authentication
+    - [ ] 401 Unauthorised
+    - [ ] 429 Too many requests
+- [ ] Emerging market challenges
+    - [ ] App size optimisations
+    - [ ] Low-end device optimisations
+    - [ ] Bandwidth optimisations/network/caching/exponential backoff
+    - [ ] CPU/Battery usage optimisations
+- [ ] Number of users related queries
+    - [ ] Exponential backoff
+    - [ ] API rate-limiting
+- [ ] Team size
+    - [ ] Smaller team (2-4 people) - People can work together easily, app can be a single module if needed
+    - [ ] Larger team (20-100 people) - App needs to be broken down into multiple modules which will be handled by different teams
+- [ ] HLD
+- [ ] CDN
+- [ ] DI Graph component/ Dependency Injection
+- [ ] Coordinator/Navigation component
+- [ ] Multi-module apps
+- [ ] MVP vs MVC vs MVVM vs MVI
+- [ ] Image loading
+- [ ] Scrolling optimizations
+- [ ] Use cases
+- [ ] API Design
+- [ ] How an HTTP connection is made
+- [ ] Real-time notifications
+    - [ ] Push Notifications pros and cons
+    - [ ] HTTP polling pros and cons
+        - [ ] Short HTTP-polling pros and cons
+        - [ ] Long HTTP-polling pros and cons
+    - [ ] Server-Sent Events pros and cons
+    - [ ] Web sockets
+    - [ ] Difference between Long HTTP-polling and SSE
+- [ ] Protocols
+    - [ ] REST pros and cons
+    - [ ] GraphQL pros and cons
+    - [ ] WebSocket pros and cons
+    - [ ] gRPC pros and cons
+- [ ] Pagination
+    - [ ] Offset pagination
+    - [ ] Keyset pagination
+    - [ ] Cursor/Seek pagination
+- [ ] Data Storage
+    - [ ] Key-Value Storage (SharedPreferences)
+    - [ ] Data Store (Custom/Binary)
+    - [ ] Database/ORM
+    - [ ] On-Device Secure Storage (KeyStore/Key Chain)
+- [ ] Storage Location
+    - [ ] Internal
+    - [ ] External
+    - [ ] Media/Scoped
+- [ ] Storage Type
+    - [ ] Document
+    - [ ] Cache
+    - [ ] Temp
+- [ ] Storage Best practices
+    - [ ] Store as little data as possible
+    - [ ] Use encrypted storage if you can’t avoid storing sensitive data
+    - [ ] Do not allow app storage to grow uncontrollably. Do periodic cleanups
+    
+
 ## Communication between client and server
 
 ### Stateless communication b/w client and server (REST)
