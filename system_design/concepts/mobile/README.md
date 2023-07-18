@@ -61,7 +61,10 @@
     - [ ] Store as little data as possible
     - [ ] Use encrypted storage if you can’t avoid storing sensitive data
     - [ ] Do not allow app storage to grow uncontrollably. Do periodic cleanups
-    
+- [ ] Security
+    - [ ] SSL pinning why and how
+    - [ ] On-device secure storage (KeyStore/Key Chain)
+    - [ ] Proguard & Dexguard 
 
 ## Communication between client and server
 
