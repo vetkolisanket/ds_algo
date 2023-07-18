@@ -71,6 +71,11 @@
     - [ ] Adding custom traces
     - [ ] Profiler
     - [ ] Best practices
+    - [ ] Slow rendering & Frozen frames
+- [ ] Testing
+    - [ ] Unit testing
+    - [ ] Integtation testing
+    - [ ] Roboelectric
 
 ## Communication between client and server
 
