@@ -3,7 +3,7 @@
 ## Things to study/revise
 
 - [ ] Login/Authentication
-    - [ ] 401 Unauthorised
+    - [ ] [401 Unauthorised](authentication/401-unauthorised.md)
     - [ ] 429 Too many requests
 - [ ] Emerging market challenges
     - [ ] App size optimisations
