@@ -64,7 +64,13 @@
 - [ ] Security
     - [ ] SSL pinning why and how
     - [ ] On-device secure storage (KeyStore/Key Chain)
-    - [ ] Proguard & Dexguard 
+    - [ ] Proguard & Dexguard
+- [ ] Performance
+    - [ ] Firebase performance
+    - [ ] Memory leaks
+    - [ ] Adding custom traces
+    - [ ] Profiler
+    - [ ] Best practices
 
 ## Communication between client and server
 
