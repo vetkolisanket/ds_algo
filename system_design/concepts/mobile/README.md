@@ -3,7 +3,7 @@
 ## Things to study/revise
 
 - [ ] Login/Authentication
-    - [ ] 401 Unauthorised
+    - [ ] [401 Unauthorised](authentication/401-unauthorised.md)
     - [ ] 429 Too many requests
 - [ ] Emerging market challenges
     - [ ] App size optimisations
@@ -61,7 +61,21 @@
     - [ ] Store as little data as possible
     - [ ] Use encrypted storage if you can’t avoid storing sensitive data
     - [ ] Do not allow app storage to grow uncontrollably. Do periodic cleanups
-    
+- [ ] Security
+    - [ ] [SSL pinning why and how](ssl-pinning.md)
+    - [ ] On-device secure storage (KeyStore/Key Chain)
+    - [ ] Proguard & Dexguard
+- [ ] Performance
+    - [ ] Firebase performance
+    - [ ] Memory leaks
+    - [ ] Adding custom traces
+    - [ ] Profiler
+    - [ ] Best practices
+    - [ ] Slow rendering & Frozen frames
+- [ ] Testing
+    - [ ] Unit testing
+    - [ ] Integtation testing
+    - [ ] Roboelectric
 
 ## Communication between client and server
 

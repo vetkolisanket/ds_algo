@@ -66,3 +66,46 @@ class Solution {
         return ans;
     }
 }
+
+//Soln from another attempt using sliding window TC O(N) SC O(1)
+class Solution {
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int n = answerKey.length();
+        int tCount = 0, fCount = 0, i = 0, j = 0, ans = 0;
+        while (i < n) {
+            while (i < n && (tCount <= k || fCount <= k)) {
+                if (answerKey.charAt(i++) == 'T') {
+                    tCount++;
+                } else {
+                    fCount++;
+                }
+            }
+            ans = Math.max(ans, i-j-1);
+            while ((tCount > k && fCount > k)) {
+                if (answerKey.charAt(j++) == 'T') {
+                    tCount--;
+                } else {
+                    fCount--;
+                }
+            }
+        }
+        ans = Math.max(ans, i-j);
+        return ans;
+    }
+}
+
+//Soln using advanced sliding window TC O(N) SC O(1)
+class Solution {
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int ans = 0, tCount = 0, fCount = 0, n = answerKey.length();
+        for (int i=0;i<n;i++) {
+            if (answerKey.charAt(i) == 'T') tCount++;
+            else fCount++;
+
+            if (Math.min(tCount, fCount) <= k) ans++;
+            else if (answerKey.charAt(i-ans) == 'T') tCount--;
+            else fCount--;
+        }
+        return ans;
+    }
+}
