@@ -62,7 +62,7 @@
     - [ ] Use encrypted storage if you can’t avoid storing sensitive data
     - [ ] Do not allow app storage to grow uncontrollably. Do periodic cleanups
 - [ ] Security
-    - [ ] SSL pinning why and how
+    - [ ] [SSL pinning why and how](ssl-pinning.md)
     - [ ] On-device secure storage (KeyStore/Key Chain)
     - [ ] Proguard & Dexguard
 - [ ] Performance
