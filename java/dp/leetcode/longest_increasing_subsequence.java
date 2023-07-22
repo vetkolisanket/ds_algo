@@ -31,6 +31,29 @@ Constraints:
 Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
 */
 
+//Another O(NlogN) soln from another attempt SC O(1)
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int j = 0;
+        for (int i=0;i<nums.length;i++) {
+            int pos = find(nums, 0, j, nums[i]);
+            nums[pos] = nums[i];
+            if (pos == j+1) j++;
+        }
+        return j+1;
+    }
+
+    private int find(int[] nums, int start, int end, int val) {
+        while (start <= end) {
+            int mid = (start + end) >> 1;
+            if (nums[mid] == val) return mid;
+            if (nums[mid] > val) end = mid-1;
+            else start = mid+1;
+        }
+        return start;
+    }
+}
+
 //O(nlogn) time complexity soln
 class Solution {
     public int lengthOfLIS(int[] nums) {
