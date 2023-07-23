@@ -19,4 +19,10 @@ requires context to perform tasks like:
 - Describe the Android application architecture.
   - The android application architecture is based on the principles of MVP, MVVM or MVI design patterns depending on the chosen
     architecture components. It provides a structured and modular approach of android application development, promoting separation of
-    concerns and maintainability. 
+    concerns and maintainability.
+- What is an activity in Android?
+  - An activity is the fundamental building block of an android application that represents a single screen with user interaction. It is responsible for managing user interactions and presenting the visual elements to the user.
+- What is an intent in Android?
+  - Intent is a messaging object that facilitates communication between different components of an application or within different applications. Intents are of two types, **implicit** intents and **explicit** intents
+      - **Implicit Intent** - Implicit intents do not specify an explicit target component and let the system find the appropriate component on the basis of action and data provided in the intent
+      - **Explicit Intent** - In an explicit intent we specify the target component that needs to be started to handle the intent and its data by providing the components class name
