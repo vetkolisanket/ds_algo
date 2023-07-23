@@ -66,3 +66,26 @@ class Solution {
         return list;
     }
 }
+
+//Soln using bottom up dp TC O(2^(N/2)) SC O(N*2^(N/2))
+class Solution {
+    public List<TreeNode> allPossibleFBT(int n) {
+        if (n%2 == 0) return new ArrayList();
+        List<List<TreeNode>> dp = new ArrayList();
+        for (int i=0;i<=n;i++) {
+            dp.add(new ArrayList());
+        }
+        dp.get(1).add(new TreeNode());
+        for (int count = 3; count <= n; count += 2) {
+            for (int i=1; i < count-1; i += 2) {
+                int j = count - i - 1;
+                for (TreeNode left: dp.get(i)) {
+                    for (TreeNode right: dp.get(j)) {
+                        dp.get(count).add(new TreeNode(0, left, right));
+                    }
+                }
+            }
+        }
+        return dp.get(n);
+    }
+}
