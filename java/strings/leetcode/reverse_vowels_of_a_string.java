@@ -42,3 +42,27 @@ class Solution {
         return String.valueOf(arr);
     }
 }
+
+//Soln from another approach which doesn't store the vowels in a list but instead uses two pointers TC O(N) SC O(N)
+class Solution {
+
+    public String reverseVowels(String s) {
+        char[] arr = s.toCharArray();
+        Set<Character> vowels = Set.of('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U');
+        int i = 0, j = arr.length-1;
+        while (i < j) {
+            while (i < j && !vowels.contains(arr[i])) {
+                i++;
+            }
+            while (j > i && !vowels.contains(arr[j])) {
+                j--;
+            }
+            if (i < j) {
+                char c = arr[i];
+                arr[i++] = arr[j];
+                arr[j--] = c;
+            }
+        }
+        return new String(arr);
+    }
+}
