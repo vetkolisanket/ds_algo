@@ -52,7 +52,7 @@ class Solution {
     }
 }
 
-//My soln
+//My soln TC O(n!/((k-1)!*(n-k)!)) SC O(k)
 class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList();
