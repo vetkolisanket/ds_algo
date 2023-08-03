@@ -24,6 +24,32 @@ Constraints:
 0 <= digits.length <= 4
 digits[i] is a digit in the range ['2', '9'].
 */
+
+//Soln from another attempt TC O(N*4^N) SC O(N) where N is the length of the digits string
+class Solution {
+
+    private String[] arr = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList();
+        if (digits.length() == 0) return ans;
+        backtrack(digits, ans, 0, new StringBuilder());
+        return ans;
+    }
+
+    private void backtrack(String digits, List<String> ans, int idx, StringBuilder sb) {
+        if (idx == digits.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+        for (char c: arr[digits.charAt(idx) - '0'].toCharArray()) {
+            sb.append(c);
+            backtrack(digits, ans, idx+1, sb);
+            sb.setLength(sb.length()-1);
+        }
+    }
+}
+
 class Solution {
     public List<String> letterCombinations(String digits) {
         if(digits.isEmpty()) return new ArrayList();
