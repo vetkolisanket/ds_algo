@@ -36,6 +36,9 @@ Constraints:
  *     }
  * }
  */
+
+//Soln from another attempt TC O((4^N)/(N^(3/2))) SC O(summation(k=1..n)[(n-k+1)((4^k)/(k^(1/2)))])
+
 class Solution {
     public List<TreeNode> generateTrees(int n) {
         return generateTreeList(1, n);
