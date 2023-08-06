@@ -36,6 +36,51 @@ Constraints:
  *     }
  * }
  */
+
+//Soln from another attempt TC O((4^N)/(N^(3/2))) SC O(summation(k=1..n)[(n-k+1)((4^k)/(k^(1/2)))])
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        Map<Pair<Integer, Integer>, List<TreeNode>> memo = new HashMap();
+        return allPossibleBSTs(1, n, memo);
+    }
+
+    private List<TreeNode> allPossibleBSTs(int start, int end, Map<Pair<Integer, Integer>, List<TreeNode>> memo) {
+        List<TreeNode> res = new ArrayList();
+        if (start > end) {
+            res.add(null);
+            return res;
+        }
+        Pair<Integer, Integer> key = new Pair(start, end);
+        if (memo.containsKey(key)) return memo.get(key);
+        for (int i=start;i<=end;i++) {
+            List<TreeNode> leftTrees = allPossibleBSTs(start, i-1, memo);
+            List<TreeNode> rightTrees = allPossibleBSTs(i+1, end, memo);
+            for (TreeNode left: leftTrees) {
+                for (TreeNode right: rightTrees) {
+                    res.add(new TreeNode(i, left, right));
+                }
+            }
+        }
+        memo.put(key, res);
+        return res;
+    }
+}
+
 class Solution {
     public List<TreeNode> generateTrees(int n) {
         return generateTreeList(1, n);
