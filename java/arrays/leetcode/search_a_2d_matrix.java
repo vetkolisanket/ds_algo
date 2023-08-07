@@ -27,6 +27,7 @@ n == matrix[i].length
 -104 <= matrix[i][j], target <= 10^4
 */
 
+//Soln using advanced binary search TC O(logMN) SC O(1)
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0) return false;
