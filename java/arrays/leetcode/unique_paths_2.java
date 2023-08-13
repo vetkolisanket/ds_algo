@@ -35,7 +35,7 @@ n == obstacleGrid[i].length
 obstacleGrid[i][j] is 0 or 1.
 */
 
-//O(1) space soln
+//O(1) space soln TC O(M*N)
 class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
