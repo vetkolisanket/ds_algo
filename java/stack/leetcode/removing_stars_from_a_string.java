@@ -65,3 +65,21 @@ class Solution {
         return sb.reverse().toString();
     }
 }
+
+//Soln using character array TC O(N) SC O(N)
+class Solution {
+    public String removeStars(String s) {
+        int n = s.length();
+        char[] arr = new char[n];
+        int j = 0;
+        for (char c: s.toCharArray()) {
+            if (c == '*') j--;
+            else arr[j++] = c;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<j;i++) {
+            sb.append(arr[i]);
+        }
+        return sb.toString();
+    }
+}
