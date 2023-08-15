@@ -57,6 +57,7 @@ class Solution {
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
 class Solution {
     public ListNode partition(ListNode head, int x) {
         ListNode smallList = null, bigList = null;
