@@ -38,6 +38,18 @@ s consists of lowercase English letters and stars *.
 The operation above can be performed on s.
 */
 
+//Better soln without the need of stack TC O(N) SC O(N)
+class Solution {
+    public String removeStars(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c: s.toCharArray()) {
+            if (c == '*') sb.deleteCharAt(sb.length()-1);
+            else sb.append(c);
+        }
+        return sb.toString();
+    }
+}
+
 //Soln using stack TC O(N) SC O(N)
 class Solution {
     public String removeStars(String s) {
@@ -51,5 +63,23 @@ class Solution {
             sb.append(stack.pop());
         }
         return sb.reverse().toString();
+    }
+}
+
+//Soln using character array TC O(N) SC O(N)
+class Solution {
+    public String removeStars(String s) {
+        int n = s.length();
+        char[] arr = new char[n];
+        int j = 0;
+        for (char c: s.toCharArray()) {
+            if (c == '*') j--;
+            else arr[j++] = c;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<j;i++) {
+            sb.append(arr[i]);
+        }
+        return sb.toString();
     }
 }
