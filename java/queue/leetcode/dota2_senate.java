@@ -41,6 +41,43 @@ n == senate.length
 senate[i] is either 'R' or 'D'.
 */
 
+//My soln from another attempt TC O(NlogN) SC O(N)
+class Solution {
+    public String predictPartyVictory(String senate) {
+        int rCount = 0, dCount = 0;
+        boolean isChange = true;
+        Queue<Character> q = new ArrayDeque();
+        for (char c: senate.toCharArray()) {
+            q.offer(c);
+        }
+        while (isChange) {
+            int size = q.size();
+            isChange = false;
+            while (size-- > 0) {
+                char c = q.poll();
+                if (c == 'R') {
+                    if (dCount == 0) {
+                        rCount++;
+                        q.offer(c);
+                    } else {
+                        dCount--;
+                        isChange = true;
+                    }
+                } else {
+                    if (rCount == 0) {
+                        dCount++;
+                        q.offer(c);
+                    } else {
+                        rCount--;
+                        isChange = true;
+                    }
+                }
+            }
+        }
+        return rCount > 0 ? "Radiant" : "Dire";
+    }
+}
+
 //Soln using two queues TC O(N) SC O(N)
 class Solution {
     public String predictPartyVictory(String senate) {
