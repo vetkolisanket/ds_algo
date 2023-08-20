@@ -53,6 +53,22 @@ The number of nodes in the list is in the range [1, 10^5].
  * }
  */
 
+//Another simpler soln TC O(N) SC O(1)
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode slow = dummyHead, fast = dummyHead;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if (slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return dummyHead.next;
+    }
+}
+
 //My soln TC O(N) SC O(1)
 class Solution {
     public ListNode deleteMiddle(ListNode head) {
