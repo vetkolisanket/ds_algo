@@ -48,6 +48,25 @@ Both of the given trees will have values in the range [0, 200].
  *     }
  * }
  */
+
+//A more compact and simpler soln TC O(N1+N2) SC O(N1+N2)
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        List<Integer> list1 = new ArrayList();
+        List<Integer> list2 = new ArrayList();
+        dfs(root1, list1);
+        dfs(root2, list2);
+        return list1.equals(list2);
+    }
+
+    private void dfs(TreeNode node, List<Integer> list) {
+        if (node == null) return;
+        if (node.left == null && node.right == null) list.add(node.val);
+        dfs(node.left, list);
+        dfs(node.right, list);
+    }
+}
+
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         StringBuilder s1 = new StringBuilder();
