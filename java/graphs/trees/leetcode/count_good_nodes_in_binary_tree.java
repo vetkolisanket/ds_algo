@@ -70,3 +70,45 @@ class Solution {
         return ans;
     }
 }
+
+//Soln from another attempt recursive DFS TC O(N) SC O(N)
+class Solution {
+    public int goodNodes(TreeNode root) {
+        return goodNodes(root, root.val);
+    }
+
+    private int goodNodes(TreeNode node, int val) {
+        int count = 0;
+        if (node == null) return count;
+        if (node.val >= val) count++;
+        val = Math.max(val, node.val);
+        count += goodNodes(node.left, val);
+        count += goodNodes(node.right, val);
+        return count;
+    }
+}
+
+//Soln using iterative BFS TC O(N) SC O(N)
+class Solution {
+    public int goodNodes(TreeNode root) {
+        int ans = 0;
+        Queue<Pair<TreeNode, Integer>> q = new ArrayDeque();
+        q.offer(new Pair(root, root.val));
+        while (!q.isEmpty()) {
+            Pair<TreeNode, Integer> p = q.poll();
+            int val = p.getValue();
+            TreeNode node = p.getKey();
+            if (node.val >= val) {
+                val = node.val;
+                ans++;
+            }
+            if (node.left != null) {
+                q.offer(new Pair(node.left, val));
+            }
+            if (node.right != null) {
+                q.offer(new Pair(node.right, val));
+            }
+        }
+        return ans;
+    }
+}
