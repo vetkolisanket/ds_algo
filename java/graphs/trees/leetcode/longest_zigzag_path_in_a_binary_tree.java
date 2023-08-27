@@ -78,3 +78,42 @@ class Solution {
         }
     }
 }
+
+//Soln from another attempt TC O(N) SC O(N)
+class Solution {
+
+    private int ans = 0;
+    private final boolean LEFT = true, RIGHT = false;
+
+    public int longestZigZag(TreeNode root) {
+        if (root.left != null) {
+            computeZigZagPath(root.left, 1, LEFT);
+        }
+        if (root.right != null) {
+            computeZigZagPath(root.right, 1, RIGHT);
+        }
+        return ans;
+    }
+
+    private void computeZigZagPath(TreeNode node, int len, boolean dir) {
+        if (dir == LEFT) {
+            if (node.right == null) {
+                ans = Math.max(ans, len);
+            } else {
+                computeZigZagPath(node.right, len+1, !dir);
+            }
+            if (node.left != null) {
+                computeZigZagPath(node.left, 1, LEFT);
+            }
+        } else if (dir == RIGHT) {
+            if (node.left == null) {
+                ans = Math.max(ans, len);
+            } else {
+                computeZigZagPath(node.left, len+1, !dir);
+            }
+            if (node.right != null) {
+                computeZigZagPath(node.right, 1, RIGHT);
+            }
+        }
+    }
+}
