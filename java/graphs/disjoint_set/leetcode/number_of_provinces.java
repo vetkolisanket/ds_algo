@@ -94,3 +94,53 @@ class Solution {
         return set.getComponents();
     }
 }
+
+//DFS soln TC O(N^2) SC O(N)
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        boolean[] visited = new boolean[n];
+        int numComponents = 0;
+        for (int i=0;i<n;i++) {
+            if (!visited[i]) {
+                numComponents++;
+                dfs(isConnected, visited, i);
+            }
+        }
+        return numComponents;
+    }
+
+    private void dfs(int[][] isConnected, boolean[] visited, int idx) {
+        visited[idx] = true;
+        for (int i=0;i<isConnected.length;i++) {
+            if (isConnected[idx][i] == 1 && !visited[i]) {
+                dfs(isConnected, visited, i);
+            }
+        }
+    }
+}
+
+//BFS soln TC O(N^2) SC O(N)
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        boolean[] visited = new boolean[n];
+        Queue<Integer> q = new ArrayDeque();
+        int numComponents = 0;
+        for (int i=0;i<n;i++) {
+            if (visited[i]) continue;
+            numComponents++;
+            q.offer(i);
+            while(!q.isEmpty()) {
+                int node = q.poll();
+                visited[node] = true;
+                for (int j=0;j<n;j++) {
+                    if (isConnected[node][j] == 1 && !visited[j]) {
+                        q.offer(j);
+                    }
+                }
+            }
+        }
+        return numComponents;
+    }
+}
