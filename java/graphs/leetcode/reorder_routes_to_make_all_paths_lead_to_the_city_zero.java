@@ -68,3 +68,42 @@ class Solution {
         }
     }
 }
+
+//My soln from another attempt TC O(N) SC O(N)
+class Solution {
+    public int minReorder(int n, int[][] connections) {
+        List<Integer>[] incoming = new ArrayList[n];
+        List<Integer>[] outgoing = new ArrayList[n];
+        for (int i=0;i<n;i++) {
+            incoming[i] = new ArrayList();
+            outgoing[i] = new ArrayList();
+        }
+        for (int[] connection: connections) {
+            incoming[connection[1]].add(connection[0]);
+            outgoing[connection[0]].add(connection[1]);
+        }
+        int ans = 0;
+        Queue<Integer> q = new ArrayDeque();
+        boolean[] visited = new boolean[n];
+        visited[0] = true;
+        q.offer(0);
+        while (!q.isEmpty()) {
+            int city = q.poll();
+            for (int neighbour: incoming[city]) {
+                if (!visited[neighbour]) {
+                    q.offer(neighbour);
+                    visited[neighbour] = true;
+                }
+                
+            }
+            for (int neighbour: outgoing[city]) {
+                if (!visited[neighbour]) {
+                    ans++;
+                    visited[neighbour] = true;
+                    q.offer(neighbour);
+                }
+            }
+        }
+        return ans;
+    }
+}
