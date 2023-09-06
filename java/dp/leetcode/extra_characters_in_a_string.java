@@ -53,3 +53,22 @@ class Solution {
         return memo[start] = ans;
     }
 }
+
+//Bottom up soln TC O(N^3) SC O(N+MK)
+class Solution {
+    public int minExtraChar(String s, String[] dictionary) {
+        int n = s.length();
+        int[] dp = new int[n+1];
+        Set<String> set = new HashSet(Arrays.asList(dictionary));
+        for (int i=n-1;i>=0;i--) {
+            dp[i] = dp[i+1] + 1;
+            for (int j=i;j<n;j++) {
+                String ss = s.substring(i,j+1);
+                if (set.contains(ss)) {
+                    dp[i] = Math.min(dp[i], dp[j+1]);
+                }
+            }
+        }
+        return dp[0];
+    }
+}
