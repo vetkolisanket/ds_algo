@@ -38,7 +38,30 @@ All the elements of nums are unique.
 Follow up: What if negative numbers are allowed in the given array? How does it change the problem? What limitation we need to add to the question to allow negative numbers?
 */
 
-//Soln TC O(T.N) SC O(T) where T is the target and N is the length of nums
+//Top down soln TC O(T*N) SC O(T)
+class Solution {
+
+    public int combinationSum4(int[] nums, int target) {
+        int[] memo = new int[target+1];
+        Arrays.fill(memo, -1);
+        return dfs(nums, target, memo);
+    }
+
+    private int dfs(int[] nums, int target, int[] memo) {
+        if (target < 0) return 0;
+        if (0 == target) {
+            return 1;
+        }
+        if (memo[target] != -1) return memo[target];
+        int ans = 0;
+        for (int i=0;i<nums.length;i++) {
+            ans += dfs(nums, target-nums[i], memo);
+        }
+        return memo[target] = ans;
+    }
+}
+
+//Bottom up DP Soln TC O(T.N) SC O(T) where T is the target and N is the length of nums
 class Solution {
     public int combinationSum4(int[] nums, int target) {
         int[] dp = new int[target+1];
