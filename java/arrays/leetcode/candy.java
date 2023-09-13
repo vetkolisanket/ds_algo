@@ -31,6 +31,7 @@ n == ratings.length
 0 <= ratings[i] <= 2 * 10^4
 */
 
+//Soln TC O(N) SC O(N)
 class Solution {
     public int candy(int[] ratings) {
         int[] candies = new int[ratings.length];
