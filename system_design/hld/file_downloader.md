@@ -69,3 +69,6 @@ FileDownloadCallback:
 - A download dispatcher consists of a queue of jobs which are processed by a pool of download workers. Each job consists of a download request, a download task and a state (`PENDING`, `ACTIVE`, `PAUSED`, `COMPLETED`, `FAILED`). A job initially is in `PENDING` state, a download worker processes a pending or paused job and moves it into `ACTIVE` state, an active job can be `PAUSED` by the user and finally a job either moves into `COMPLETED` state on successful download or `FAILED` state if user cancels the download or it fails due to some error
 
 ![Download Dispatcher](../images/download-dispatcher.svg)
+
+## Classes Involved
+
