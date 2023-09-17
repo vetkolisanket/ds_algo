@@ -32,7 +32,7 @@ The input graph is always connected.
 
 */
 
-//Soln using DFS with top down DP TC O((2^N)*N) SC O((2^N)*N)
+//Soln using DFS with top down DP TC O((2^N)*N^2) SC O((2^N)*N)
 class Solution {
 
     private int[][] cache;
