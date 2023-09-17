@@ -71,3 +71,37 @@ class Solution {
         return cache[node][mask];
     }
 }
+
+//Soln using BFS TC O((2^N)*N^2) SC O((2^N)*N)
+class Solution {
+    public int shortestPathLength(int[][] graph) {
+        int n = graph.length;
+        if (n == 1) return 0;
+        int endMask = (1 << n) - 1;
+        List<int[]> queue = new ArrayList();
+        for (int i=0;i<n;i++) {
+            queue.add(new int[]{i, 1 << i});
+        }
+        int steps = 0;
+        boolean visited[][] = new boolean[n][endMask];
+        while (!queue.isEmpty()) {
+            List<int[]> newQueue = new ArrayList();
+            int size = queue.size();
+            for (int i=0;i<queue.size();i++) {
+                int[] arr = queue.get(i);
+                int node = arr[0];
+                int mask = arr[1];
+                for (int neighbour: graph[node]) {
+                    int newMask = mask | (1 << neighbour);
+                    if (newMask == endMask) return steps+1;
+                    if (visited[neighbour][newMask]) continue;
+                    visited[neighbour][newMask] = true;
+                    newQueue.add(new int[]{neighbour, newMask});
+                }
+            }
+            steps++;
+            queue = newQueue;
+        }
+        return -1;
+    }
+}
