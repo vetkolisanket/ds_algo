@@ -46,7 +46,7 @@ class Solution {
     }
 }
 
-//Using two pointers
+//Using two pointers TC O(N) SC O(1)
 class Solution {
     public int findDuplicate(int[] nums) {
         int slow = nums[0];
