@@ -30,6 +30,7 @@ Constraints:
 1 <= x <= 10^9
 */
 
+//Soln TC O(N) SC O(1)
 class Solution {
     public int minOperations(int[] nums, int x) {
         int total = 0;
