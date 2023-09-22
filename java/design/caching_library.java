@@ -131,7 +131,7 @@ public class CachingLibrary {
         }
 
         public void put(K key, V val) {
-            if (storage.isStorageFull()) {
+            if (!storage.conainsKey(key) && storage.isStorageFull()) {
                 K keyToEvict = (K) strategy.removeKeyToEvict();
                 storage.remove(keyToEvict);
             }
