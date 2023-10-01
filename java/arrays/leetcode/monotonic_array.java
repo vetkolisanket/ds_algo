@@ -30,6 +30,7 @@ Constraints:
 */
 
 //Soln using one pass TC O(N) SC O(1)
+
 class Solution {
     public boolean isMonotonic(int[] nums) {
         if (nums.length == 1) return true;
