@@ -72,3 +72,65 @@ class Solution {
         return memo[i][j] = Math.max(val1, Math.max(val2, val3));
     }
 }
+
+//Soln using bottom up DP TC O(MN) SC O(MN)
+class Solution {
+    public int maxDotProduct(int[] nums1, int[] nums2) {
+        int firstMax = Integer.MIN_VALUE, secondMax = Integer.MIN_VALUE, firstMin = Integer.MAX_VALUE, secondMin = Integer.MAX_VALUE;
+
+        for (int num: nums1) {
+            firstMin = Math.min(firstMin, num);
+            firstMax = Math.max(firstMax, num);
+        }
+        for (int num: nums2) {
+            secondMin = Math.min(secondMin, num);
+            secondMax = Math.max(secondMax, num);
+        }
+        if (firstMin > 0 && secondMax < 0) {
+            return firstMin * secondMax;
+        }
+        if (firstMax < 0 && secondMin > 0) {
+            return firstMax * secondMin;
+        }
+        int[][] dp = new int[nums1.length+1][nums2.length+1];
+        for (int i=nums1.length-1;i>=0;i--) {
+            for (int j=nums2.length-1;j>=0;j--) {
+                int val = nums1[i]*nums2[j] + dp[i+1][j+1];
+                dp[i][j] = Math.max(val, Math.max(dp[i+1][j], dp[i][j+1]));
+            }
+        }
+        return dp[0][0];
+    }
+}
+
+//Space optimised bottom up dp TC O(MN) SC O(M)
+class Solution {
+    public int maxDotProduct(int[] nums1, int[] nums2) {
+        int firstMax = Integer.MIN_VALUE, secondMax = Integer.MIN_VALUE, firstMin = Integer.MAX_VALUE, secondMin = Integer.MAX_VALUE;
+
+        for (int num: nums1) {
+            firstMin = Math.min(firstMin, num);
+            firstMax = Math.max(firstMax, num);
+        }
+        for (int num: nums2) {
+            secondMin = Math.min(secondMin, num);
+            secondMax = Math.max(secondMax, num);
+        }
+        if (firstMin > 0 && secondMax < 0) {
+            return firstMin * secondMax;
+        }
+        if (firstMax < 0 && secondMin > 0) {
+            return firstMax * secondMin;
+        }
+        int[] dp = new int[nums2.length+1], prevDp = new int[nums2.length+1];
+        for (int i=nums1.length-1;i>=0;i--) {
+            dp = new int[nums2.length+1];
+            for (int j=nums2.length-1;j>=0;j--) {
+                int val = nums1[i]*nums2[j] + prevDp[j+1];
+                dp[j] = Math.max(val, Math.max(prevDp[j], dp[j+1]));
+            }
+            prevDp = dp;
+        }
+        return dp[0];
+    }
+}
