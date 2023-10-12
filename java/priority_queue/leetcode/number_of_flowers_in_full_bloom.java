@@ -87,3 +87,30 @@ class Solution {
         return res;
     }
 }
+
+//Soln using priority queue TC O(NlogN + M(logM + logN)) SC O(M+N) where N is the no. of people and M is the no. of flowers
+class Solution {
+    public int[] fullBloomFlowers(int[][] flowers, int[] people) {
+        int[] sortedPeople = Arrays.copyOf(people, people.length);
+        Arrays.sort(sortedPeople);
+        Arrays.sort(flowers, (a,b) -> Arrays.compare(a, b));
+        PriorityQueue<Integer> pq = new PriorityQueue();
+        Map<Integer, Integer> map = new HashMap();
+
+        int i=0;
+        for (int person: sortedPeople) {
+            while (i < flowers.length && flowers[i][0] <= person) {
+                pq.offer(flowers[i++][1]);
+            }
+            while (!pq.isEmpty() && pq.peek() < person) {
+                pq.poll();
+            }
+            map.put(person, pq.size());
+        }
+        int[] ans = new int[people.length];
+        for (i=0;i<people.length;i++) {
+            ans[i] = map.get(people[i]);
+        }
+        return ans;
+    }
+}
