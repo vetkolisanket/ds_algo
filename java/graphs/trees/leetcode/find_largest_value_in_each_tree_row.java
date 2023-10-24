@@ -80,3 +80,28 @@ class Solution {
         dfs(node.right, height+1, list);
     }
 }
+
+//Iterative DFS soln TC O(N) SC O(H) where N is the no. of nodes and H is the height of the tree
+class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        if (root == null) return list;
+
+        Stack<Pair<TreeNode, Integer>> stack = new Stack();
+        stack.push(new Pair(root, 0));
+        while (!stack.isEmpty()) {
+            Pair<TreeNode, Integer> p = stack.pop();
+            TreeNode node = p.getKey();
+            int height = p.getValue();
+            if (list.size() == height) {
+                list.add(node.val);
+            } else {
+                list.set(height, Math.max(list.get(height), node.val));
+            }
+
+            if (node.left != null) stack.push(new Pair(node.left, height+1));
+            if (node.right != null) stack.push(new Pair(node.right, height+1));
+        }
+        return list;
+    }
+}
