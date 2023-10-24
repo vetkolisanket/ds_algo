@@ -40,3 +40,24 @@ class Solution {
         return true;
     }
 }
+
+//Soln using math TC O(1) SC O(1)
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        return n > 0 && (Math.log(n)/Math.log(2) % 2 == 0);
+    }
+}
+
+//Soln using bitwise operations TC O(1) SC O(1)
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        return n > 0 && (n & (n-1)) == 0 && (n & 0xaaaaaaaa) == 0;
+    }
+}
+
+//Soln using Math and bitwise manipulation
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        return n > 0 && (n & (n-1)) == 0 && n % 3 == 1;
+    }
+}
