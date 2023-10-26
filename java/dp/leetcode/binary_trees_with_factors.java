@@ -28,6 +28,7 @@ Constraints:
 All the values of arr are unique.
 */
 
+//Soln using DP TC O(N^2) SC O(N)
 class Solution {
     public int numFactoredBinaryTrees(int[] arr) {
         int MOD = 1_000_000_007;
