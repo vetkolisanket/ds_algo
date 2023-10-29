@@ -34,6 +34,7 @@ Constraints:
 1 <= minutesToDie <= minutesToTest <= 100
 */
 
+//Soln TC O(1) SC O(1)
 class Solution {
     public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
         int states = minutesToTest/minutesToDie + 1;
