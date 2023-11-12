@@ -83,3 +83,76 @@ class Solution {
         return false;
     }
 }
+
+//Soln from another attempt TC O(NL(logL + N)) SC O(N^2 + logL)
+class Solution {
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+        if (source == target) return 0;
+        //O(NLlogL)
+        for (int[] route: routes) {
+            Arrays.sort(route);
+        }
+        List<Integer>[] adjList = new ArrayList[routes.length];
+        //O(N)
+        for(int i=0;i<routes.length;i++) {
+            adjList[i] = new ArrayList();
+        }
+        //O(N^2*L)
+        for (int i=0;i<routes.length;i++) {
+            for (int j=i+1;j<routes.length;j++) {
+                if (intersect(routes[i], routes[j])) {
+                    adjList[i].add(j);
+                    adjList[j].add(i);
+                }
+            }
+        }
+        boolean[] visited = new boolean[routes.length];
+        Queue<Integer> q = new ArrayDeque();
+        //O(NlogL)
+        for (int i=0;i<routes.length;i++) {
+            if (contains(routes[i], source)) {
+                q.offer(i);
+                visited[i] = true;
+            }
+        }
+        int ans = 1;
+        //O(NlogL)
+        while (!q.isEmpty()) {
+            int size = q.size();
+            while (size-- > 0) {
+                int node = q.poll();
+                if (contains(routes[node], target)) {
+                    return ans;
+                }
+                for (int neighbour: adjList[node]) {
+                    if (visited[neighbour]) continue;
+                    q.offer(neighbour);
+                    visited[neighbour] = true;
+                }
+            }
+            ans++;
+        }
+        return -1;
+    }
+
+    private boolean intersect(int[] routeA, int[] routeB) {
+        int i = 0, j = 0;
+        while (i < routeA.length && j < routeB.length) {
+            if (routeA[i] == routeB[j]) return true;
+            else if (routeA[i] > routeB[j]) j++;
+            else i++;
+        }
+        return false;
+    }
+
+    private boolean contains(int[] route, int stop) {
+        int start = 0, end = route.length-1;
+        while (start <= end) {
+            int mid = start + (end - start)/2;
+            if (route[mid] == stop) return true;
+            else if (route[mid] > stop) end = mid-1;
+            else start = mid+1;
+        }
+        return false;
+    }
+}
