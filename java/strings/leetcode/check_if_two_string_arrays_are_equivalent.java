@@ -48,7 +48,7 @@ class Solution {
     }
 }
 
-//A more space efficient soln TC O(N*K) SC O(1)
+//A more space efficient soln TC O(N*K) SC O(1) where N is the no. of strings in the array and K is the max length of the string
 class Solution {
     public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
         int word1Pointer = 0, word2Pointer = 0, string1Pointer = 0, string2Pointer = 0;
