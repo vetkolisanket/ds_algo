@@ -119,3 +119,27 @@ public class Solution {
         return s.substring(1, s.length() - 1);
     }
 }
+
+//Soln from another attempt TC O(N) SC O(N)
+class Solution {
+    public String tree2str(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        traverse(root, sb);
+        return sb.toString();
+    }
+
+    private void traverse(TreeNode node, StringBuilder sb) {
+        if (node == null) return;
+        sb.append(node.val);
+        if (node.left != null || node.right != null) {
+            sb.append("(");
+            traverse(node.left, sb);
+            sb.append(")");
+        }
+        if (node.right != null) {
+            sb.append("(");
+            traverse(node.right, sb);
+            sb.append(")");
+        }
+    }
+}
