@@ -90,3 +90,35 @@ class Solution {
     }
     
 }
+
+//Iterative soln from another attempt
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack();
+        List<Integer> list = new ArrayList();
+        Set<TreeNode> visited = new HashSet();
+        if (root == null) return list;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            visited.add(node);
+            if (node.left != null) {
+                if (!visited.contains(node.left)) {
+                    stack.push(node);
+                    stack.push(node.left);
+                } else {
+                    list.add(node.val);
+                    if (node.right != null) {
+                        stack.add(node.right);
+                    }
+                }
+            } else if (node.right != null) {
+                list.add(node.val);
+                stack.push(node.right);
+            } else {
+                list.add(node.val);
+            }
+        }
+        return list;
+    }
+}
