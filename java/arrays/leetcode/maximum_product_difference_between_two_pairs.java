@@ -30,6 +30,7 @@ Constraints:
 1 <= nums[i] <= 104
 */
 
+//Soln TC O(N) SC O(1)
 class Solution {
     public int maxProductDifference(int[] nums) {
         int s = Integer.MAX_VALUE;
