@@ -90,3 +90,30 @@ class Solution {
         return dp[n];
     }
 }
+
+//Soln from another attempt TC O(N) SC O(N)
+class Solution {
+
+    Map<Integer, Integer> memo = new HashMap();
+
+    public int numDecodings(String s) {
+        return computeWays(0, s);
+    }
+
+    private int computeWays(int idx, String s) {
+        if (idx == s.length()) {
+            return 1;
+        }
+        if (memo.containsKey(idx)) return memo.get(idx);
+        if (s.charAt(idx) == '0') return 0;
+        if (idx == s.length()-1) return 1;
+
+        int ans = computeWays(idx+1, s);
+        int val = Integer.valueOf(s.substring(idx, idx+2));
+        if (val >= 10 && val <= 26) {
+            ans += computeWays(idx+2, s);
+        }
+        memo.put(idx, ans);
+        return ans;
+    }
+}
