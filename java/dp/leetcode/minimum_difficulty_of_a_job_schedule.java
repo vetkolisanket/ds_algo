@@ -38,7 +38,7 @@ Constraints:
 1 <= d <= 10
 */
 
-//DP soln using top down approach
+//DP soln using top down approach TC O(N^2*D) SC O(ND) 
 class Solution {
     public int minDifficulty(int[] jobDifficulty, int d) {
         int n = jobDifficulty.length;
