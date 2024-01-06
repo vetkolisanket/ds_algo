@@ -204,3 +204,68 @@ class Solution {
         return nextIndex;
     }
 }
+
+//Top down and botton up approach combined soln from another attempt TC O(NlogN) SC O(N)
+class Solution {
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n = startTime.length;
+        int[][] jobs = new int[n][3];
+        for (int i=0;i<n;i++) {
+            jobs[i][0] = startTime[i];
+            jobs[i][1] = endTime[i];
+            jobs[i][2] = profit[i];
+        }
+        Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
+        int[] memo = new int[n];
+        // return findMaxProfitTd(jobs, memo, 0);
+        return findMaxProfitBu(jobs, memo);
+    }
+
+    private int findMaxProfitBu(int[][] jobs, int[] memo) {
+        int n = jobs.length;
+        for (int i=n-1;i>=0;i--) {
+            int nextIdx = findNextIdx(jobs, jobs[i][1]);
+
+            int profit;
+            if (nextIdx == n) {
+                profit = jobs[i][2];
+            } else {
+                profit = jobs[i][2] + memo[nextIdx];
+            }
+
+            if (i == n-1) {
+                memo[i] = profit;
+            } else {
+                memo[i] = Math.max(profit, memo[i+1]);
+            }
+        }
+        return memo[0];
+    }
+
+    private int findMaxProfitTd(int[][] jobs, int[] memo, int pos) {
+        if (pos == jobs.length) return 0;
+
+        if (memo[pos] != 0) return memo[pos];
+
+        int nextIdx = findNextIdx(jobs, jobs[pos][1]);
+
+        int maxProfit = Math.max(jobs[pos][2] + findMaxProfitTd(jobs, memo, nextIdx), findMaxProfitTd(jobs, memo, pos+1));
+
+        return memo[pos] = maxProfit;
+    }
+
+    private int findNextIdx(int[][] jobs, int time) {
+        int start = 0, end = jobs.length-1, idx = jobs.length;
+
+        while (start <= end) {
+            int mid = start + (end-start)/2;
+            if (jobs[mid][0] >= time) {
+                idx = mid;
+                end = mid-1;
+            } else {
+                start = mid+1;
+            }
+        }
+        return idx;
+    }
+}
