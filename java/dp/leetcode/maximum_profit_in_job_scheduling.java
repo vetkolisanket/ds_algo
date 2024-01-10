@@ -216,28 +216,15 @@ class Solution {
             jobs[i][2] = profit[i];
         }
         Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
-        int[] memo = new int[n];
+        int[] memo = new int[n+1];
         // return findMaxProfitTd(jobs, memo, 0);
         return findMaxProfitBu(jobs, memo);
     }
 
     private int findMaxProfitBu(int[][] jobs, int[] memo) {
-        int n = jobs.length;
-        for (int i=n-1;i>=0;i--) {
-            int nextIdx = findNextIdx(jobs, jobs[i][1]);
-
-            int profit;
-            if (nextIdx == n) {
-                profit = jobs[i][2];
-            } else {
-                profit = jobs[i][2] + memo[nextIdx];
-            }
-
-            if (i == n-1) {
-                memo[i] = profit;
-            } else {
-                memo[i] = Math.max(profit, memo[i+1]);
-            }
+        for (int i=jobs.length-1;i>=0;i--) {
+            int nextIdx = findIdx(jobs, i);
+            memo[i] = Math.max(jobs[i][2] + memo[nextIdx], memo[i+1]);
         }
         return memo[0];
     }
