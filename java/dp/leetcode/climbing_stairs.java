@@ -31,6 +31,20 @@ Constraints:
 //Soln from another attempt TC O(N) SC O(1)
 class Solution {
     public int climbStairs(int n) {
+        if (n <= 3) return n;
+        int pre = 2, cur = 3;
+        for (int i=4;i<=n;i++) {
+            int next = cur + pre;
+            pre = cur;
+            cur = next;
+        }
+        return cur;
+    }
+}
+
+//Soln from another attempt TC O(N) SC O(1)
+class Solution {
+    public int climbStairs(int n) {
         if (n == 1) return 1;
         int pre = 1, cur = 1, ans = 0;
         for (int i=2;i<=n;i++) {
