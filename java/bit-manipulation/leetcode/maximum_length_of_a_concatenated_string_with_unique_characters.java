@@ -125,3 +125,51 @@ class Solution {
         return best;
     }
 }
+
+//Soln using backtracking and bit manipulation TC O(2^N) SC O(N)
+class Solution {
+    public int maxLength(List<String> arr) {
+        Set<Integer> optSet = new HashSet();
+        for (String word: arr) {
+            wordToBitSet(optSet, word);
+        }
+
+        int[] optArr = new int[optSet.size()];
+        int i = 0;
+        for (int num: optSet) {
+            optArr[i++] = num;
+        }
+        return backtracking(optArr, 0, 0, 0);
+    }
+
+    private void wordToBitSet(Set<Integer> optSet, String word) {
+        int charBitSet = 0;
+        for (char c: word.toCharArray()) {
+            int mask = 1 << c - 'a';
+            if ((charBitSet & mask) > 0) {
+                return;
+            }
+            charBitSet += mask;
+        }
+        optSet.add(charBitSet + (word.length() << 26));
+    }
+
+    private int backtracking(int[] optArr, int pos, int resChars, int resLen) {
+        int bestLen = resLen;
+        for (int i=pos;i<optArr.length; i++) {
+            int newChars = optArr[i] & ((1 << 26) - 1);
+            int newLen = optArr[i] >> 26;
+
+            if ((newChars & resChars) > 0) {
+                continue;
+            }
+            resChars += newChars;
+            resLen += newLen;
+
+            bestLen = Math.max(bestLen, backtracking(optArr, i+1, resChars, resLen));
+            resChars -= newChars;
+            resLen -= newLen;
+        }
+        return bestLen;
+    }
+}

@@ -29,6 +29,35 @@ n == matrix.length == matrix[i].length
 
 */
 
+//My soln using top down dp TC O(N^2) SC O(N^2)
+class Solution {
+
+    private final int bigVal = Integer.MAX_VALUE/2;
+
+    public int minFallingPathSum(int[][] matrix) {
+        int ans = bigVal, n = matrix.length;
+        Integer[][] memo = new Integer[n][n];
+        for (int i=0;i<n;i++) {
+            ans = Math.min(ans, findMinPathSum(matrix, 0, i, memo));
+        }
+        return ans;
+    }
+
+    private int findMinPathSum(int[][] matrix, int row, int col, Integer[][] memo) {
+        if (row == matrix.length) {
+            return 0;
+        }
+        if (col == -1 || col == matrix.length) {
+            return bigVal;
+        }
+        if (memo[row][col] != null) {
+            return memo[row][col];
+        }
+        int sum = matrix[row][col] + Math.min(findMinPathSum(matrix, row+1, col-1, memo), Math.min(findMinPathSum(matrix, row+1, col, memo), findMinPathSum(matrix, row+1, col+1, memo)));
+        return memo[row][col] = sum;
+    }
+}
+
 //My soln using bottom up dp TC O(N^2) SC O(N^2)
 class Solution {
 
