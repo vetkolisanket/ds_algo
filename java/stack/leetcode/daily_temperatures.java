@@ -41,3 +41,26 @@ class Solution {
         return ans;
     }
 }
+
+//Soln from another attempt TC O(N) SC O(N)
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
+        ArrayDeque<Pair<Integer, Integer>> stack = new ArrayDeque<>();
+        stack.push(new Pair(temperatures[n-1], n-1));
+        int[] ans = new int[n];
+        for (int i=n-2;i>=0;i--) {
+            while (!stack.isEmpty()) {
+                Pair<Integer, Integer> pair = stack.peek();
+                if (pair.getKey() > temperatures[i]) {
+                    ans[i] = pair.getValue() - i;
+                    break;
+                } else {
+                    stack.pop();
+                }
+            }
+            stack.push(new Pair(temperatures[i], i));
+        }
+        return ans;
+    }
+}
