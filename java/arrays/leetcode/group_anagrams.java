@@ -64,3 +64,32 @@ class Solution {
         return sb.toString();
     }
 }
+
+//Soln from another attempt TC O(NKlogK) SC O(NK) where N is the length of the array and K is the avg length of the string
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap();
+        for (String str: strs) {
+            String key = getKey(str);
+            map.computeIfAbsent(key, k -> new ArrayList()).add(str);
+        }
+        List<List<String>> ans = new ArrayList();
+        for (List<String> list: map.values()) {
+            ans.add(list);
+        }
+        return ans;
+    }
+
+    private String getKey(String s) {
+        List<Character> chars = new ArrayList<>();
+        for (char c: s.toCharArray()) {
+            chars.add(c);
+        }
+        Collections.sort(chars);
+        StringBuilder sb = new StringBuilder();
+        for (char c: chars) {
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+}
