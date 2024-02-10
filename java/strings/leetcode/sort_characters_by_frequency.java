@@ -92,3 +92,28 @@ class Solution {
         return sb.toString();
     }
 }
+
+//Soln from another attempt TC O(N + KlogK) SC O(K)
+class Solution {
+    public String frequencySort(String s) {
+        Map<Character, Integer> charToFreq = new HashMap();
+        for (char c: s.toCharArray()) {
+            charToFreq.put(c, charToFreq.getOrDefault(c, 0) + 1);
+        }
+        TreeMap<Integer, List<Character>> freqToChar = new TreeMap(Collections.reverseOrder());
+        for (Map.Entry<Character, Integer> entry: charToFreq.entrySet()) {
+            freqToChar.computeIfAbsent(entry.getValue(), k -> new ArrayList())
+            .add(entry.getKey());
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Integer, List<Character>> entry: freqToChar.entrySet()) {
+            List<Character> list = entry.getValue();
+            for (char c: list) {
+                for (int i=0;i<entry.getKey();i++) {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
