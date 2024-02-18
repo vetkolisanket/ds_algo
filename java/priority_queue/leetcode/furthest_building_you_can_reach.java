@@ -67,3 +67,24 @@ class Solution {
         return heights.length-1;
     }
 }
+
+//Soln from another attempt TC O(NlogN) SC O(N)
+class Solution {
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        PriorityQueue<Integer> pq = new PriorityQueue();
+        for (int i=1;i<heights.length;i++) {
+            int diff = heights[i] - heights[i-1];
+            if (diff > 0) {
+                pq.offer(diff);
+                if (ladders > 0) {
+                    ladders--;
+                } else {
+                    if (bricks >= pq.peek()) {
+                        bricks -= pq.poll();
+                    } else return i-1;
+                }
+            }
+        }
+        return heights.length-1;
+    }
+}
