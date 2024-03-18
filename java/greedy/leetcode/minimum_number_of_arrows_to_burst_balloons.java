@@ -56,3 +56,22 @@ class Solution {
         return ans;
     }
 }
+
+//Similar approach written slightly differently TC O(NlogN) SC O(logN)
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        int ans = 0;
+        Arrays.sort(points, (a, b) -> {
+            if (a[1] < b[1]) return -1;
+            return 1;
+        });
+        for (int i=0;i<points.length;) {
+            int end = points[i++][1];
+            while (i < points.length && points[i][0] <= end) {
+                i++;
+            }
+            ans++;
+        }
+        return ans;
+    }
+}
