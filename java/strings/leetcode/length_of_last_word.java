@@ -31,6 +31,22 @@ s consists of only English letters and spaces ' '.
 There will be at least one word in s.
 */
 
+//My soln TC O(N) SC O(1)
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int len = s.length();
+        int i = len-1;
+        while (i >=0 && s.charAt(i) == ' ') {
+            i--;
+        }
+        int end = i;
+        while (i >= 0 && s.charAt(i) != ' ') {
+            i--;
+        }
+        return end - i;
+    }
+}
+
 class Solution {
     public int lengthOfLastWord(String s) {
         int len = s.length();
