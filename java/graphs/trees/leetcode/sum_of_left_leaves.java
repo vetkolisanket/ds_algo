@@ -55,3 +55,19 @@ class Solution {
         return node.left != null || node.right != null;
     }
 }
+
+//Soln from another attempt TC O(N) SC O(N)
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null) return 0;
+        return getSum(root.left) + sumOfLeftLeaves(root.right);
+    }
+
+    private int getSum(TreeNode node) {
+        if (node == null) return 0;
+        if (node.left == null && node.right == null) {
+            return node.val;
+        }
+        return getSum(node.left) + sumOfLeftLeaves(node.right);
+    }
+}
