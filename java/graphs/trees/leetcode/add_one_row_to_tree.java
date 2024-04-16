@@ -118,3 +118,22 @@ class Solution {
         }
     }
 }
+
+//DFS soln from another attempt TC O(N) SC O(N)
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if (depth == 1) return new TreeNode(val, root, null);
+        addRow(root, depth-1, val);
+        return root;
+    }
+
+    private void addRow(TreeNode node, int depth, int val) {
+        if (node == null) return;
+        if (depth > 1) {
+            addRow(node.left, depth-1, val);
+            addRow(node.right, depth-1, val);
+        } else {
+            node.left = new TreeNode(val, node.left, null);
+            node.right = new TreeNode(val, null, node.right);
+        }
+    }
+}
