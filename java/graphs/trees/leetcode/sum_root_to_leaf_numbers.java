@@ -70,3 +70,28 @@ class Solution {
         return sumNumbers(node.left, sum) + sumNumbers(node.right, sum);
     }
 }
+
+//BFS soln TC O(N) SC O(N)
+class Solution {
+    public int sumNumbers(TreeNode root) {
+        int ans = 0;
+        Queue<Pair<TreeNode, Integer>> q = new ArrayDeque();
+        q.offer(new Pair(root, 0));
+        while (!q.isEmpty()) {
+            Pair<TreeNode, Integer> p = q.poll();
+            TreeNode node = p.getKey();
+            int val = p.getValue();
+            int sum = val*10+node.val;
+            if (node.left == null && node.right == null) {
+                ans += sum;
+            } 
+            if (node.left != null) {
+                q.offer(new Pair(node.left, sum));
+            }
+            if (node.right != null) {
+                q.offer(new Pair(node.right, sum));
+            }
+        }
+        return ans;
+    }
+}

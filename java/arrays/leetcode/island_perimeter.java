@@ -38,7 +38,7 @@ class Solution {
     }
 }
 
-//My soln
+//My soln TC O(MN) SC O(1)
 class Solution {
     public int islandPerimeter(int[][] grid) {
         if (grid.length == 0) return 0;
