@@ -169,3 +169,50 @@ class Solution {
         return false;
     }
 }
+
+//Another Union Find soln TC O(V + Ealpha(V)) SC O(V)
+class UnionFind {
+
+    private int n;
+    private int[] parent, rank;
+
+    public UnionFind(int n) {
+        this.n = n;
+        parent = new int[n];
+        rank = new int[n];
+        for (int i=0;i<n;i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (x == parent[x]) {
+            return x;
+        }
+        return parent[x] = find(parent[x]);
+    }
+
+    public void union(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return;
+        if (rank[x] >= rank[y]) {
+            parent[y] = x;
+            rank[x]++;
+        } else {
+            parent[x] = y;
+            rank[y]++;
+        }
+    }
+
+}
+
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        UnionFind uf = new UnionFind(n);
+        for (int[] edge: edges) {
+            uf.union(edge[0], edge[1]);
+        }
+        return uf.find(source) == uf.find(destination);
+    }
+}
