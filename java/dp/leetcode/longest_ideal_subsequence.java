@@ -46,3 +46,21 @@ class Solution {
         return max;
     }
 }
+
+//Soln from another attempt TC O(NK) SC O(1) where N is the length of the string and K is the input value k
+class Solution {
+    public int longestIdealString(String s, int k) {
+        int[] arr = new int[26];
+        int ans = 0;
+        for (char c: s.toCharArray()) {
+            int idx = c - 'a';
+            int val = 0;
+            for (int i=Math.max(0, idx-k);i<=Math.min(25, idx+k);i++) {
+                val = Math.max(val, arr[i]);
+            }
+            arr[idx] = val+1;
+            ans = Math.max(ans, arr[idx]);
+        }
+        return ans;
+    }
+}
