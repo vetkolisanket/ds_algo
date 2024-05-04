@@ -147,3 +147,30 @@ class Solution {
         return flag ? s.substring(left, right+1) : "";
     }
 }
+
+//Another soln which uses a substring problems soln template and int arr which improves time a lot TC O(m+n) SC O(1)
+class Solution {
+    public String minWindow(String s, String t) {
+        int[] arr = new int[128];
+        int start = 0, end = 0, counter = t.length(), sLen = s.length(), 
+        minLen = Integer.MAX_VALUE, head = 0;
+        for (char c: t.toCharArray()) {
+            arr[c]++;
+        }
+        while (end < sLen) {
+            if (arr[s.charAt(end++)]-- > 0) {
+                counter--;
+            }
+            while (counter == 0) {
+                if (minLen > end - start) {
+                    minLen = end - start;
+                    head = start;
+                }
+                if (arr[s.charAt(start++)]++ == 0) {
+                    counter++;
+                }
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(head, head+minLen);
+    }
+}
