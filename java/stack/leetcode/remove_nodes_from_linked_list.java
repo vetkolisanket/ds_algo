@@ -61,3 +61,45 @@ class Solution {
         return dummyHead.next;
     }
 }
+
+//A space efficient soln TC O(N) SC O(1)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNodes(ListNode head) {
+        head = reverse(head);
+
+        ListNode pre = null, cur = head;
+        int max = 0;
+
+        while (cur != null) {
+            if (cur.val < max) {
+                pre.next = cur.next;
+            } else {
+                max = cur.val;
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return reverse(head);
+    }
+
+    private ListNode reverse(ListNode node) {
+        ListNode pre = null, cur = node;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+}
