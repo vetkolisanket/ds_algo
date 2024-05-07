@@ -62,3 +62,19 @@ class Solution {
         return cur;
     }
 }
+
+//A more space efficient single pointer soln TC O(N) SC O(1)
+class Solution {
+    public ListNode doubleIt(ListNode head) {
+        ListNode dummyHead = new ListNode(0, head), node = dummyHead;
+        while (node != null) {
+            int val = node.val*2;
+            if (node.next != null && node.next.val > 4) {
+                val++;
+            }
+            node.val = val%10;
+            node = node.next;
+        }
+        return dummyHead.val == 0 ? dummyHead.next : dummyHead;
+    }
+}
