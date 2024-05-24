@@ -133,3 +133,46 @@ class MyQueue {
         return stack1.isEmpty() && stack2.isEmpty();
     }
 }
+
+//Another soln
+class MyQueue {
+
+    Stack<Integer> a, b;
+
+    public MyQueue() {
+        a = new Stack<>();
+        b = new Stack<>();
+    }
+    
+    public void push(int x) {
+        if (a.isEmpty() && b.isEmpty()) {
+            a.push(x);
+        } else {
+            b.push(x);
+        }
+    }
+    
+    public int pop() {
+        if (a.isEmpty()) {
+            moveStack();
+        }
+        return a.pop();
+    }
+    
+    public int peek() {
+        if (a.isEmpty()) {
+            moveStack();
+        }
+        return a.peek();
+    }
+
+    private void moveStack() {
+        while (!b.isEmpty()) {
+            a.push(b.pop());
+        }
+    }
+    
+    public boolean empty() {
+        return a.isEmpty() && b.isEmpty();
+    }
+}
