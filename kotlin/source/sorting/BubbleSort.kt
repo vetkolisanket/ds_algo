@@ -1,4 +1,4 @@
-package sorting
+package source.sorting
 
 fun main() {
     val arr = arrayOf(1, 5, 2, 6, 3, 7, 4, 5, 3, 6, 8)
