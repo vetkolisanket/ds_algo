@@ -37,6 +37,28 @@ nums[i] is 0, 1, or 2.
 Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 */
 
+//Correct soln for this problem TC O(N) SC O(1)
+class Solution {
+    public void sortColors(int[] nums) {
+        int p0 = 0, p2 = nums.length-1, cur = 0;
+        while (cur <= p2) {
+            if (nums[cur] == 0) {
+                swap(nums, cur++, p0++);
+            } else if (nums[cur] == 2) {
+                swap(nums, cur, p2--);
+            } else {
+                cur++;
+            }
+        }
+    }
+
+    private void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+}
+
 //My Soln
 class Solution {
     public void sortColors(int[] nums) {
@@ -117,5 +139,32 @@ void sortColors(int A[], int n) {
             swap(A[i], A[j++]);
         else if (A[i] == 2)
             swap(A[i--], A[k--]);
+    }
+}
+
+//Soln from another attempt using quick sort TC O(NlogN) SC O(logN)
+class Solution {
+    public void sortColors(int[] nums) {
+        quickSort(nums, 0, nums.length-1);
+    }
+
+    private void quickSort(int[] nums, int start, int end) {
+        if (start > end) return;
+        int pivot = start, smaller = start;
+        for (int i=start+1;i<=end;i++) {
+            if (nums[i] < nums[pivot]) {
+                swap(nums, i, smaller+1);
+                smaller++;
+            }
+        }
+        swap(nums, pivot, smaller);
+        quickSort(nums, start, smaller-1);
+        quickSort(nums, smaller+1, end);
+    }
+
+    private void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
