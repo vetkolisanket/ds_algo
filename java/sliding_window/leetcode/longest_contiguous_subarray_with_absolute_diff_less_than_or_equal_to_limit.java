@@ -59,3 +59,32 @@ class Solution {
         return ans;
     }
 }
+
+//A more time efficient soln using deques TC O(N) SC O(N)
+class Solution {
+    public int longestSubarray(int[] nums, int limit) {
+        Deque<Integer> maxDq = new ArrayDeque<>(), minDq = new ArrayDeque();
+        int ans = 0;
+        for (int start = 0, end = 0; end < nums.length; end++) {
+            while (!maxDq.isEmpty() && maxDq.peekLast() < nums[end]) {
+                maxDq.pollLast();
+            }
+            maxDq.offerLast(nums[end]);
+            while (!minDq.isEmpty() && minDq.peekLast() > nums[end]) {
+                minDq.pollLast();
+            }
+            minDq.offerLast(nums[end]);
+            while (maxDq.peekFirst() - minDq.peekFirst() > limit) {
+                if (maxDq.peekFirst() == nums[start]) {
+                    maxDq.pollFirst();
+                }
+                if (minDq.peekFirst() == nums[start]) {
+                    minDq.pollFirst();
+                }
+                start++;
+            }
+            ans = Math.max(ans, end - start + 1);
+        }
+        return ans;
+    }
+}
