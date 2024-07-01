@@ -119,3 +119,63 @@ class Solution {
         return -1;
     }
 }
+
+//Soln from another attempt using UnionFind TC O(V + E*alpha(V)) SC O(V)
+class Solution {
+    public int maxNumEdgesToRemove(int n, int[][] edges) {
+        if (edges.length < n-1) return -1;
+        UnionFind alice = new UnionFind(n), bob = new UnionFind(n);
+        int ans = 0;
+        for (int[] edge: edges) {
+            if (edge[0] == 3) {
+                boolean isNeededByAlice = alice.union(edge[1], edge[2]);
+                boolean isNeededByBob = bob.union(edge[1], edge[2]);
+                if (!isNeededByAlice && !isNeededByBob) {
+                    ans++;
+                }
+            }
+        }
+        for (int[] edge: edges) {
+            if (edge[0] != 3) {
+                if (edge[0] == 1 && !alice.union(edge[1], edge[2])) {
+                    ans++;
+                }
+                if (edge[0] == 2 && !bob.union(edge[1], edge[2])) {
+                    ans++;
+                }
+            }
+        }
+        if (alice.components != 1 || bob.components != 1) return -1;
+        return ans;
+    }
+}
+
+class UnionFind {
+
+    private int[] parent;
+    public int components;
+
+    public UnionFind(int n) {
+        components = n;
+        parent = new int[n+1];
+        for (int i=0;i<=n;i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (x == parent[x]) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    public boolean union(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return false;
+        components--;
+        parent[y] = x;
+        return true;
+    }
+
+
+}
