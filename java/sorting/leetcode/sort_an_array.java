@@ -74,3 +74,44 @@ class Solution {
         for (i = start;i<=end;i++) nums[i] = target[i];
     }
 }
+
+//Soln from another attempt TC O(NlogN) SC O(N)
+class Solution {
+    public int[] sortArray(int[] nums) {
+        mergeSort(nums, 0, nums.length-1);
+        return nums;
+    }
+
+    private void mergeSort(int[] nums, int start, int end) {
+        if (start >= end) return;
+        int mid = start + (end - start)/2;
+        mergeSort(nums, start, mid);
+        mergeSort(nums, mid+1, end);
+        merge(nums, start, mid, end);
+    }
+
+    private void merge(int[] nums, int start, int mid, int end) {
+        int[] arr1 = new int[mid - start + 1];
+        int[] arr2 = new int[end - mid];
+        for (int i=start;i<=mid;i++) {
+            arr1[i-start] = nums[i];
+        }
+        for (int i=mid+1;i<=end;i++) {
+            arr2[i-mid-1] = nums[i];
+        }
+        int i = start, j = 0, k = 0;
+        while (j < arr1.length && k < arr2.length) {
+            if (arr1[j] < arr2[k]) {
+                nums[i++] = arr1[j++];
+            } else {
+                nums[i++] = arr2[k++];
+            }
+        }
+        while (j < arr1.length) {
+            nums[i++] = arr1[j++];
+        }
+        while (k < arr2.length) {
+            nums[i++] = arr2[k++];
+        }
+    }
+}
