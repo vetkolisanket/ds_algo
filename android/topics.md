@@ -50,3 +50,35 @@ requires context to perform tasks like:
       - **Heap Dump Analysis**: Take heap dumps during testing and analyze them to identify objects that are not being properly garbage collected.
       - **Testing on Low-end Devices**: Ensure that your application functions correctly on low-end devices with limited memory resources.
   - By following good memory management practices, regularly testing your application for memory-related issues, and using appropriate tools for profiling and leak detection, you can prevent out-of-memory errors and deliver a stable and efficient Android application.
+-  Compose related interview questions
+  - Jetpack Compose vs Android View System.
+  - Explain the concept of declarative UI in Jetpack Compose.
+  - Declarative UI vs Imperative UI.
+• What are Composable functions?
+• What is Recomposition?
+• What is State in Compose?
+• How does state management work in Jetpack Compose?
+• Stateful composable vs Stateless composable.
+• What are the side effects?
+• Difference between LaunchedEffect and DisposableEffect.
+• What is rememberCoroutineScope and its use cases?
+• How to observe Flows, and LiveData states in Compose UI?
+• How can we handle asynchronous operations in Jetpack Compose?
+• How can we convert a non-compose state into a Compose state?
+• Explain derivedStateOf.
+• Explain rememberUpdatedState.
+• Difference between remember and rememberSaveable.
+• Explain the Lifecycle of a Composable in Jetpack Compose.
+• How do you handle lifecycle events in Compose functions?
+• What are the best practices for performance optimization in Jetpack Compose?
+• Can we use both Jetpack Compose and Android View in a Single App?
+• What is State Hoisting?
+• Explain CompositionLocal.
+• Explain Jetpack Compose Phases.
+• What is the role of the Modifier in Jetpack Compose?
+• What are Semantics?
+• How can you handle user input and events in Jetpack Compose?
+• How do you handle navigation in Jetpack Compose?
+• How do you handle orientation changes in Jetpack Compose?
+• Explain the concept of unidirectional data flow in Jetpack Compose.
+• How to create Custom Layouts in Compose?
